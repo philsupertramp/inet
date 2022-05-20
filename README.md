@@ -14,7 +14,7 @@ tasks of classification and bounding box regression, either individually or comb
 ## Visuals
 
 ### Data Augmentation
-![Augmentation examples](./docs/augmentation.png)
+![Augmentation examples](./notebooks/visualizations/classification-test.png)
 
 ## Installation
 
