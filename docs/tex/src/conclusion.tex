@@ -1,0 +1,38 @@
+\section{Conclusion}\label{sec:conclusion}
+To conclude, the here introduced CNN architecture has its limitations and existing state-of-the-art classifiers like MobileNet perform predictions with higher accuracy.
+But YOLOv5 seems to be a good candidate for further investigations, experiments and potentially to be the model that is later applied in \textit{KInsecta}'s monitoring device.
+
+First, it should be said that it was extremely fascinating and enjoyable to research this paper.
+To put it into the words of my generation: "I had the blast of my life!".\\
+But the overall task given for this paper has been daunting for two reasons.
+Mainly, the three month time constraint limiting this thesis was a very tight schedule, considering that knowledge about most techniques used here was required to be acquired.
+Secondly, the object detection task itself was very challenging.
+On one hand, due to the complexity of CNNs and the abstraction through code, using Tensorflow.
+On the other, because it took a long time to achieve the here described results\footnote{Some of the final results were computed in the last week prior to submission.}.
+The results in \nameref{sec:application} are a great building block for my processor at \textit{KInsecta}, and give me enough confidence to claim that the task will eventually be solved in a satisfying manner.
+
+\subsection{General ideas and prospects for similar problems}\label{subsec:prospects}
+For ML projects in general, it is advised to get a good understanding of the problem and the available data for it.
+It seemed to be one of the most crucial parts of the ML project pipeline, introduced in the beginning of this paper (\figref{fig:pipeline}).
+When enough knowledge about the raw input data is collected, augmentation techniques should be assembled to increase the amount of samples in the training set.
+After understanding and increasing the data, it is also recommend to use SotA (state-of-the-art) architectures first.
+These architectures exist for a reason, they generalize well on many different data sets.
+The chance of picking a problem that can not be solved in a satisfying way, using these models, seems from the here obtained results, unlikely.
+Additionally, great predictions with SotA architectures are a good motivation and can reduce the time spent exploring into a specific direction, rather than trying out a different ones.\\
+If the objective is still to create a custom architecture from ground up, the reader is recommended to research different techniques and architectures thoroughly prior to performing first implementation attempts.
+This can also resolve frustration and might lead into finding comparable results from other researchers.\\
+By now, the reader should be motivated to look deeper into YOLO, especially YOLOv5.
+\subsection{Outlook}\label{subsec:outlooks}
+As this paper demonstrated regular CNN architectures have their limitations.
+Compared to referenced papers and performance measures of SotA architectures give reason to believe that the resulting model is not yet the perfect candidate to solve the here described task.
+Due to time constraints of this thesis several approaches have not been tested or analyzed further.
+Albeit, the here assembled architectures do not reach good performances, the outlook that is given by the results of a naively trained YOLOv5 is outstanding.
+Compared to the other Backbone-Head architectures, the multi object detection by YOLO is a task none of the other ones can currently perform.
+Furthermore, it is impossible to ever achieve multi object detection, with the current architecture of these models, because each of them is predicting one and only one BB per image.
+Hence, the next steps should be to perform HPO for YOLOv5.
+Another open question that seeks an answer is the slow inference time of YOLO, this should be target of an investigation, as well.
+
+\section{Acknowledgement}
+This thesis was supported by my great colleagues at \textit{KInsecta}, that welcomed me with open arms from the beginning and allowed me to take over the here described research.
+I would like to express my appreciation to Prof. Dr. Frank Haußer and M. Sc. Teodor Chiaburu for the helpful discussions and support during this research.
+Additionally, I would like to deeply thank my fiance Roberta, that has been under a lot of pressure and was forced to undergo my mood swings, over the last three months.

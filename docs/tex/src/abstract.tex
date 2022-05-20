@@ -1,0 +1,29 @@
+\begin{abstract}
+    This thesis has been written in the citizen science project \textit{KInsekt} at the \textit{Berliner Hochschule für Technik}.
+    Its main objective is to investigate different Machine Learning techniques for the localization and classification of insect orders, namely "Coleoptera", "Hymenoptera, Formicidae", "Lepidoptera", "Hemiptera" and "Ordonata",  based on image files.
+    The accompanying code repository (\url{https://gitlab.com/kinsecta/ml/thesisphilipp}) contains software written in Python (version 3.6.9), developed using the libraries
+    %TODO: add versions
+    \path{numpy},\\
+    \path{tensorflow}, \path{keras}, \path{keras-tuner}~\cite{omalley2019kerastuner} and \path{scikit-learn}~\cite{scikit-learn}.
+    The code has been written in the attempt to be easily extendable or changeable, to e.g.\ append the list of available classification classes.\\
+    All used algorithms and "random" generated numbers are seeded, using the seed $42$.\\
+    The Machine Learning model is supposed to run efficiently on a small computer, such as the RaspberryPi, therefore widely used architectures can not simply be used.\\
+    This thesis contains a brief description of the Machine Learning pipeline from data collection, and preparation to preprocessing of the data set and finally using the resulting data set to train different models and architectures.
+    At the end, the best models, based on predefined metrics, will be chosen and its performance against state-of-the-art architectures, including YOLO, evaluated.
+    The results of this evaluation will then reveal that custom tailored architectures perform worse on the given task, when compared to SotA architectures.
+\end{abstract}
+\newpage
+
+\selectlanguage{ngerman}
+\begin{abstract}
+Die hier vorliegende Arbeit wurde im Rahmen des Citizen-Science Projekts \textit{KInsecta} an der \textit{Berliner Hochschule für Technik} verfasst.
+Ihr Hauptziel ist es verschiedene Machine Learning Techniken zur Lokalisierung und Erkennung von Insekten der Ordnung "Coleoptera", "Hymenoptera, Formicidae", "Lepidoptera", \dq Hemiptera\dq und \dq Ordonata\dq, anhand von Bildern zu erkunden.
+Das begleitende Code-Repository (\url{https://gitlab.com/kinsecta/ml/thesisphilipp}) enthält Programme geschrieben in Python (Version 3.6.9), welche mit Hilfe der Bibliotheken \path{numpy}
+\path{tensorflow}, \path{keras}, \path{keras-tuner}~\cite{omalley2019kerastuner} und \path{scikit-learn}~\cite{scikit-learn} flexibel entwickelt wurden, sodass spätere Anpassungen, beispielsweise die Erweiterung einer neuen Ordnung, möglich ist.\\
+Alle Programme und \dq zufällig\dq generierte Zufallszahlen, die für dieses Projekt entwickelt wurden, sind mit einem Seed $42$ initialisiert worden.\\
+Das resultierende Machine Learning Modell zielt darauf ab effizient und platzsparend auf einem kleinen Computer, wie ein RaspberryPi, ausgeführt zu werden.\\
+Diese Abschlussarbeit beinhalten kurze Erläuterungen des Ablaufes eines Machine Learning Projekts, von der Beschaffung und Weiterverarbeitung eines Datensatzes zum Training verschiedener Modellarchitekturen.
+Am Schluss werden die besten Modelle anhand von vorher definierten Metriken gewählt und gegen State-of-the-Art Architekturen, inklusive YOLO, verglichen.
+Diese Vergleiche werden zeigen, dass State-of-the-Art Architekturen besser, als maßgeschneiderte Architekturen, dafür geeignet sind das hier beschriebene Problem zu lösen.
+\end{abstract}
+\selectlanguage{english}

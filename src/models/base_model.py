@@ -1,0 +1,220 @@
+"""
+A collection of different base models to build different model architectures.
+"""
+import os
+from datetime import datetime
+from typing import Callable, Optional
+
+import numpy as np
+from tensorflow import keras
+from tensorflow.keras.models import Model as KerasModel
+
+from src.data.load_dataset import extract_labels_and_features
+from src.helpers import get_train_logdir
+
+
+class Model(KerasModel):
+    """
+    Helper class to store a human-readable name
+    """
+    def __init__(self, inputs, outputs, name: Optional[str] = None):
+        self.model_name = name
+        if name is None:
+            self.model_name = str(type(self).__name__)
+
+        super().__init__(inputs=inputs, outputs=outputs)
+
+
+class Backbone(Model):
+    """
+    An alias for Backbone/Feature extractor models.
+    """
+    pass
+
+
+class TaskModel(Model):
+    model_type = None
+    """
+    A model tailored to solve a task. Contains helper methods and wrappers for training methods.
+    """
+    @classmethod
+    def default_callbacks(cls, monitoring_val, verbose, model_name):
+        """
+        Hidden helper function to create default callbacks for fit method.
+
+        Consists of:
+        - keras.callbacks.TensorBoard
+        - keras.callbacks.ModelCheckpoint
+        - keras.callbacks.EarlyStopping
+        - keras.callbacks.ReduceLROnPlateau
+
+        :param monitoring_val: value to monitor
+        :param verbose: use verbose output
+        :return: list of default callbacks
+        """
+
+        run_logdir = get_train_logdir(model_name)
+        tensorboard_cb = keras.callbacks.TensorBoard(run_logdir)
+        model_checkpoint_path = os.path.join(
+            '../../models/',
+            f'{model_name}-{datetime.now().strftime("%m-%d-%Y_%H-%M-%S")}'
+        )
+        checkpoint_cb = keras.callbacks.ModelCheckpoint(model_checkpoint_path, save_best_only=True)
+        stopping_cb = keras.callbacks.EarlyStopping(monitor=monitoring_val, patience=5, min_delta=1e-3,
+                                                    restore_best_weights=True)
+        reduce_lr_cb = keras.callbacks.ReduceLROnPlateau(
+            monitor=monitoring_val, factor=0.3, patience=3, min_lr=1e-12, verbose=verbose, min_delta=1e-2
+        )
+        return [
+            tensorboard_cb,
+            checkpoint_cb,
+            stopping_cb,
+            reduce_lr_cb,
+            keras.callbacks.ProgbarLogger('samples'),
+            keras.callbacks.TerminateOnNaN()
+        ]
+
+    def fit(self, train_set, validation_set, monitoring_val, batch_size: int = 32, epochs: int = 20,
+            verbose: bool = True, *args, **kwargs):
+
+        callbacks = kwargs.pop('callbacks', self.default_callbacks(monitoring_val, verbose, self.model_name))
+
+        return super().fit(
+            train_set.batch(batch_size),
+            *args,
+            validation_data=validation_set.batch(batch_size),
+            batch_size=batch_size,
+            validation_batch_size=batch_size,
+            epochs=epochs,
+            verbose=2 if verbose else 0,
+            callbacks=callbacks,
+            **kwargs
+        )
+
+    def extract_backbone_features(self, train_set, validation_set):
+        """
+        Processes inputs using weights from backbone feature extractor.
+
+        :param train_set:
+        :param validation_set:
+        :return:
+        """
+        feature_extractor = keras.models.Sequential(self.layers[:self.feature_layer_index + 1])
+        return feature_extractor.predict(train_set), feature_extractor.predict(validation_set)
+
+    def evaluate_model(self, validation_set, preprocessing_method: Callable = None, render_samples: bool = False) -> None:
+        """
+        Method to evaluate a models predictive power.
+
+        :param validation_set: the validation data set to use
+        :param preprocessing_method: optional preprocessing_method for features.
+         Gets applied before feeding the features into the model
+        :param render_samples: boolean flag to append visualization of samples
+        :return:
+        """
+        def preprocess_input(x):
+            if preprocessing_method is None:
+                return x
+            return preprocessing_method(x)
+
+        validation_values, validation_labels = extract_labels_and_features(validation_set)
+        processed_validation_values = preprocess_input(np.array(validation_values.copy()))
+        preds = self.predict(processed_validation_values)
+
+        self.evaluate_predictions(preds, validation_labels, validation_values, render_samples)
+
+    def to_tflite(self, quantization_method: 'QuantizationMethod', train_set, test_set):
+        from src.models.quantization import create_quantize_model
+        return create_quantize_model(self, train_set, test_set, quantization_method)
+
+    def evaluate_predictions(self, predictions, labels, features, render_samples=False) -> None:
+        """
+        Implement this method to evaluate a models predictive power individually.
+        For examples see `.classifier.Classifier` or `.bounding_boxes.BoundingBoxRegressor`.
+
+        :param predictions: predictions done by the model
+        :param labels: true labels for the task
+        :param features: features used to make predictions
+        :param render_samples: boolean flag to append visualization of samples
+        :return:
+        """
+        raise NotImplementedError('Requires implementation in child.')
+
+
+class SingleTaskModel(TaskModel):
+    """
+    Dedicated model architecture to solve a single task, classification or regression.
+    Appends a backbone model with
+    - [optional] global max pooling layer
+    - 1 dropout layer with parameter `dropout_factor`
+    - 1 dense layer with `dense_neurons` number neurons
+    - 1 dense block
+        - batch normalization
+        - ReLU activation function
+        - dense layer with `num_classes` neurons and `regularization_factor` for L2 kernel regularization
+
+    Example:
+        >>> from tensorflow.keras.applications.vgg16 import VGG16
+        >>> vgg_backbone = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+        >>> # building a classifier for 5 classes
+        >>> SingleTaskModel(vgg_backbone, 5, 'softmax')
+        >>> # building a bounding box regressor (outputs: [y, x, height, width])
+        >>> SingleTaskModel(vgg_backbone, 4, 'relu')
+    """
+
+    def __init__(self, backbone: Backbone, num_classes: int, output_activation: str, dense_neurons: int = 128,
+                 include_pooling: bool = False, name: Optional[str] = None, regularization_factor: float = 1e-3,
+                 dropout_factor: float = 0.5):
+        keras.backend.clear_session()
+        # define model architecture
+        self.feature_layer_index = len(backbone.layers) - 1
+        # fully connected layer
+        if include_pooling:
+            layer_stack = keras.layers.GlobalMaxPooling2D(name='pre_task_pooling')(backbone.output)
+            self.feature_layer_index += 1
+        else:
+            layer_stack = backbone.output
+
+        layer_stack = keras.layers.Dropout(dropout_factor, name='task_dropout')(layer_stack)
+        layer_stack = keras.layers.Dense(dense_neurons, name='task_dense_layer')(layer_stack)
+        layer_stack = keras.layers.BatchNormalization(name='task_bn')(layer_stack)
+        layer_stack = keras.layers.ReLU(name='task_relu')(layer_stack)
+        output_layer = keras.layers.Dense(
+            num_classes,
+            activation=output_activation,
+            kernel_regularizer=keras.regularizers.L2(regularization_factor),
+            name='task_output'
+        )(layer_stack)
+
+        # set model config
+        self.loss_fn = None
+        self.monitoring_val = None
+
+        self.history = None
+        self.image_width = backbone.input.shape[2]
+        self.image_height = backbone.input.shape[1]
+        super().__init__(inputs=[backbone.inputs], outputs=[output_layer], name=name)
+        self.compile_args = {}
+
+    def evaluate_predictions(self, predictions, labels, features, render_samples=False):
+        """
+        Helper method to evaluate predictive power of model
+        :param predictions: predictions done by the model
+        :param labels: true labels for the task
+        :param features: features used to make predictions
+        :param render_samples: boolean flag to append visualization of samples
+        :return:
+        """
+        raise NotImplementedError('Requires implementation in child.')
+
+    @classmethod
+    def from_config(cls, cfg):
+        backbone_clone = keras.models.clone_model(cfg.get('backbone'))
+
+        model = cls(backbone_clone, **cfg.get('head'))
+
+        model.load_weights(cfg.get('weights'), by_name=True)
+
+        model.compile(cfg.get('learning_rate'), cfg.get('loss'))
+
+        return model
