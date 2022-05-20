@@ -1,93 +1,100 @@
 # thesisphilipp
 
+## Thesis: Machine Learning Methods for Localization and Classification of Insects in Images
 
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://gitlab.com/kinsecta/ml/thesisphilipp.git
-git branch -M main
-git push -uf origin main
-```
-
-## Integrate with your tools
-
-- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://gitlab.com/kinsecta/ml/thesisphilipp/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:c2b88e6d32f5e675f4fd46672f0fffed?https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+This project contains all content and things around the thesis to obtain the degree Bachelor of Science.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+For now the repository contains the `./docs` directory for the theoretical part of the thesis, a demo webapp and several scripts used during the preparation of the first dataset as well
+as the first design of model architectures.
+The directory `src/` contains different model architectures `src/models/` that are all designed to solve the supervised learning
+tasks of classification and bounding box regression, either individually or combined.
 
 ## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+
+### Data Augmentation
+![Augmentation examples](./docs/augmentation.png)
 
 ## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+
+### Prerequesites:
+- An account to access the VPN, as well as an account to access the NAS is required
+- `openfortivpn`
+- set environment variables according to [`mount_volumes.sh`](mount_volumes.sh)
+- `python >= 3.8, virtualenv`
 
 ## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### Datasets
+#### iNaturalist
+**use available `*.npy` files:**
+All available `*.npy` files follow the same structure
+```text
+X
+labels
+bounding-boxes
+```
+to extract the data use
+```python
+import numpy as np
+
+with open('./data.npy', 'rb') as f:
+    X = np.load(f, allow_pickle=True)
+    labels = np.load(f, allow_pickle=True)
+    bbs = np.load(f, allow_pickle=True)
+```
+#### recreate a used training set:
+```shell
+$ sudo ./scripts/mount_volumes.sh on
+$ python -m scripts.reuse_labels bounding-boxes-2022-02-12-14-33.json mnt/KInsektDaten/data/iNat/train_Insecta/ data/iNat/storage
+```
+#### generate a training set:
+
+1. Set environment variables `USERNAME` (username on NAS), `PASSWORD` (password for NAS), `VPN_USER` and `VPN_PASSWD` accordingly
+2. Run:
+```shell
+$ sudo ./mount_volumes.sh on
+```
+3. To generate a dataset from the source `mnt/KInsektDaten/data/iNat/train_Insecta/`:
+```shell
+$ python -m scripts.preselect_files --seed 42 -g 20 -s 25 -rng -l ../mnt/KInsektDaten/data/iNat/train_Insecta/ ../data/iNat/
+```
+for more options see `-h`.
+
+4. Upload the files within the (default) target directory `./data/iNat/storage` into ["Label-Studio"](https://labelstudio-kinsekt.app.datexis.com) and generate bounding boxes.
+
+optionally Launch [LabelStudio]()
+```shell
+$ docker run -it -p 8080:8080 -v $PWD/data/iNat:/label-studio/data -e LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true -e LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data heartexlabs/label-studio:latest
+```
+5. Create labels for image files
+6. Export the labels from LStudio
+7. Generate file structure for train, test and validation sets by running
+```shell
+$ python -m scripts.process_files -input_directory data/iNat/storage -output_directory data/iNat/data -test 0.1 -val 0.2 bounding-boxes-2022-02-12-14-33.json
+```
+8. Generate cropped dataset for classification task
+```shell
+$ python -m scripts.generate_cropped_dataset data/iNat/
+```
+
+## Features
+
+### Tex docs
+To build the `./doc` directory see [`docs/tex/README.md`](docs/tex/README.md).
+
+### Webapp
+To run the webapp see [`src/app/README.md`](src/webapp/README.md)
+
+
+# TODO
 
 ## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+In case you need help setting up the project or run into issues please create a ticket within the repositories issue tracker
 
 ## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
 
 ## License
-For open source projects, say how it is licensed.
 
 ## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
-
+The project is currently Work in Progress (WIP).

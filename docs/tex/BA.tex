@@ -1,0 +1,28 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb}
+
+
+\input{lib/definitions}
+%\addbibresource{../lib/bibtex-lib.bib}
+
+% HEADER/FOOTER DEFINITIONS
+\fancyhf{}
+\lhead{\pageHead}
+\rhead{\rightmark}
+\rfoot{Page \thepage}
+\lfoot{\author}
+
+\renewcommand*\contentsname{Summary}
+
+
+
+\begin{document}
+\pagestyle{fancy}
+
+\input{src/source_files}
+
+%\begin{multicols}{2}
+\bibliography{lib/bibtex_lib}{}
+\bibliographystyle{ieeetr}
+%\end{multicols}
+\end{document}

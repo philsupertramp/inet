@@ -1,0 +1,77 @@
+{
+  "ongoing_trials": {},
+  "hyperparameters": {
+    "space": [
+      {
+        "class_name": "Choice",
+        "config": {
+          "name": "alpha",
+          "default": 0.0001,
+          "conditions": [],
+          "values": [
+            0.0001,
+            0.0005,
+            0.001,
+            0.005,
+            0.01
+          ],
+          "ordered": true
+        }
+      },
+      {
+        "class_name": "Choice",
+        "config": {
+          "name": "frozen_blocks",
+          "default": 2,
+          "conditions": [],
+          "values": [
+            2,
+            1,
+            0
+          ],
+          "ordered": true
+        }
+      },
+      {
+        "class_name": "Choice",
+        "config": {
+          "name": "learning_rate",
+          "default": 0.0001,
+          "conditions": [],
+          "values": [
+            0.0001,
+            0.0005,
+            0.001,
+            0.005,
+            0.01
+          ],
+          "ordered": true
+        }
+      }
+    ],
+    "values": {
+      "alpha": 0.0001,
+      "frozen_blocks": 2,
+      "learning_rate": 0.0001
+    }
+  },
+  "seed": 42,
+  "seed_state": 81,
+  "tried_so_far": [
+    "cbb7ab4980169777fa88467f07fec167",
+    "b4299cc31915f355634f74eb48be039d",
+    "3b11db47ed86eef15f49bc63cf495441",
+    "68c0e30615a4050fb1aad1deddea03a3",
+    "8d08008fad1f188476d6c918a752c369",
+    "41cdc61c660dbaab2145d8933bd2ed8d",
+    "f4d3b675fe62ae9b870603cfc70e0ee7",
+    "f5f694d9b0defd67e7be3371189bbf6f",
+    "c888047554829e2f7ee332792a2e2603",
+    "6783c7b89dce68c99988dd77cf25c7a8",
+    "886b9fbf5a1fada860fe37e29492d487",
+    "9518b0b6c4ffa202a3dd1aafc24011f8"
+  ],
+  "num_initial_points": 12,
+  "alpha": 0.0001,
+  "beta": 2.6
+}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}Bounding Box Regressor{% endblock %}
+{% block nav %}
+    {% set ns.is_bbs = true %}
+{% endblock %}
+{% block content %}
+{% if error %}
+    {{ error }}
+{% endif %}
+    <h1>Bounding Box Regressor Tests</h1>
+    <div class="row">
+        <div class="col-6">
+            <p>
+                Click one of the images below to apply the bounding box regression model
+            </p>
+            <div>
+                {% if files %}
+                    {% for file in files %}
+                        <picture>
+                            <img class="img-fluid img-thumbnail" src="data:image/png;base64, {{ file['src'] }}" alt="{{ file['name'] }}" width="100" height="100" onclick="window.location.replace(window.location.pathname + '?file={{ file.name }}');"/>
+                        </picture>
+                    {% endfor %}
+                {% endif %}
+                <form id="customFileForm" method="post" target="/bounding-boxes/?file=custom">
+                    <label class="form-label" for="customFile">Upload custom file</label>
+                    <input type="file" class="form-control" name="customFile" id="customFile" onchange="customFilechange()" />
+                    <input type="hidden" name="customFileContent" id="customFileContent"/>
+                </form>
+            </div>
+            <div>
+                {% if prediction %}
+                <picture>
+                    <img src="data:image/png;base64, {{ prediction['src'] }}" alt="{{ prediction['name'] }}" width="100%" height="100%"/>
+                </picture>
+                {% endif %}
+            </div>
+        </div>
+        {% if models %}
+        <div class="col-6">
+            Model:<br/>
+            <select id="model-selector" onchange="model_selector_change()">
+                {% for m in models %}
+                <option value="{{ m }}" {% if m == selected_model %}selected{% endif %}>{{ m }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+    </div>
+
+<script>
+    function model_selector_change(){
+        var val = document.getElementById("model-selector").value;
+        window.location.replace(window.location.pathname + '?model=' + val);
+    };
+    function getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    };
+    function customFilechange(){
+        var file = document.querySelector('#customFile').files[0];
+        getBase64(file).then(
+          (data) => {
+              window.history.replaceState({}, document.title, "/bounding-boxes/?file=custom");
+              document.querySelector('#customFileContent').value = data;
+              document.querySelector('#customFileForm').submit();
+          }
+        );
+
+    }
+</script>
+{% endblock %}

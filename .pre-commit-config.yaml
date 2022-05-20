@@ -1,0 +1,23 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+    -   id: check-yaml
+    -   id: check-json
+    -   id: check-shebang-scripts-are-executable
+    -   id: check-case-conflict
+    -   id: debug-statements
+    -   id: end-of-file-fixer
+        exclude: '.*ipynb'
+    -   id: double-quote-string-fixer
+    -   id: trailing-whitespace
+    -   id: check-ast
+-   repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.10.1
+    hooks:
+    -   id: isort
+-   repo: https://github.com/asottile/pyupgrade
+    rev: v2.31.0
+    hooks:
+    -   id: pyupgrade
+        args: [--py38-plus]
