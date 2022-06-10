@@ -3,14 +3,15 @@ A collection of different base models to build different model architectures.
 """
 import os
 from datetime import datetime
-from typing import Callable, Optional
+from typing import Callable, Optional, Tuple
 
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras.models import Model as KerasModel
 
-from src.data.load_dataset import extract_labels_and_features
-from src.helpers import get_train_logdir
+from src.data.constants import LabelType, ModelType
+from src.data.datasets import ImageDataSet
+from src.helpers import extract_labels_and_features, get_train_logdir
 
 
 class Model(KerasModel):
@@ -33,7 +34,7 @@ class Backbone(Model):
 
 
 class TaskModel(Model):
-    model_type = None
+    model_type: ModelType = None
     """
     A model tailored to solve a task. Contains helper methods and wrappers for training methods.
     """
@@ -47,9 +48,12 @@ class TaskModel(Model):
         - keras.callbacks.ModelCheckpoint
         - keras.callbacks.EarlyStopping
         - keras.callbacks.ReduceLROnPlateau
+        - keras.callbacks.ProgbarLogger
+        - keras.callbacks.TerminateOnNaN
 
         :param monitoring_val: value to monitor
         :param verbose: use verbose output
+        :param model_name: name of the model
         :return: list of default callbacks
         """
 
@@ -91,7 +95,7 @@ class TaskModel(Model):
             **kwargs
         )
 
-    def extract_backbone_features(self, train_set, validation_set):
+    def extract_backbone_features(self, train_set, validation_set) -> Tuple[LabelType, LabelType]:
         """
         Processes inputs using weights from backbone feature extractor.
 
@@ -102,7 +106,8 @@ class TaskModel(Model):
         feature_extractor = keras.models.Sequential(self.layers[:self.feature_layer_index + 1])
         return feature_extractor.predict(train_set), feature_extractor.predict(validation_set)
 
-    def evaluate_model(self, validation_set, preprocessing_method: Callable = None, render_samples: bool = False) -> None:
+    def evaluate_model(self, validation_set: ImageDataSet, preprocessing_method: Callable = None,
+                       render_samples: bool = False) -> None:
         """
         Method to evaluate a models predictive power.
 
@@ -124,7 +129,8 @@ class TaskModel(Model):
         self.evaluate_predictions(preds, validation_labels, validation_values, render_samples)
 
     def to_tflite(self, quantization_method: 'QuantizationMethod', train_set, test_set):
-        from src.models.quantization import create_quantize_model
+        """Converts the model to a tflite compatible model"""
+        from src.models.convert_to_tflite import create_quantize_model
         return create_quantize_model(self, train_set, test_set, quantization_method)
 
     def evaluate_predictions(self, predictions, labels, features, render_samples=False) -> None:
@@ -165,6 +171,17 @@ class SingleTaskModel(TaskModel):
     def __init__(self, backbone: Backbone, num_classes: int, output_activation: str, dense_neurons: int = 128,
                  include_pooling: bool = False, name: Optional[str] = None, regularization_factor: float = 1e-3,
                  dropout_factor: float = 0.5):
+        """
+
+        :param backbone: backbone model
+        :param num_classes: number of output neurons
+        :param output_activation: activation function of output layer
+        :param dense_neurons: number dense neurons for FC layer
+        :param include_pooling: use pooling prior to FC layer
+        :param name: model name
+        :param regularization_factor: factor for L2 regularization in output layer
+        :param dropout_factor: factor of dropout that's applied in front of the FC layer
+        """
         keras.backend.clear_session()
         # define model architecture
         self.feature_layer_index = len(backbone.layers) - 1
@@ -209,6 +226,9 @@ class SingleTaskModel(TaskModel):
 
     @classmethod
     def from_config(cls, cfg):
+        """
+        Load model from configuration
+        """
         backbone_clone = keras.models.clone_model(cfg.get('backbone'))
 
         model = cls(backbone_clone, **cfg.get('head'))

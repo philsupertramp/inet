@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 import tensorflow_model_optimization as tfmot
 
-from src.models.base_model import TaskModel
+from src.models.architectures.base_model import TaskModel
 from src.models.tflite_methods import (evaluate_q_model,
                                        validate_q_model_prediction)
 

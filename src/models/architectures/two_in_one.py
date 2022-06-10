@@ -9,12 +9,12 @@ from tensorflow import keras
 from tensorflow.keras.metrics import RootMeanSquaredError
 
 from scripts.constants import CLASS_MAP
-from src.data.load_dataset import extract_labels_and_features
-from src.data.visualization import (plot_bbox_samples, plot_confusion_matrix,
+from src.data.constants import ModelType
+from src.data.visualization import (plot_confusion_matrix,
                                     plot_prediction_samples)
+from src.helpers import extract_labels_and_features
 from src.losses.giou_loss import GIoULoss
-from src.models.base_model import Backbone, TaskModel
-from src.models.constants import ModelType
+from src.models.architectures.base_model import Backbone, TaskModel
 from src.models.tflite_methods import evaluate_interpreted_model
 
 

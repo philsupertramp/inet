@@ -1,16 +1,15 @@
 """
 Wrapper implementation for GIoU-Loss.
+
+Fork of tensorflow_addons.losses.giou_loss
+https://github.com/tensorflow/addons/blob/b2dafcfa74c5de268b8a5c53813bc0b89cadf386/tensorflow_addons/losses/giou_loss.py
+
+Forked to bypass version issue with TF 2.4 and unavailable package tensorflow_addons.
 """
 from typing import Optional
 
 import tensorflow as tf
 from tensorflow.python.keras.utils.tf_utils import is_tensor_or_variable
-
-"""
-TF-Addons Fork of
-
-
-"""
 
 
 class LossFunctionWrapper(tf.keras.losses.Loss):

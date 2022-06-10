@@ -1,51 +1,19 @@
-from typing import Tuple
-
 import numpy as np
 import sklearn
 import tensorflow as tf
 from matplotlib import pyplot as plt
-from tensorflow.keras.metrics import RootMeanSquaredError
+from tensorflow.python.keras.metrics import RootMeanSquaredError
 
 from scripts.constants import CLASS_MAP
-from src.data.load_dataset import extract_labels_and_features
 from src.data.visualization import (plot_confusion_matrix,
                                     plot_prediction_samples)
+from src.helpers import extract_labels_and_features
 from src.losses.giou_loss import GIoULoss
-from src.models.bounding_boxes import BoundingBoxRegressor
-from src.models.classifier import Classifier
-from src.models.tflite_methods import evaluate_interpreted_model
+from src.models.architectures.bounding_boxes import BoundingBoxRegressor
+from src.models.architectures.classifier import Classifier
 
 
-class TwoStageModel:
-    def __init__(self, regressor, classifier, input_shape: Tuple[int, ...] = (224, 224, 3), is_tflite=False):
-        self.regressor = regressor
-        self.classifier = classifier
-        self.image_height = input_shape[0]
-        self.image_width = input_shape[1]
-        self.is_tflite = is_tflite
-
-    def predict(self, X):
-        """
-        This method was build under the assumption that X is an array only containing the features
-        :param X:
-        :return:
-        """
-        if self.is_tflite:
-            bbs = evaluate_interpreted_model(self.regressor, X)
-            bbs = np.array(bbs).reshape((len(bbs), -1))
-        else:
-            bbs = self.regressor.predict(X)
-
-        cropped_images = np.array([i for i in map(self.crop_image, zip(X.copy(), bbs.copy()))])
-
-        if self.is_tflite:
-            clf = evaluate_interpreted_model(self.classifier, cropped_images)
-            clf = np.array(clf).reshape((len(clf), -1))
-            return np.c_[clf, bbs]
-
-        classifications = self.classifier.predict(cropped_images)
-        return np.c_[classifications, bbs]
-
+class MultiTaskModel:
     def evaluate_model(self, validation_set, preprocessing_method, render_samples = False):
         def preprocess_input(x):
             if preprocessing_method is None:

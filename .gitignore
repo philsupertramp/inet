@@ -20,7 +20,7 @@ data.bak/
 /data/
 train_logs/
 backups/
-models/
+/models/
 model-weights/
 model-selection/
 submission/
