@@ -10,7 +10,7 @@ Example:
     Output: 10px x 20px
 
 
-For usage run `./process_files.py -h`
+For usage run `./generate_cropped_dataset.py -h`
 """
 import argparse
 import json
@@ -25,14 +25,17 @@ from scripts.process_files import create_directory_structure
 from src.models.data_structures import BoundingBox
 
 if __name__ == '__main__':
-
+    ## Argument parser
     parser = argparse.ArgumentParser()
     parser.add_argument('root_dir', help='path root to extract images from nested directory "data"')
     parser.add_argument('-m', '--multi-threading', dest='multi_threading', action='store_true', default=False, help='Use multiple threads file moving')
     args = parser.parse_args()
 
+    ## input directory name
     input_dir = os.path.join(args.root_dir, 'data')
+    ## output directory name
     output_dir = os.path.join(args.root_dir, 'cropped-data')
+    ## data set configuration file
     dataset_file = os.path.join(input_dir, 'dataset-structure.json')
 
     with open(dataset_file) as fp:
@@ -57,10 +60,10 @@ if __name__ == '__main__':
             new_filename = '/'.join(new_filename)
             img.crop(
                 (
-                    bb.x_min * img.width/100.,
-                    bb.y_min * img.height/100.,
-                    bb.x_max * img.width/100.,
-                    bb.y_max * img.height/100.
+                    int(bb.x_min * img.width/100.),
+                    int(bb.y_min * img.height/100.),
+                    int(bb.x_max * img.width/100.),
+                    int(bb.y_max * img.height/100.),
                 )
             ).save(new_filename)
             new_data[set_name][new_filename] = {'label': data['label']}

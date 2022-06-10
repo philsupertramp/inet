@@ -36,7 +36,9 @@ class LossFunctionWrapper(tf.keras.losses.Loss):
           **kwargs: The keyword arguments that are passed on to `fn`.
         """
         super().__init__(reduction=reduction, name=name)
+        ## The underlying function
         self.fn = fn
+        ## kwargs forwarded to `fn`
         self._fn_kwargs = kwargs
 
     def call(self, y_true, y_pred):
@@ -52,6 +54,7 @@ class LossFunctionWrapper(tf.keras.losses.Loss):
         return self.fn(y_true, y_pred, **self._fn_kwargs)
 
     def get_config(self):
+        """Configuration getter for LossWrapper"""
         config = {}
         for k, v in iter(self._fn_kwargs.items()):
             config[k] = tf.keras.backend.eval(v) if is_tensor_or_variable(v) else v

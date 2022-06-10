@@ -15,6 +15,11 @@ from scripts.helpers import ProgressBar, ThreadWithReturnValue
 
 
 def extract_file_name(elem: Dict) -> str:
+    """
+    Extract file name from element dictionary
+    :param elem: element dictionary
+    :return: file name
+    """
     if 'file_upload' in elem:
         fn = elem['file_upload']
     else:
@@ -23,12 +28,25 @@ def extract_file_name(elem: Dict) -> str:
 
 
 def get_directory_from_prefix(in_dir, prefix):
+    """
+    search function for directory with prefix `prefix` within `in_dir`
+    :param in_dir: parent directory
+    :param prefix: search term to look for
+    :return: path to target directory
+    """
     directory = os.listdir(in_dir)
     directory = [i for i in filter(lambda x: prefix in x, directory)][0]
     return os.path.join(in_dir, directory)
 
 
 def move_file(elem, input_dir, target_dir):
+    """
+    moves files from one directory into another
+    :param elem: files to move
+    :param input_dir: source to move from
+    :param target_dir: target to move files to
+    :return: list of files in target directory
+    """
     fn = extract_file_name(elem)
     target_file = os.path.join(target_dir, fn)
     copy(
@@ -38,7 +56,15 @@ def move_file(elem, input_dir, target_dir):
     return target_file
 
 
-def process_in_multi_threads(file_content, input_dir, target_dir):
+def process_in_multi_threads(file_content, input_dir, target_dir) -> None:
+    """
+    Moves files `file_content` from `input_dir` to `target_dir` using multiple threads
+    :param file_content: list of file names
+    :param input_dir: source directory
+    :param target_dir: target directory
+    :return:
+    """
+    # increase this number to increase the number of used threads
     max_running_threads = 10
 
     list_len = len(file_content)
@@ -71,7 +97,15 @@ def process_in_multi_threads(file_content, input_dir, target_dir):
     pb.done()
 
 
-def process_in_single_thread(file_content, input_dir, target_dir):
+def process_in_single_thread(file_content, input_dir, target_dir) -> None:
+    """
+    Copies files `file_content` from `input_dir` to `target_dir` using a single thread.
+
+    :param file_content: files to move
+    :param input_dir: source directory
+    :param target_dir: target directory
+    :return:
+    """
     list_len = len(file_content)
     pb = ProgressBar(list_len)
     generated_file_names = []

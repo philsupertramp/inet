@@ -23,6 +23,7 @@ class Classifier(SingleTaskModel):
         >>> clf.load_weights('my_weights.h5')
         >>> clf.predict(some_input)
     """
+    ## Fixed type of model
     model_type = ModelType.CLASSIFICATION.value
 
     def __init__(self, backbone: Backbone, dense_neurons: int, num_classes: int = 5, include_pooling: bool = False,
@@ -44,7 +45,9 @@ class Classifier(SingleTaskModel):
         super().__init__(backbone, num_classes=num_classes, output_activation='softmax', dense_neurons=dense_neurons,
                          include_pooling=include_pooling, name=name, regularization_factor=regularization_factor,
                          dropout_factor=dropout_factor)
+        ## Number neurons in FC layer
         self.dense_neurons = dense_neurons
+        ## Batch size used to train the model
         self.batch_size = batch_size
 
     def compile(self, learning_rate: float = 1e-6, loss='categorical_crossentropy', metrics=None, *args, **kwargs):
@@ -61,6 +64,7 @@ class Classifier(SingleTaskModel):
         """
         if metrics is None:
             metrics = []
+        ## arguments used while calling `compile`
         self.compile_args = dict(loss=loss, learning_rate=learning_rate, metrics=metrics, args=args, kwargs=kwargs)
         super().compile(
             *args,
@@ -131,10 +135,17 @@ class ClassifierHyperModel(keras_tuner.HyperModel):
         ...     epochs=50,
         ... )
     """
-    model_data: ModelArchitecture = None
+    ## model configuration to use when creating a new model for HPO
+    model_data: Optional[ModelArchitecture] = None
+    ## model weights used
     weights: str = None
 
     def build(self, hp):
+        """
+        Builds new classification model for HPO
+        :param hp: current state of HPs
+        :return: model for next iteration in HPO
+        """
         hp_alpha = hp.Choice('alpha', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
         hp_lr = hp.Choice('learning_rate', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
         hp_frozen_blocks = hp.Choice(

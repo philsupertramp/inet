@@ -14,16 +14,24 @@ CentroidInitialization = tfmot.clustering.keras.CentroidInitialization
 
 
 class QuantizationMethod(Enum):
+    ## No quantization
     NONE = None
+    ## Dynamic quantization
     DYNAMIC = 1
+    ## Conversion to float16
     FLOAT_16 = 2
+    ## Conversion to uint8
     FULL_INT = 3
 
 
 class ClusterMethod(Enum):
+    ## Linear clustering method
     LINEAR = CentroidInitialization.LINEAR
+    ## Random clustering method
     RANDOM = CentroidInitialization.RANDOM
+    ## Clustering based on density
     DENSITY_BASED = CentroidInitialization.DENSITY_BASED
+    ## Clustering using KMeans++ algo
     KMEANS_PLUS_PLUS = CentroidInitialization.KMEANS_PLUS_PLUS
 
 

@@ -19,6 +19,12 @@ class Model(KerasModel):
     Helper class to store a human-readable name
     """
     def __init__(self, inputs, outputs, name: Optional[str] = None):
+        """
+        :param inputs: input parameters
+        :param outputs: output parameters
+        :param name: verbose name for the model
+        """
+        ## verbose name for the model
         self.model_name = name
         if name is None:
             self.model_name = str(type(self).__name__)
@@ -42,6 +48,7 @@ class TaskModel(Model):
         >>> backbone = MobileNet(weights='imagenet', include_top=False, input_shape=(224, 224))
         >>> my_model = TaskModel(inputs=[backbone.input], outputs=[backbone.output])
     """
+    ## Type of model
     model_type: ModelType = None
 
     @classmethod
@@ -86,6 +93,18 @@ class TaskModel(Model):
 
     def fit(self, train_set, validation_set, monitoring_val, batch_size: int = 32, epochs: int = 20,
             verbose: bool = True, *args, **kwargs):
+        """
+        Extended `keras.Model.fit` to add default callbacks
+        :param train_set: dataset for training
+        :param validation_set: dataset for validation
+        :param monitoring_val: value to monitor while using EarlyStopping/ModelCheckpoint callbacks
+        :param batch_size: the batch size to use when training the model
+        :param epochs: number of epochs used in the training process
+        :param verbose: verbosity setting
+        :param args: further args to pass to `keras.Model.fit`
+        :param kwargs: further kwargs to pass to `keras.Model.fit`
+        :return:
+        """
         callbacks = kwargs.pop('callbacks', self.default_callbacks(monitoring_val, verbose, self.model_name))
 
         return super().fit(
@@ -190,6 +209,7 @@ class SingleTaskModel(TaskModel):
         """
         keras.backend.clear_session()
         # define model architecture
+        ## Index of feature layer (last CNN layer)
         self.feature_layer_index = len(backbone.layers) - 1
         # fully connected layer
         if include_pooling:
@@ -210,13 +230,19 @@ class SingleTaskModel(TaskModel):
         )(layer_stack)
 
         # set model config
+        ## desired loss function
         self.loss_fn = None
+        ## value to monitor while optimizing
         self.monitoring_val = None
 
+        ## Stores history after training cycle
         self.history = None
+        ## expected input image width
         self.image_width = backbone.input.shape[2]
+        ## expected input image height
         self.image_height = backbone.input.shape[1]
         super().__init__(inputs=[backbone.inputs], outputs=[output_layer], name=name)
+        ## args used when calling `compile`
         self.compile_args = {}
 
     @staticmethod

@@ -7,6 +7,7 @@ from src.data.constants import ModelType
 from src.data.visualization import plot_prediction_samples
 from src.losses.giou_loss import GIoULoss
 from src.models.architectures.base_model import Backbone, SingleTaskModel
+from src.models.data_structures import ModelArchitecture
 
 
 class BoundingBoxRegressor(SingleTaskModel):
@@ -20,6 +21,7 @@ class BoundingBoxRegressor(SingleTaskModel):
         >>> regressor.load_weights('my-weights.h5')
         >>> regressor.predict([some_image])
     """
+    ## Fixed type of model
     model_type = ModelType.REGRESSION.value
 
     def __init__(self, backbone: Backbone, dense_neurons: int, include_pooling: bool = False,
@@ -38,9 +40,13 @@ class BoundingBoxRegressor(SingleTaskModel):
         """
         super().__init__(backbone, 4, activation_fn, dense_neurons=dense_neurons, include_pooling=include_pooling,
                          name=name, regularization_factor=regularization_factor, dropout_factor=dropout_factor)
+        ## GIoU-Loss function
         self.giou_loss_fn = GIoULoss()
+        ## RMSE function
         self.rmse_loss_fn = keras.metrics.RootMeanSquaredError()
+        ## Number dense neurons in FC layer
         self.dense_neurons = dense_neurons
+        ## Batch size used for training
         self.batch_size = batch_size
 
     def compile(self, learning_rate: float = 1e-6, loss='mse', metrics=None, *args, **kwargs):
@@ -123,9 +129,15 @@ class BoundingBoxHyperModel(keras_tuner.HyperModel):
         ...     epochs=50,
         ... )
     """
-    model_data = None
+    ## model configuration to use when creating a new model for HPO
+    model_data: Optional[ModelArchitecture] = None
 
     def build(self, hp):
+        """
+        Build model for HPO
+        :param hp: hp storage
+        :return: next model for HPO
+        """
         hp_alpha = hp.Choice('alpha', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
         hp_lr = hp.Choice('learning_rate', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
 

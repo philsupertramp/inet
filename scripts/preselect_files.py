@@ -18,6 +18,7 @@ from scripts.constants import (CLASS_MAP, CLASS_RANGES, COLEOPTERA_STR,
                                ORDONATA_STR)
 from scripts.helpers import ProgressBar, ThreadWithReturnValue, decision
 
+## Holds available ID ranges
 USED_ID_RANGES = {}
 
 

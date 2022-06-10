@@ -8,6 +8,7 @@ from src.data.constants import ModelType
 from src.helpers import extract_labels_and_features
 from src.losses.giou_loss import GIoULoss
 from src.models.architectures.base_model import Backbone, TaskModel
+from src.models.data_structures import ModelArchitecture
 from src.models.solvers.common import evaluate_solver_predictions
 from src.models.tf_lite.tflite_methods import evaluate_interpreted_model
 
@@ -24,6 +25,7 @@ class TwoInOneModel(TaskModel):
         >>> solver.load_weights('my-weights.h5', by_name=True)
         >>> solver.predict([some_input])
     """
+    ## Fixed type of model
     model_type = ModelType.TWO_IN_ONE.value
 
     def __init__(self, backbone: Backbone, num_classes: int, dense_neurons: int = 128,
@@ -37,8 +39,10 @@ class TwoInOneModel(TaskModel):
         """
         keras.backend.clear_session()
 
+        ## Batch size used to train the model
         self.batch_size = batch_size
         # define model architecture
+        ## Feature extractor (CNN) output layer index
         self.feature_layer_index = len(backbone.layers)
         # fully connected layer
         layer_stack = keras.layers.GlobalMaxPooling2D(name='pre_task_pooling')(backbone.output)
@@ -66,7 +70,6 @@ class TwoInOneModel(TaskModel):
         )(reg_stack)
 
         super().__init__(inputs=backbone.inputs, outputs=[clf_output_layer, reg_output_layer])
-        self.lite_model = None
 
     def compile(self, learning_rate: float = 1e-3, loss_weights: Optional[List[float]] = None,
                 losses: Optional[List[float]] = None, metrics: Optional[List] = None, *args, **kwargs):
@@ -185,6 +188,7 @@ class TwoInOneTFLite:
         """
         interpreter = tf.lite.Interpreter(model_path=weights)
         interpreter.allocate_tensors()
+        ## TFLite model instance
         self.model = interpreter
 
     def predict(self, X):
@@ -275,9 +279,16 @@ class TwoInOneHyperModel(keras_tuner.HyperModel):
         ...     epochs=50,
         ... )
     """
-    model_data = None
+    ## Model architecture configuration
+    model_data: Optional[ModelArchitecture] = None
 
     def build(self, hp):
+        """
+        Builds model of next HPO iteration
+
+        :param hp: current HP state
+        :return: next HPO model
+        """
         hp_alpha = hp.Float('alpha', min_value=1e-4, max_value=5e-2)
         hp_dropout = hp.Float('dropout', min_value=0.1, max_value=0.75)
         hp_lr = hp.Float('learning_rate', min_value=1e-4, max_value=0.01)
