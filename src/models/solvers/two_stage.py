@@ -22,6 +22,7 @@ class TwoStageModel(MultiTaskModel):
         >>> solver = TwoStageModel(regressor, classifier, (224, 224, 3), False)
 
     """
+    ## Name of model architecture
     model_name = 'two-stage-model'
 
     def predict(self, X):

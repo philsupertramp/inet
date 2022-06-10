@@ -19,10 +19,15 @@ class BoundingBox:
         :param w: width
         :param h: height
         """
+        ## BBox parameter as vector
         self.values = [x, y, w, h]
+        ## Minimal X-value
         self.x_min = self.values[0]
+        ## Minimal Y-value
         self.y_min = self.values[1]
+        ## BBox width
         self.w = self.values[2]
+        ## BBox height
         self.h = self.values[3]
 
     @property
@@ -135,9 +140,11 @@ class BoundingBox:
         )
 
     def __str__(self) -> str:
+        """string representation"""
         return f'BoundingBox [{self.x_min}, {self.y_min}, {self.x_max}, {self.y_max}]'
 
     def __eq__(self, other: 'BoundingBox') -> bool:
+        """Equals operator to compare two BBs"""
         return np.linalg.norm(np.array(self.values) - np.array(other.values)) <= np.finfo(np.float32).eps
 
 
@@ -146,8 +153,11 @@ class ModelArchitecture:
     """
     Helper dataclass to simplify creation of model architecture, mostly used in development notebooks.
     """
+    ## The backbone to use
     backbone: keras.models.Sequential
+    ## Name of the architecture
     name: str
+    ## Callback to create a model out of the architecture
     create_model: Optional[
         Callable[[keras.models.Sequential, Optional[str], Optional[int], Optional[float]], TaskModel]
     ] = None

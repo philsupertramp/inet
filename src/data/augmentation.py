@@ -19,15 +19,20 @@ class AugmentationMethod(abc.ABC):
 
     Require implementation of `process` method, as well as passing `probability` to the constructor.
     """
+    ## Expected type of label
+    label_value_type: Optional[LabelType] = None
+
     def __init__(self, probability: float = 1.0):
         """
-
         :param probability: probability of which the method gets used for augmentation
         """
+        ## probability of which the method gets used for augmentation
         self.probability = probability
-        self.label_value_type = None
+        ## Expected type of label
+        self.label_value_type: Optional[LabelType] = None
 
     def __str__(self):
+        """String representation"""
         return f'{self.__class__.__name__} ({self.probability})'
 
     def process(self, features: Features, labels: Labels = None) -> Tuple[Features, Labels]:
@@ -48,7 +53,7 @@ class AugmentationMethod(abc.ABC):
         :return: augmented sample or input sample
         """
         @functools.wraps(func)
-        def wrap(self: 'AugmentationMethod', features, labels=None, **kwargs):
+        def wrap(self, features, labels=None, **kwargs):
             if (features is None or labels is None) or self.label_value_type == LabelType.NONE.value:
                 return features, labels
             return func(self, features, labels, **kwargs)
@@ -63,6 +68,7 @@ class MultiProbabilityAugmentationMethod(AugmentationMethod):
 
     Inherit from this class to implement AugmentationMethod with multiple processing methods.
     """
+    ## list of probabilities for child methods in same order as `method_list`
     shared_probabilities = []
 
     def __init__(self, probability: float, shared_probabilities: Optional[Tuple[float, ...]] = None):
@@ -71,6 +77,7 @@ class MultiProbabilityAugmentationMethod(AugmentationMethod):
         :param probability: of which the AugmentationMethod gets used for augmentation
         :param shared_probabilities: list of probabilities for child methods in same order as `method_list`
         """
+        ## list of probabilities for child methods in same order as `method_list`
         self.shared_probabilities = shared_probabilities or self.shared_probabilities
         error_msg = f'Insufficient probability vector: {self.shared_probabilities}. Requires total probability >= 1.'
         assert sum(self.shared_probabilities) >= 1.0, error_msg
@@ -128,6 +135,7 @@ class RandomFlip(MultiProbabilityAugmentationMethod):
     Method to randomly flip the input features horizontal or vertical.
     Flips the provided Bounding Box values accordingly.
     """
+    ## list of probabilities for methods `(horizontal_flip, vertical_flip)`
     shared_probabilities = (0.5, 0.5)
 
     @property
@@ -175,6 +183,8 @@ class RandomChannelIntensity(MultiProbabilityAugmentationMethod):
 
     No transformation of input labels.
     """
+    ## list of probabilities for methods in order
+    ## `(random_scale_n_channels, random_scale_single_channel, random_set_single_channel)`
     shared_probabilities = (1/3, 1/3, 1/3)
 
     @property
@@ -253,6 +263,7 @@ class RandomCrop(MultiProbabilityAugmentationMethod):
 
     **Note: Requires Bounding Box labels to be passed.**
     """
+    ## list of probabilities for individual methods in order `(top, bottom, left, right, top_left, bottom_right)`
     shared_probabilities = (
         0.1,  # top
         0.1,  # bottom
@@ -402,7 +413,7 @@ class RandomRotate90(MultiProbabilityAugmentationMethod):
 
     Transforms label accordingly.
     """
-
+    ## list of probabilities for methods `(rotate_left, rotate_right)`
     shared_probabilities = (
         0.5,  # rotate_left
         0.5,  # rotate_right
@@ -450,8 +461,6 @@ class RandomRotate90(MultiProbabilityAugmentationMethod):
 
 
 class DataAugmentationHelper:
-    AUTOTUNE = tf.data.AUTOTUNE
-
     def __init__(self, number_samples: int, operations: Optional[List[AugmentationMethod]] = None,
                  batch_size: int = 32, seed: int = 42, bbox_label_index: Optional[int] = None,
                  label_value_type: LabelType = LabelType.SINGLE.value, output_signature: Optional[Tuple] = None):
@@ -467,18 +476,26 @@ class DataAugmentationHelper:
         required if `label_value_type = LabelType.MULTI.value`
         (see `__perform_transformation` for further configuration info)
         :param label_value_type: index  (see `__perform_transformation` for further configuration info)
-        :param output_signature:
+        :param output_signature: signature of yielded elements
         """
+        ## desired number of total augmented samples in the dataset
         self.number_samples = number_samples
+        ## desired batch size during training
         self.batch_size = batch_size
+        ## index for bbox label
         self.bbox_label_index = bbox_label_index
+        ## type of output label(s)
         self.label_value_type = label_value_type
+        ## desired augmentation operations
         self.operations = operations or []
+        ## a seed to reproduce
         self.seed = seed
+        ## signature of output elements to yield
         self._output_signature = output_signature or (
             tf.TensorSpec(shape=(224, 224, 3), dtype=tf.float32),
             tf.TensorSpec(shape=4, dtype=tf.float32)
         )
+        ## storage to collect information about performed augmentations
         self.picks = dict.fromkeys([str(op) for op in self.operations + [None]], 0)
 
     def __set_seed(self) -> None:
@@ -606,37 +623,3 @@ class DataAugmentationHelper:
             generator_fn,
             output_signature=self._output_signature
         )
-
-
-if __name__ == '__main__':
-    """
-    Example of data augmentation for a classification dataset.
-    """
-    import matplotlib.pyplot as plt
-
-    from src.data.load_dataset import directory_to_classification_dataset
-
-    ds, _, _ = directory_to_classification_dataset('../../data/iNat/cropped-data')
-    augmenter = DataAugmentationHelper(
-        1024,
-        operations=[
-            RandomContrast(probability=0.2),
-            RandomFlip(probability=0.5),
-            RandomRotate90(probability=0.3)
-        ],
-        label_value_type=LabelType.NONE.value,
-        output_signature=(
-            tf.TensorSpec(shape=(224, 224, 3), dtype=tf.float32),
-            tf.TensorSpec(shape=5, dtype=tf.float32)
-        )
-    )
-    augmented_ds = augmenter.transform(ds.unbatch())
-
-    plt.figure(figsize=(50, 50))
-    i = 1
-    for img, _ in augmented_ds:
-        plt.subplot(32, 32, i)
-        plt.imshow(img.numpy()/255.)
-        plt.axis('off')
-        i += 1
-    plt.savefig('flip-contrast-test.png')

@@ -17,12 +17,18 @@ LabeledFileDictType = Dict[str, Dict[str, Union[BBoxLabelType, ClassLabelType]]]
 
 
 class LabelType(Enum):
+    ## No label expected
     NONE = 0
+    ## Single label (BBox or class label)
     SINGLE = 1
+    ## Multiple labels (BBox and class label)
     MULTI = 2
 
 
 class ModelType(Enum):
+    ## Regression model type
     REGRESSION = 0
+    ## Classification model type
     CLASSIFICATION = 1
+    ## Mixed two-in-one model type
     TWO_IN_ONE = 2

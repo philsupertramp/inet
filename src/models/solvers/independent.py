@@ -21,6 +21,7 @@ class IndependentModel(MultiTaskModel):
         >>> solver = IndependentModel(regressor, classifier, (224, 224, 3), False)
 
     """
+    ## Name of the model architecture
     model_name = 'independent-model'
 
     def predict(self, X):

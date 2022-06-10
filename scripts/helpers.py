@@ -47,7 +47,9 @@ class ProgressBar:
         :param max_num_elements: maximum number elements expected
         :param size: size of the progress bar, i.e. the max number of '#' symbols
         """
+        ## Maximum number of elements in progress bar
         self.max_num_elements = max_num_elements
+        ## size of progress bar (in characters)
         self.size = size
 
     def step(self, index: int) -> None:
@@ -76,15 +78,26 @@ class ThreadWithReturnValue(Thread):
     found at https://stackoverflow.com/a/6894023/6904543
     """
     def __init__(self, group=None, target=None, name=None, args=None, kwargs=None, Verbose=None):
+        """
+
+        :param group: thread group
+        :param target: target method to call
+        :param name: give the thread a verbose name
+        :param args: args to pass to `target`
+        :param kwargs: kwargs to pass to `target`
+        :param Verbose: [invalid parameter] verbosity setting
+        """
         if args is None:
             args = ()
         if kwargs is None:
             kwargs = {}
 
         super().__init__(group, target, name, args, kwargs)
+        ## Storage for return value
         self._return = None
 
     def run(self) -> None:
+        """Overwritten Thread.run method"""
         try:
             if self._target:
                 self._return = self._target(*self._args, **self._kwargs)
@@ -94,5 +107,6 @@ class ThreadWithReturnValue(Thread):
             del self._target, self._args, self._kwargs
 
     def join(self, *args) -> Any:
+        """Join with return value"""
         super().join(*args)
         return self._return

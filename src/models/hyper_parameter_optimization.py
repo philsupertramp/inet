@@ -3,17 +3,26 @@ import os
 import re
 import time
 from enum import Enum
+from typing import List
 
 import matplotlib.pyplot as plt
 
 
 class FrozenBlockConf(Enum):
     """Helper to freeze layers in a sequential model"""
+    ## Train all layers
     TRAIN_ALL = 0
+    ## Train 50% of the layers
     TRAIN_HALF = 1
+    ## Train 0 layers
     TRAIN_NONE = 2
 
-    def process(self, backbone):
+    def process(self, backbone) -> None:
+        """
+        Method to propagate selection through a model instance
+        :param backbone: the model to configure
+        :return:
+        """
         if self == FrozenBlockConf.TRAIN_NONE:
             backbone.trainable = False
             for layer in backbone.layers:
@@ -33,10 +42,11 @@ class FrozenBlockConf(Enum):
 
     @staticmethod
     def choices():
+        """Helper to get list of available choices"""
         return [FrozenBlockConf.TRAIN_NONE.value, FrozenBlockConf.TRAIN_HALF.value, FrozenBlockConf.TRAIN_ALL.value]
 
 
-def read_trials(dir_name):
+def read_trials(dir_name: str) -> List:
     """Reads trial files provided by [keras-tuner](https://keras.io/keras_tuner/)."""
     trial_list = [os.path.join(directory, 'trial.json') for directory in filter(
         lambda x: os.path.isdir(x),
@@ -54,7 +64,7 @@ def read_trials(dir_name):
     return trials
 
 
-def plot_hpo_values(trial):
+def plot_hpo_values(trial) -> None:
     """Helper to display course of HP values during a HPO"""
     hp_list = [t.get('hyperparameters').get('values') for t in trial]
     hps = {}

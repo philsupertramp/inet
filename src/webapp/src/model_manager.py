@@ -2,7 +2,7 @@ import json
 import os
 from typing import Optional
 
-from src.models.bounding_boxes import BoundingBoxRegressor
+from src.models.architectures.bounding_boxes import BoundingBoxRegressor
 
 
 class ModelManager:
@@ -10,13 +10,20 @@ class ModelManager:
     Singleton implementation for model management
     use `model_manager.model_manager` in code.
     """
+    ## Source directory of model weights
     MODEL_DIR = 'model-weights'
+    ## Model Name-Constructor map
     MODEL_MAP = {
         'BoundingBoxRegressor': BoundingBoxRegressor
     }
 
     def __init__(self, default_model: Optional = None):
+        """
+        :param default_model: Optional defaMulti processing implementation of files movingult model
+        """
+        ## Storage of available models
         self.models = {'default': default_model}
+        ## The default model to use
         self.default_model = default_model
 
     def load_models(self):
@@ -55,4 +62,5 @@ class ModelManager:
         return self.models.keys()
 
 
+## Singleton instance of `ModelManager`
 model_manager = ModelManager()

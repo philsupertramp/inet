@@ -10,6 +10,7 @@ from Augmentor import Pipeline
 
 from scripts.helpers import move_files
 
+## parent directory of current directory
 root_directory = os.path.join(os.path.dirname(__file__), '..')
 
 if __name__ == '__main__':

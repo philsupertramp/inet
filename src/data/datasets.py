@@ -17,7 +17,9 @@ class ImageDataSet:
     """
     Base class to define general behavior of an image data set.
     """
+    ## key of label to extract from data set structure
     label_key: str = None
+    ## signature of yielding elements/output elements
     output_signature: Tuple[tf.TensorSpec, Union[tf.TensorSpec, Tuple[tf.TensorSpec, ...]]] = None
 
     def __init__(self, parent_directory: str, img_width: int, img_height: int, set_name: Optional[str] = None,
@@ -31,20 +33,29 @@ class ImageDataSet:
         :param batch_size: number of elements per yielded batch
         :param class_names: list of class names to find in the dataset
         """
+        ## Data set type/name
         self.set_name = set_name or 'train'
+        ## Name of parent directory of data set
         self.dir_name = parent_directory
+        ## Index of current element
         self.current_index = 0
 
+        ## Set of class names present in this data set
         self.class_names = class_names
         if class_names is None:
             self.class_names = [name.split('>')[0] for name in CLASS_MAP.keys()]
 
         with open(os.path.join(parent_directory, 'dataset-structure.json')) as json_file:
+            ## data structure config file content
             self.content = json.load(json_file)[self.set_name]
 
+        ## number of samples in data set
         self.file_count = len(self.content)
+        ## used image width
         self.img_width = img_width
+        ## used image height
         self.img_height = img_height
+        ## used batch size when yielding elements
         self.batch_size = batch_size
 
     def _parse_fn(self, filename: str, label: LabelType) -> List[Union[ImageType, LabelType]]:
@@ -116,18 +127,20 @@ class ImageLabelDataSet(ImageDataSet):
     """
     yields objects of form (image, label)
     """
+    ## key of label to extract from data set structure
     label_key = 'label'
 
     def __init__(self, parent_directory: str, img_width: int, img_height: int, set_name: Optional[str] = None,
                  batch_size: int = 32, class_names: Optional[List[str]] = None):
         super().__init__(parent_directory, img_width, img_height, set_name, batch_size, class_names)
+        ## number classes represented in the dataset
         self.num_classes = len(os.listdir(os.path.join(self.dir_name, self.set_name)))
 
         # (pz) TODO: potentially make labels integers
+        ## signature of output elements
         self.output_signature = (
             tf.TensorSpec(shape=(), dtype=tf.string), tf.TensorSpec(shape=(self.num_classes,), dtype=tf.float32)
         )
-        self.output_shapes = ((), (self.num_classes,))
 
     def _convert_label(self, label):
         """
@@ -147,7 +160,9 @@ class ImageBoundingBoxDataSet(ImageDataSet):
     Image in pixel color values (0, 255)
     Bounding Box in percentages (0, 100)
     """
+    ## key of label to extract from data set structure
     label_key = 'bbs'
+    ## Signature of yielding elements/output elements
     output_signature = (tf.TensorSpec(shape=(), dtype=tf.string), tf.TensorSpec(shape=(4,), dtype=tf.float32))
 
     def _convert_label(self, label):
@@ -171,8 +186,10 @@ class ImageTwoInOneDataSet(ImageDataSet):
     def __init__(self, parent_directory: str, img_width: int, img_height: int, set_name: Optional[str] = None,
                  batch_size: int = 32, class_names: Optional[List[str]] = None):
         super().__init__(parent_directory, img_width, img_height, set_name, batch_size, class_names)
+        ## Number of classes represented in data set
         self.num_classes = len(os.listdir(os.path.join(self.dir_name, self.set_name)))
         # (pz) TODO: potentially make labels integers
+        ## Signature of output elements
         self.output_signature = (
             tf.TensorSpec(shape=(), dtype=tf.string),
             (

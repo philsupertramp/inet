@@ -33,10 +33,15 @@ class MultiTaskModel:
         :param input_shape: used for rescaling
         :param is_tflite: indicates if model is tflite version
         """
+        ## Expected input image height
         self.image_height = input_shape[0]
+        ## Expected input image width
         self.image_width = input_shape[1]
+        ## BBox Regression model
         self.regressor = regressor
+        ## Classifier model
         self.classifier = classifier
+        ## indicates if model is tflite version
         self.is_tflite = is_tflite
 
     def predict(self, X):
