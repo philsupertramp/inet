@@ -6,12 +6,19 @@ from tensorflow import keras
 from src.data.constants import ModelType
 from src.data.visualization import plot_prediction_samples
 from src.losses.giou_loss import GIoULoss
-from src.models.base_model import Backbone, SingleTaskModel
+from src.models.architectures.base_model import Backbone, SingleTaskModel
 
 
 class BoundingBoxRegressor(SingleTaskModel):
     """
     Bounding Box Regression model
+
+    Example:
+        >>> from tensorflow.keras.applications.mobilenet import MobileNet
+        >>> backbone = MobileNet(weights='imagenet', include_top=False, input_shape=(224, 224))
+        >>> regressor = BoundingBoxRegressor(backbone, 128, True, 'my-model', 0.125, 0.5, 64, 'relu')
+        >>> regressor.load_weights('my-weights.h5')
+        >>> regressor.predict([some_image])
     """
     model_type = ModelType.REGRESSION.value
 
@@ -37,6 +44,17 @@ class BoundingBoxRegressor(SingleTaskModel):
         self.batch_size = batch_size
 
     def compile(self, learning_rate: float = 1e-6, loss='mse', metrics=None, *args, **kwargs):
+        """
+        Extended `keras.Model.compile`.
+        Adds default `Adam` optimizer and metrics RMSE & GIoU-Loss
+
+        :param learning_rate: the learning rate to train with
+        :param loss: the loss function to optimize
+        :param metrics: additional metrics to calculate during training
+        :param args: will be passed as args to parent implementation
+        :param kwargs:  will be passed as kwargs to parent implementation
+        :return:
+        """
         if metrics is None:
             metrics = []
 
@@ -48,11 +66,30 @@ class BoundingBoxRegressor(SingleTaskModel):
             **kwargs
         )
 
-    def evaluate_predictions(self, predictions, labels, features, render_samples=False):
+    @staticmethod
+    def evaluate_predictions(predictions, labels, features, render_samples=False) -> None:
+        """
+        Evaluation method for BBox-Regression.
+        Calculates metrics:
+        - GIoU-Loss
+        - GIoU
+        - RMSE
+
+        :param predictions: predictions done by the model
+        :param labels: ground truth for predictions
+        :param features: used input features to perform predictions
+        :param render_samples: when `True` renders up to 25 BBox prediction samples
+        :return:
+        """
+        giou_loss_fn = GIoULoss()
+        rmse_loss_fn = keras.metrics.RootMeanSquaredError()
+
+        giou_loss = giou_loss_fn(predictions, labels).numpy()
         print(
             '=' * 35,
-            '\n\tGIoU Loss:\t', self.giou_loss_fn(predictions, labels).numpy(),
-            '\n\tRMSE Loss:\t', self.rmse_loss_fn(predictions, labels).numpy()
+            '\n\tGIoU Loss:\t', giou_loss,
+            '\n\tGIoU:\t', 1. - giou_loss,
+            '\n\tRMSE:\t', rmse_loss_fn(predictions, labels).numpy()
         )
         if render_samples:
             plot_prediction_samples(predictions, validation_features=features, validation_bbs=labels)
@@ -60,12 +97,37 @@ class BoundingBoxRegressor(SingleTaskModel):
 
 class BoundingBoxHyperModel(keras_tuner.HyperModel):
     """
-    HPO wrapper for Bounding Box Regression model
+    HPO wrapper for Bounding Box Regression model.
+
+    Used Hyper parameters (HPs):
+    - Dropout Factor `alpha`: [1e-4, 5e-4, 1e-3, 5e-3, 1e-2]
+    - Learning rate `learning_rate`: [1e-4, 5e-4, 1e-3, 5e-3, 1e-2]
+
+    Example:
+        >>> import keras_tuner as kt
+        >>> hpo_model = BoundingBoxHyperModel()
+        >>> tuner = kt.BayesianOptimization(
+        ...    hpo_model,
+        ...    objective=kt.Objective('val_loss', 'min'),
+        ...    max_trials=36,
+        ...    directory=f'./model-selection/my-model/',
+        ...    project_name='proj_name',
+        ...    seed=42,
+        ...    overwrite=False,
+        ...    num_initial_points=12
+        ...)
+        >>> tuner.search(
+        ...     train_set=train_set.unbatch(),
+        ...     validation_set=validation_set.unbatch(),
+        ...     monitoring_val='val_loss',
+        ...     epochs=50,
+        ... )
     """
     model_data = None
 
     def build(self, hp):
         hp_alpha = hp.Choice('alpha', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
+        hp_lr = hp.Choice('learning_rate', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
 
         backbone_clone = keras.models.clone_model(self.model_data.backbone)
         backbone_clone.set_weights(self.model_data.backbone.get_weights())
@@ -74,7 +136,5 @@ class BoundingBoxHyperModel(keras_tuner.HyperModel):
             backbone_clone, dense_neurons=128, include_pooling=True, name=self.model_data.name,
             regularization_factor=hp_alpha, dropout_factor=0.5, batch_size=32
         )
-
-        hp_lr = hp.Choice('learning_rate', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
         model.compile(learning_rate=hp_lr, loss=GIoULoss())
         return model

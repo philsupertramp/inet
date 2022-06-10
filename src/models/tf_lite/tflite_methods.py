@@ -6,17 +6,19 @@ import tensorflow as tf
 from tensorflow.keras.metrics import RootMeanSquaredError
 
 from scripts.helpers import ProgressBar
+from src.data.constants import ModelType
 from src.losses.giou_loss import GIoULoss
-from src.models.constants import ModelType
 
 
 def save_model_file(model):
+    """Writes model to .h5 file"""
     _, keras_file = tempfile.mkstemp('.h5')
     model.save(keras_file, include_optimizer=False)
     return keras_file
 
 
 def get_gzipped_model_size(model):
+    """Computes size of gzip converted model"""
     # It returns the size of the gzipped model in bytes.
     import os
     import zipfile
@@ -30,6 +32,12 @@ def get_gzipped_model_size(model):
 
 
 def evaluate_interpreted_model(interpreter, test_images):
+    """
+    Method to evaluate an interpreted (tflite) model
+    :param interpreter: interpreted model
+    :param test_images: input to evaluate
+    :return: predictions of interpreted model
+    """
     input_index = interpreter.get_input_details()[0]['index']
     outputs_indices = [o['index'] for o in interpreter.get_output_details()]
 
@@ -62,6 +70,12 @@ def evaluate_interpreted_model(interpreter, test_images):
 
 
 def evaluate_q_model(tf_lite_model, test_images):
+    """
+    Evaluation method for quantization aware model
+    :param tf_lite_model: q-aware tflite model
+    :param test_images: input to perform prediction on
+    :return: predictions for given images
+    """
     interpreter = tf.lite.Interpreter(model_content=tf_lite_model)
     interpreter.allocate_tensors()
 
@@ -69,6 +83,14 @@ def evaluate_q_model(tf_lite_model, test_images):
 
 
 def evaluate_regression(model_predictions, tfl_model_predictions, test_labels):
+    """
+    Evaluation method for TFLite regression model
+
+    :param model_predictions: predictions done by the original model
+    :param tfl_model_predictions: predictions done by the tflite version of the original model
+    :param test_labels: ground truth labels
+    :return:
+    """
     gloss_fn = GIoULoss()
     rmse_fn = RootMeanSquaredError()
 
@@ -81,6 +103,14 @@ def evaluate_regression(model_predictions, tfl_model_predictions, test_labels):
 
 
 def evaluate_classification(model_predictions, tfl_model_predictions, test_labels):
+    """
+    Evaluation of classification model
+
+    :param model_predictions: predictions done by the original model
+    :param tfl_model_predictions: predictions done by the tflite version of the original model
+    :param test_labels: ground truth labels
+    :return:
+    """
     def model_eval(pred, name):
         print(f'"{name}" Accuracy:', sklearn.metrics.accuracy_score(test_labels, pred, normalize=True))
         print(f'"{name}" F1-Score:', sklearn.metrics.f1_score(test_labels, pred, average='macro'))
@@ -90,6 +120,14 @@ def evaluate_classification(model_predictions, tfl_model_predictions, test_label
 
 
 def evaluate_two_in_one(model_predictions, tfl_model_predictions, test_labels):
+    """
+    Evaluation of two-in-one model
+
+    :param model_predictions: predictions done by the original model
+    :param tfl_model_predictions: predictions done by the tflite version of the original model
+    :param test_labels: ground truth labels
+    :return:
+    """
     gloss_fn = GIoULoss()
     rmse_fn = RootMeanSquaredError()
 
@@ -103,7 +141,16 @@ def evaluate_two_in_one(model_predictions, tfl_model_predictions, test_labels):
     model_eval(tfl_model_predictions, 'TFLite')
 
 
-def validate_q_model_prediction(model_prediction, tfl_model_prediction, test_labels, model_type):
+def validate_q_model_prediction(model_prediction, tfl_model_prediction, test_labels, model_type) -> None:
+    """
+    Validates a tflite model, comparing values with its original predecessor.
+
+    :param model_prediction: predictions done by the original model
+    :param tfl_model_prediction: predictions done by the tflite version of the original model
+    :param test_labels: ground truth labels
+    :param model_type: `ModelType` of the underlying model
+    :return:
+    """
     if model_type == ModelType.CLASSIFICATION.value:
         evaluate_classification(model_prediction.argmax(axis=1), np.array(tfl_model_prediction).argmax(axis=2).flatten(), test_labels.argmax(axis=1))
     elif model_type == ModelType.REGRESSION.value:

@@ -7,8 +7,7 @@ import tensorflow as tf
 import tensorflow_model_optimization as tfmot
 
 from src.models.architectures.base_model import TaskModel
-from src.models.tflite_methods import (evaluate_q_model,
-                                       validate_q_model_prediction)
+from src.models.tf_lite.tflite_methods import evaluate_q_model, validate_q_model_prediction
 
 tf_cluster_weights = tfmot.clustering.keras.cluster_weights
 CentroidInitialization = tfmot.clustering.keras.CentroidInitialization
@@ -29,6 +28,11 @@ class ClusterMethod(Enum):
 
 
 def create_q_aware_model(model):
+    """
+    Create quantization aware model
+    :param model: model to convert
+    :return: quantization aware model
+    """
     quant_aware_model = tfmot.quantization.keras.quantize_model(model)
 
     # Save or checkpoint the model.
@@ -46,11 +50,11 @@ def create_q_aware_model(model):
 def create_tf_lite_q_model(q_model, train_set, quant_method: QuantizationMethod = QuantizationMethod.FULL_INT, model_name='bbreg'):
     """
     converts regular model to q aware model using provided `quant_method`
-    :param q_model:
-    :param train_set:
-    :param quant_method:
-    :param model_name:
-    :return:
+    :param q_model: a quantization aware model
+    :param train_set: samples representing the train set
+    :param quant_method: quantization method
+    :param model_name: resulting model name
+    :return: tf lite version of quantization aware model
     """
     converter = tf.lite.TFLiteConverter.from_keras_model(q_model)
     # This step is needed in all quantization strategies
@@ -166,5 +170,4 @@ def cluster_weights(model, cluster_method: ClusterMethod, number_clusters):
     keras_model = tfmot.clustering.keras.strip_clustering(clustered_model)
 
     converter = tf.lite.TFLiteConverter.from_keras_model(keras_model)
-    #converter.optimizations = [tf.lite.Optimize.DEFAULT]
     return converter.convert()
