@@ -34,10 +34,16 @@ class Backbone(Model):
 
 
 class TaskModel(Model):
+    """
+    A model tailored to solve a task. Essentially keras.Model with helper methods and wrappers for training methods.
+
+    Example:
+        >>> from tensorflow.keras.applications.mobilenet import MobileNet
+        >>> backbone = MobileNet(weights='imagenet', include_top=False, input_shape=(224, 224))
+        >>> my_model = TaskModel(inputs=[backbone.input], outputs=[backbone.output])
+    """
     model_type: ModelType = None
-    """
-    A model tailored to solve a task. Contains helper methods and wrappers for training methods.
-    """
+
     @classmethod
     def default_callbacks(cls, monitoring_val, verbose, model_name):
         """
@@ -80,7 +86,6 @@ class TaskModel(Model):
 
     def fit(self, train_set, validation_set, monitoring_val, batch_size: int = 32, epochs: int = 20,
             verbose: bool = True, *args, **kwargs):
-
         callbacks = kwargs.pop('callbacks', self.default_callbacks(monitoring_val, verbose, self.model_name))
 
         return super().fit(
@@ -130,10 +135,11 @@ class TaskModel(Model):
 
     def to_tflite(self, quantization_method: 'QuantizationMethod', train_set, test_set):
         """Converts the model to a tflite compatible model"""
-        from src.models.convert_to_tflite import create_quantize_model
+        from src.models.tf_lite.convert_to_tflite import create_quantize_model
         return create_quantize_model(self, train_set, test_set, quantization_method)
 
-    def evaluate_predictions(self, predictions, labels, features, render_samples=False) -> None:
+    @staticmethod
+    def evaluate_predictions(predictions, labels, features, render_samples=False) -> None:
         """
         Implement this method to evaluate a models predictive power individually.
         For examples see `.classifier.Classifier` or `.bounding_boxes.BoundingBoxRegressor`.
@@ -163,9 +169,9 @@ class SingleTaskModel(TaskModel):
         >>> from tensorflow.keras.applications.vgg16 import VGG16
         >>> vgg_backbone = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
         >>> # building a classifier for 5 classes
-        >>> SingleTaskModel(vgg_backbone, 5, 'softmax')
+        >>> clf = SingleTaskModel(vgg_backbone, 5, 'softmax')
         >>> # building a bounding box regressor (outputs: [y, x, height, width])
-        >>> SingleTaskModel(vgg_backbone, 4, 'relu')
+        >>> reg = SingleTaskModel(vgg_backbone, 4, 'relu')
     """
 
     def __init__(self, backbone: Backbone, num_classes: int, output_activation: str, dense_neurons: int = 128,
@@ -213,7 +219,8 @@ class SingleTaskModel(TaskModel):
         super().__init__(inputs=[backbone.inputs], outputs=[output_layer], name=name)
         self.compile_args = {}
 
-    def evaluate_predictions(self, predictions, labels, features, render_samples=False):
+    @staticmethod
+    def evaluate_predictions(predictions, labels, features, render_samples=False):
         """
         Helper method to evaluate predictive power of model
         :param predictions: predictions done by the model

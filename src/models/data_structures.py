@@ -9,7 +9,16 @@ from src.models.architectures.base_model import TaskModel
 
 
 class BoundingBox:
+    """
+    BoundingBox representation to parse, draw and evaluate
+    """
     def __init__(self, x: float, y: float, w: float, h: float):
+        """
+        :param x: x-min coordinate
+        :param y: y-min coordinate
+        :param w: width
+        :param h: height
+        """
         self.values = [x, y, w, h]
         self.x_min = self.values[0]
         self.y_min = self.values[1]
@@ -17,37 +26,73 @@ class BoundingBox:
         self.h = self.values[3]
 
     @property
-    def half_w(self):
+    def half_w(self) -> float:
+        """
+        :return: half of the bbs width
+        """
         return self.w / 2.
 
     @property
-    def half_h(self):
+    def half_h(self) -> float:
+        """
+        :return: half of the bbs height
+        """
         return self.h / 2.
 
     @property
-    def x_max(self):
+    def x_max(self) -> float:
+        """
+        :return: x-max coordinate
+        """
         return self.x_min + self.w
 
     @property
-    def y_max(self):
+    def y_max(self) -> float:
+        """
+        :return: y-max coordinate
+        """
         return self.y_min + self.h
 
     @property
     def area(self) -> float:
+        """
+
+        :return:
+        """
         return self.w * self.h
 
     def A_I(self, other: 'BoundingBox') -> float:
+        """
+        Area of intersection with another BBox `other`
+        :param other: a different BBox
+        :return: the area of intersection
+        """
         width = abs(min(self.x_max, other.x_max) - max(self.x_min, other.x_min))
         height = abs(min(self.y_max, other.y_max) - max(self.y_min, other.y_min))
         return width * height
 
     def A_U(self, other: 'BoundingBox') -> float:
+        """
+        Area of union with other BBox `other`
+        :param other: a different BBox
+        :return: the area of union
+        """
         return self.area + other.area - self.A_I(other)
 
     def IoU(self, other: 'BoundingBox') -> float:
+        """
+        Computes the intersection over union (IoU) with a different BBox `other`
+        :param other: a different BBox
+        :return: intersection over union value
+        """
         return self.A_I(other)/self.A_U(other)
 
     def overlap(self, bb2: 'BoundingBox') -> Optional['BoundingBox']:
+        """
+        Generates an overlapping BBox/convex hull around `self` and `bb2`
+        :param bb2: a different BBox
+        :return: when overlapping, a new BBox containing both BBoxes
+        """
         out = BoundingBox(
             max(self.x_min, bb2.x_min),
             max(self.y_min, bb2.y_min),
@@ -58,22 +103,25 @@ class BoundingBox:
             return None
         return out
 
-    def hull(self, other: 'BoundingBox') -> 'BoundingBox':
-        return BoundingBox(
-            min(self.x_min, other.x_min),
-            min(self.y_min, other.y_min),
-            max(self.x_max, other.x_max),
-            max(self.y_max, other.y_max),
-        )
-
     def GIoU(self, other: 'BoundingBox') -> float:
-        convex_hull_area = self.hull(other).area
+        """
+        Generalized intersection over union (GIoU) based on [the paper](https://giou.stanford.edu/GIoU.pdf)
+        :param other: other BB to compute GIoU with
+        :return: GIoU for `self` and `other`
+        """
+        convex_hull_area = self.overlap(other).area
         iou = self.IoU(other)
         if convex_hull_area == 0:
             return iou
         return iou - (convex_hull_area-self.A_U(other))/convex_hull_area
 
     def draw(self, gc, color: str = 'red') -> None:
+        """
+        Method to render BBox into a graphic-context `gc`
+        :param gc: graphics-context, e.g. `matplotlib.pyplot.gca()`
+        :param color: the color of the BBox
+        :return:
+        """
         gc.add_patch(
             Rectangle(
                 (self.x_min, self.y_min),
@@ -95,6 +143,9 @@ class BoundingBox:
 
 @dataclass
 class ModelArchitecture:
+    """
+    Helper dataclass to simplify creation of model architecture, mostly used in development notebooks.
+    """
     backbone: keras.models.Sequential
     name: str
     create_model: Optional[

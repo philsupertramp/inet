@@ -7,7 +7,7 @@ from tensorflow import keras
 from scripts.constants import CLASS_MAP
 from src.data.constants import ModelType
 from src.data.visualization import plot_confusion_matrix
-from src.models.base_model import Backbone, SingleTaskModel
+from src.models.architectures.base_model import Backbone, SingleTaskModel
 from src.models.data_structures import ModelArchitecture
 from src.models.hyper_parameter_optimization import FrozenBlockConf
 
@@ -15,6 +15,13 @@ from src.models.hyper_parameter_optimization import FrozenBlockConf
 class Classifier(SingleTaskModel):
     """
     Class label prediction model
+
+    Example:
+        >>> from tensorflow.keras.applications.vgg16 import VGG16
+        >>> backbone = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+        >>> clf = Classifier(backbone, 128, 5, True, 'My-Classifier', 0.125, 0.5, 64, FrozenBlockConf.TRAIN_ALL.value)
+        >>> clf.load_weights('my_weights.h5')
+        >>> clf.predict(some_input)
     """
     model_type = ModelType.CLASSIFICATION.value
 
@@ -41,6 +48,17 @@ class Classifier(SingleTaskModel):
         self.batch_size = batch_size
 
     def compile(self, learning_rate: float = 1e-6, loss='categorical_crossentropy', metrics=None, *args, **kwargs):
+        """
+        Extended `keras.Model.compile`.
+        Adds default `Adam` optimizer and Accuracy metric
+
+        :param learning_rate: the learning rate to train with
+        :param loss: the loss function to optimize
+        :param metrics: additional metrics to calculate during training
+        :param args: will be passed as args to parent implementation
+        :param kwargs:  will be passed as kwargs to parent implementation
+        :return:
+        """
         if metrics is None:
             metrics = []
         self.compile_args = dict(loss=loss, learning_rate=learning_rate, metrics=metrics, args=args, kwargs=kwargs)
@@ -52,7 +70,21 @@ class Classifier(SingleTaskModel):
             **kwargs
         )
 
-    def evaluate_predictions(self, predictions, labels, features, render_samples=False):
+    @staticmethod
+    def evaluate_predictions(predictions, labels, features, render_samples=False) -> None:
+        """
+        Evaluates predictions done by a classification model.
+
+        Computes:
+        - Accuracy
+        - F1-Score
+
+        :param predictions: the predictions performed by the model to evaluate
+        :param labels: ground truth labels for the predictions
+        :param features: input features used to perform predictions
+        :param render_samples: if `True` renders confusion matrix for predictions
+        :return:
+        """
         if sum(predictions.shape) > len(predictions):
             pred = predictions.argmax(axis=1)
         else:
@@ -72,13 +104,39 @@ class Classifier(SingleTaskModel):
 
 class ClassifierHyperModel(keras_tuner.HyperModel):
     """
-    HPO Wrapper for classification model
+    HPO wrapper for Classifier model.
+
+    Used Hyper parameters (HPs):
+    - Dropout factor `alpha`: [1e-4, 5e-4, 1e-3, 5e-3, 1e-2]
+    - Learning rate `learning_rate`: [1e-4, 5e-4, 1e-3, 5e-3, 1e-2]
+    - Number frozen layers `frozen_layers`: [TRAIN_ALL, TRAIN_HALF, TRAIN_NONE]
+
+    Example:
+        >>> import keras_tuner as kt
+        >>> hpo_model = ClassifierHyperModel()
+        >>> kt.BayesianOptimization(
+        ...    hpo_model,
+        ...    objective=kt.Objective('val_accuracy', 'max'),
+        ...    max_trials=36,
+        ...    directory=f'./model-selection/my-model/',
+        ...    project_name='proj_name',
+        ...    seed=42,
+        ...    overwrite=False,
+        ...    num_initial_points=12
+        ... )
+        >>> tuner.search(
+        ...     train_set=train_set.unbatch(),
+        ...     validation_set=validation_set.unbatch(),
+        ...     monitoring_val='val_accuracy',
+        ...     epochs=50,
+        ... )
     """
-    weights: str = None
     model_data: ModelArchitecture = None
+    weights: str = None
 
     def build(self, hp):
         hp_alpha = hp.Choice('alpha', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
+        hp_lr = hp.Choice('learning_rate', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
         hp_frozen_blocks = hp.Choice(
             'frozen_blocks',
             FrozenBlockConf.choices()
@@ -94,8 +152,6 @@ class ClassifierHyperModel(keras_tuner.HyperModel):
         )
         if self.weights:
             model.load_weights(self.weights, by_name=True)
-
-        hp_lr = hp.Choice('learning_rate', [1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
 
         model.compile(learning_rate=hp_lr)
         return model
