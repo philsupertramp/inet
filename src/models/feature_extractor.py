@@ -3,7 +3,7 @@ from typing import Tuple
 import keras_tuner
 from tensorflow import keras
 
-from src.models.base_model import Backbone
+from src.models.architectures.base_model import Backbone
 from src.models.data_structures import ModelArchitecture
 
 
@@ -15,7 +15,9 @@ class FeatureExtractor(Backbone):
         current_filter_size = filter_size_start
 
         for layer in range(num_layers):
-            layer_stack = keras.layers.Conv2D(current_filter_size, (3, 3), padding='same', name=f'block_{layer + 1}_conv')(layer_stack)
+            layer_stack = keras.layers.Conv2D(
+                current_filter_size, (3, 3), padding='same', name=f'block_{layer + 1}_conv'
+            )(layer_stack)
             layer_stack = keras.layers.BatchNormalization(name=f'block_{layer + 1}_bn')(layer_stack)
             layer_stack = keras.layers.ReLU(name=f'block_{layer + 1}_relu')(layer_stack)
             layer_stack = keras.layers.MaxPooling2D(2, strides=2, name=f'block_{layer + 1}_pooling')(layer_stack)
@@ -36,7 +38,9 @@ class FeatureExtractorHyperModel(keras_tuner.HyperModel):
         hp_num_dense_layers = hp.Int('num_layers', min_value=4, max_value=6)
         hp_filter_size_start = hp.Choice('filter_size_start', [2, 4, 8, 16, 32, 64])
 
-        backbone = FeatureExtractor((224, 224, 3), num_layers=hp_num_dense_layers, filter_size_start=hp_filter_size_start)
+        backbone = FeatureExtractor(
+            (224, 224, 3), num_layers=hp_num_dense_layers, filter_size_start=hp_filter_size_start
+        )
 
         if isinstance(self.base_model, keras_tuner.HyperModel):
             model_cls = self.base_model

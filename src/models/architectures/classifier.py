@@ -1,24 +1,38 @@
 from typing import Optional
 
 import keras_tuner
-import matplotlib.pyplot as plt
 import sklearn.metrics
 from tensorflow import keras
 
-from scripts.constants import CLASS_MAP, LABEL_MAP
-from src.data.visualization import plot_confusion_matrix, plot_img_labels
+from scripts.constants import CLASS_MAP
+from src.data.constants import ModelType
+from src.data.visualization import plot_confusion_matrix
 from src.models.base_model import Backbone, SingleTaskModel
-from src.models.constants import ModelType
 from src.models.data_structures import ModelArchitecture
 from src.models.hyper_parameter_optimization import FrozenBlockConf
 
 
 class Classifier(SingleTaskModel):
+    """
+    Class label prediction model
+    """
     model_type = ModelType.CLASSIFICATION.value
 
     def __init__(self, backbone: Backbone, dense_neurons: int, num_classes: int = 5, include_pooling: bool = False,
                  name: Optional[str] = None, regularization_factor: float = 1e-3, dropout_factor: float = 0.2,
                  batch_size: int = 32, frozen_backbone_blocks: FrozenBlockConf = FrozenBlockConf.TRAIN_NONE.value):
+        """
+
+        :param backbone: backbone model
+        :param num_classes: number of output neurons
+        :param dense_neurons: number dense neurons for FC layer
+        :param include_pooling: use pooling prior to FC layer
+        :param name: model name
+        :param regularization_factor: factor for L2 regularization in output layer
+        :param dropout_factor: factor of dropout that's applied in front of the FC layer
+        :param batch_size: batch size of the dataset
+        :param frozen_backbone_blocks: allows to freeze specific layers of a model, see `FrozenBlockConf`
+        """
         FrozenBlockConf(frozen_backbone_blocks).process(backbone)
         super().__init__(backbone, num_classes=num_classes, output_activation='softmax', dense_neurons=dense_neurons,
                          include_pooling=include_pooling, name=name, regularization_factor=regularization_factor,
@@ -26,7 +40,7 @@ class Classifier(SingleTaskModel):
         self.dense_neurons = dense_neurons
         self.batch_size = batch_size
 
-    def compile(self, learning_rate: float = 1e-6, loss='categorical_crossentropy', metrics = None, *args, **kwargs):
+    def compile(self, learning_rate: float = 1e-6, loss='categorical_crossentropy', metrics=None, *args, **kwargs):
         if metrics is None:
             metrics = []
         self.compile_args = dict(loss=loss, learning_rate=learning_rate, metrics=metrics, args=args, kwargs=kwargs)
@@ -57,6 +71,9 @@ class Classifier(SingleTaskModel):
 
 
 class ClassifierHyperModel(keras_tuner.HyperModel):
+    """
+    HPO Wrapper for classification model
+    """
     weights: str = None
     model_data: ModelArchitecture = None
 

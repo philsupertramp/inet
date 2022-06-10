@@ -4,8 +4,11 @@ import re
 import time
 from enum import Enum
 
+import matplotlib.pyplot as plt
+
 
 class FrozenBlockConf(Enum):
+    """Helper to freeze layers in a sequential model"""
     TRAIN_ALL = 0
     TRAIN_HALF = 1
     TRAIN_NONE = 2
@@ -34,6 +37,7 @@ class FrozenBlockConf(Enum):
 
 
 def read_trials(dir_name):
+    """Reads trial files provided by [keras-tuner](https://keras.io/keras_tuner/)."""
     trial_list = [os.path.join(directory, 'trial.json') for directory in filter(
         lambda x: os.path.isdir(x),
         [os.path.join(dir_name, f) for f in os.listdir(dir_name) if 'trial' in f]
@@ -49,10 +53,9 @@ def read_trials(dir_name):
 
     return trials
 
-import matplotlib.pyplot as plt
-
 
 def plot_hpo_values(trial):
+    """Helper to display course of HP values during a HPO"""
     hp_list = [t.get('hyperparameters').get('values') for t in trial]
     hps = {}
     for elem in hp_list:
@@ -66,9 +69,3 @@ def plot_hpo_values(trial):
         plt.title(f'Chosen values for HP "{key}"')
         plt.plot(list(range(len(values))), values, '*-')
         plt.show()
-
-
-if __name__ == '__main__':
-    t = read_trials('../../model-selection/BBReg-CNN')
-
-    plot_hpo_values(t)

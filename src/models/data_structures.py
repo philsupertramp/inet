@@ -5,7 +5,7 @@ import numpy as np
 from matplotlib.patches import Rectangle
 from tensorflow import keras
 
-from src.models.base_model import TaskModel
+from src.models.architectures.base_model import TaskModel
 
 
 class BoundingBox:

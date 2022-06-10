@@ -5,27 +5,12 @@ Helper classes/methods to generate augmented dataset.
 import abc
 import functools
 import random as rng
-from enum import Enum
 from typing import (Any, Callable, Iterable, List, NewType, Optional, Tuple,
                     Union)
 
 import tensorflow as tf
 
-"""
-Unfortunately it becomes very cryptic once tf.Tensor and np.array are involved.
-Therefore single elements will receive the type Any
-"""
-ImageType = NewType('ImageType', Any)
-ClassLabelType = NewType('ClassLabelType', Any)
-BoundingBoxLabelType = NewType('BoundingBoxLabelType', Any)
-Features = Iterable[Any]
-Labels = Iterable[Union[ClassLabelType, BoundingBoxLabelType, Tuple[ClassLabelType, BoundingBoxLabelType]]]
-
-
-class LabelType(Enum):
-    NONE = 0
-    SINGLE = 1
-    MULTI = 2
+from src.data.constants import Features, Labels, LabelType
 
 
 class AugmentationMethod(abc.ABC):
@@ -93,7 +78,7 @@ class MultiProbabilityAugmentationMethod(AugmentationMethod):
         super().__init__(probability)
 
     @property
-    def method_list(self) -> List[Callable[[Any, Any], Tuple[Any, Any]]]:
+    def method_list(self) -> List[Callable[[Features, Labels], Tuple[Features, Labels]]]:
         """
         Property of implemented child methods.
 
@@ -123,8 +108,8 @@ class MultiProbabilityAugmentationMethod(AugmentationMethod):
         return features, labels
 
     def __str__(self):
-        return f'{self.__class__.__name__} [{", ".join([str(i) for i in self.shared_probabilities])}]' \
-               f' ({self.probability})'
+        shared_probabilities = ', '.join([str(j) for j in self.shared_probabilities])
+        return f'{self.__class__.__name__} [{shared_probabilities}] ({self.probability})'
 
 
 class RandomContrast(AugmentationMethod):
@@ -135,7 +120,7 @@ class RandomContrast(AugmentationMethod):
     No transformation of input labels.
     """
     def process(self, features: Features, labels: Labels = None) -> Tuple[Features, Labels]:
-        return features * rng.randrange(50, 130, 10) / 100, labels
+        return features * (rng.randrange(50, 130, 10) / 100), labels
 
 
 class RandomFlip(MultiProbabilityAugmentationMethod):
@@ -146,7 +131,7 @@ class RandomFlip(MultiProbabilityAugmentationMethod):
     shared_probabilities = (0.5, 0.5)
 
     @property
-    def method_list(self) -> List[Callable[[Any, Any], Tuple[Any, Any]]]:
+    def method_list(self) -> List[Callable[[Features, Labels], Tuple[Features, Labels]]]:
         """See `MultiProbabilityAugmentationMethod.method_list`"""
         return [
             self.horizontal_flip,
@@ -193,7 +178,7 @@ class RandomChannelIntensity(MultiProbabilityAugmentationMethod):
     shared_probabilities = (1/3, 1/3, 1/3)
 
     @property
-    def method_list(self):
+    def method_list(self) -> List[Callable[[Features, Labels], Tuple[Features, Labels]]]:
         """See `MultiProbabilityAugmentationMethod.method_list`"""
         return [
             RandomChannelIntensity.random_scale_n_channels,
@@ -242,11 +227,11 @@ class RandomChannelIntensity(MultiProbabilityAugmentationMethod):
         :param labels: optional array of labels, will **not** be transformed
         :return: transformed sample
         """
-        def set_input_channel(val):
+        def set_input_channel(feat):
             rng_channel_index = rng.randint(0, 2)
-            rng_channel = tf.random.normal((*val.shape[:2], 1), 0.5, 0.12, tf.float32)
-            channels = tf.split(val, 3, -1)
-            return tf.concat(channels[:rng_channel_index] + [rng_channel] + channels[rng_channel_index+1:], -1)
+            rng_channel = tf.random.normal((*feat.shape[:2], 1), 0.5, 0.12, tf.float32)
+            channels = tf.split(feat, 3, -1)
+            return tf.concat(channels[:rng_channel_index] + [rng_channel] + channels[rng_channel_index + 1:], -1)
 
         return set_input_channel(features), labels
 
@@ -278,7 +263,7 @@ class RandomCrop(MultiProbabilityAugmentationMethod):
     )
 
     @property
-    def method_list(self) -> List[Callable[[Any, Any], Tuple[Any, Any]]]:
+    def method_list(self) -> List[Callable[[Features, Labels], Tuple[Features, Labels]]]:
         """See `MultiProbabilityAugmentationMethod.method_list`"""
         rng_pct = rng.randint(1, 100)
         return [
@@ -415,17 +400,20 @@ class RandomRotate90(MultiProbabilityAugmentationMethod):
     """
     Method to randomly rotate left, or right.
 
-    Transforms labels accordingly.
+    Transforms label accordingly.
     """
 
-    shared_probabilities = (0.5, 0.5)
+    shared_probabilities = (
+        0.5,  # rotate_left
+        0.5,  # rotate_right
+    )
 
     @property
-    def method_list(self) -> List[Callable[[Any, Any], Tuple[Any, Any]]]:
+    def method_list(self) -> List[Callable[[Features, Labels], Tuple[Features, Labels]]]:
         """See `MultiProbabilityAugmentationMethod.method_list`"""
         return [
             self.rotate_left,
-            self.rotate_right
+            self.rotate_right,
         ]
 
     @staticmethod

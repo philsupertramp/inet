@@ -13,20 +13,65 @@ import numpy as np
 import pytz
 
 from scripts.constants import CLASS_MAP
-# Type definitions
-from src.data.load_dataset import (LabeledFileDictType,
-                                   load_labels_from_bbox_file)
+from src.data.constants import (BBoxLabelType, ClassLabelType,
+                                LabeledFileDictType)
 from src.models.data_structures import BoundingBox
 
 
+def extract_file_name(elem: Dict) -> str:
+    """extracts file name from dictionary"""
+    fn = elem['data']['image']
+    return fn.split('/')[-1]
+
+
+def extract_label(elem: Dict) -> Tuple[BBoxLabelType, ClassLabelType]:
+    """
+    Extracts labels from element dictionary
+    :param elem:
+    :return: Bounding Box coordinates and class label: ((y_min, x_min, y_max, x_max), label)
+    """
+    res = elem['annotations'][0]['result'][0]['value']
+    x = res.get('x')
+    y = res.get('y')
+    h = res.get('height')
+    w = res.get('width')
+    return dict(x=x, y=y, w=w, h=h), res['rectanglelabels'][0]
+
+
+def load_element(elem, in_directory: str) -> Dict:
+    """load element from data dict"""
+    label = extract_label(elem)
+    return {
+        'path': os.path.join(in_directory, extract_file_name(elem)),
+        'labels': {
+            'label': label[1],
+            'bbs': label[0]
+        }
+    }
+
+
+def load_labels_from_bbox_file(bbox_file: str, in_directory: str) -> LabeledFileDictType:
+    """loads all available labels from dataset file"""
+    with open(bbox_file) as json_file:
+        content = json.load(json_file)
+    files = dict()
+    for elem in content:
+        labeled_element = load_element(elem, in_directory)
+        files[labeled_element['path']] = labeled_element['labels']
+
+    return files
+
+
 def load_labels_from_bbox_files(bbox_files: List[str], in_directory: str) -> LabeledFileDictType:
-    labeled_files = dict()
+    """loads all labels from all provided files"""
+    files = dict()
     for elem in bbox_files:
-        labeled_files.update(**load_labels_from_bbox_file(elem, in_directory))
-    return labeled_files
+        files.update(**load_labels_from_bbox_file(elem, in_directory))
+    return files
 
 
 def create_directory_structure(directory: str, class_names: Set[str]) -> Tuple[str, str, str]:
+    """Generates test, train and validation directories"""
     sub_dirs = (
         os.path.join(directory, 'test'),
         os.path.join(directory, 'train'),
@@ -44,9 +89,10 @@ def create_directory_structure(directory: str, class_names: Set[str]) -> Tuple[s
     return sub_dirs
 
 
-def split_labeled_files(files: LabeledFileDictType,
-                        test_share: float, validation_share: float
-                        ) -> Tuple[LabeledFileDictType, LabeledFileDictType, LabeledFileDictType]:
+def split_labeled_files(
+        files: LabeledFileDictType, test_share: float, validation_share: float
+) -> Tuple[LabeledFileDictType, LabeledFileDictType, LabeledFileDictType]:
+    """Method to split given files into test/train/validation sets"""
 
     filenames = np.array(list(files.keys()))
     num_files = len(filenames)
@@ -75,7 +121,8 @@ def split_labeled_files(files: LabeledFileDictType,
     )
 
 
-def spread_files(files: LabeledFileDictType, target_directory: str, label_names: List[str]) -> LabeledFileDictType:
+def spread_files(files: LabeledFileDictType, target_directory: str, label_names: Set[str]) -> LabeledFileDictType:
+    """copies files from input to target directory nested in class directories"""
     directories = [os.path.join(target_directory, n) for n in label_names]
     new_files = dict()
     for filepath, data in files.items():
@@ -88,7 +135,10 @@ def spread_files(files: LabeledFileDictType, target_directory: str, label_names:
     return new_files
 
 
-def create_config_file(test_set, train_set, val_set, label_names, output_file):
+def create_config_file(
+        test_set: LabeledFileDictType, train_set: LabeledFileDictType, val_set: LabeledFileDictType,
+        label_names: Set[str], output_file: str) -> None:
+    """Creates JSON Dataset configuration file from given data"""
     file_content = {
         'labels': list(label_names),
         'train': train_set,
@@ -100,14 +150,20 @@ def create_config_file(test_set, train_set, val_set, label_names, output_file):
         json.dump(file_content, f, indent=2)
 
 
-def create_dataset_structure(labeled_files: LabeledFileDictType, label_names, dir_name, test_split, val_split):
-    """Plan:
-    1. create structure
-    2. split files into test, train, val
-    3. move files
+def create_dataset_structure(files: LabeledFileDictType, label_names: Set[str], dir_name: str, test_split: float,
+                             val_split: float) -> None:
+    r"""
+    Generates dataset directory structure for given data.
+
+    :param files: files to process
+    :param label_names: set of available class labels
+    :param dir_name: name of target directory
+    :param test_split: share of test data (\in [0, 1])
+    :param val_split:  share of validation data  (\in [0, 1])
+    :return:
     """
     test_dir, train_dir, val_dir = create_directory_structure(dir_name, label_names)
-    test_set, train_set, val_set = split_labeled_files(labeled_files, test_split, val_split)
+    test_set, train_set, val_set = split_labeled_files(files, test_split, val_split)
 
     test_set = spread_files(test_set, test_dir, label_names)
     train_set = spread_files(train_set, train_dir, label_names)
@@ -116,8 +172,9 @@ def create_dataset_structure(labeled_files: LabeledFileDictType, label_names, di
     create_config_file(test_set, train_set, val_set, label_names, os.path.join(dir_name, 'dataset-structure.json'))
 
 
-def get_genera_file_stats_for_directory(directory: str, labels) -> Dict[str, int]:
-    files_per_genera = dict.fromkeys(labels, 0)
+def get_genera_file_stats_for_directory(directory: str, label_names: Set[str]) -> Dict[str, int]:
+    """Calculates statistics for each genus"""
+    files_per_genera = dict.fromkeys(label_names, 0)
 
     for genera in files_per_genera.keys():
         files = os.listdir(os.path.join(directory, genera))
@@ -126,7 +183,8 @@ def get_genera_file_stats_for_directory(directory: str, labels) -> Dict[str, int
     return files_per_genera
 
 
-def test_output_directory(directory: str, labels) -> Tuple[Dict, Dict, Dict]:
+def test_output_directory(directory: str, label_names: Set[str]) -> Tuple[Dict, Dict, Dict]:
+    """Validates output directory for correctness"""
     test_dir = os.path.join(directory, 'test')
     train_dir = os.path.join(directory, 'train')
     val_dir = os.path.join(directory, 'validation')
@@ -139,10 +197,10 @@ def test_output_directory(directory: str, labels) -> Tuple[Dict, Dict, Dict]:
         plt.savefig(f'{filename}.eps', bbox_inches='tight', pad_inches=0)
         plt.savefig(f'{filename}.png', bbox_inches='tight', pad_inches=0)
 
-    test_stats = get_genera_file_stats_for_directory(test_dir, labels)
-    train_stats = get_genera_file_stats_for_directory(train_dir, labels)
-    val_stats = get_genera_file_stats_for_directory(val_dir, labels)
-    total_stats = {label: sum([test_stats[label], train_stats[label], val_stats[label]]) for label in labels}
+    test_stats = get_genera_file_stats_for_directory(test_dir, label_names)
+    train_stats = get_genera_file_stats_for_directory(train_dir, label_names)
+    val_stats = get_genera_file_stats_for_directory(val_dir, label_names)
+    total_stats = {label: sum([test_stats[label], train_stats[label], val_stats[label]]) for label in label_names}
 
     fig, ax = plt.subplots()
 
@@ -151,9 +209,9 @@ def test_output_directory(directory: str, labels) -> Tuple[Dict, Dict, Dict]:
     validation_share = sum(val_stats.values()) / sample_count
     test_share = sum(test_stats.values()) / sample_count
 
-    ax.bar(labels, train_stats.values(), label=f'train set ({train_share*100:.0f}%)')
-    ax.bar(labels, val_stats.values(), label=f'validation set ({validation_share*100:.0f}%)')
-    ax.bar(labels, test_stats.values(), label=f'test set ({test_share*100:.0f}%)')
+    ax.bar(label_names, train_stats.values(), label=f'train set ({train_share * 100:.0f}%)')
+    ax.bar(label_names, val_stats.values(), label=f'validation set ({validation_share * 100:.0f}%)')
+    ax.bar(label_names, test_stats.values(), label=f'test set ({test_share * 100:.0f}%)')
     fig.legend(
         loc='center left',  # Position of legend,
         borderaxespad=0.1,  # Small spacing around legend box
@@ -163,7 +221,6 @@ def test_output_directory(directory: str, labels) -> Tuple[Dict, Dict, Dict]:
     plt.savefig(os.path.join(directory, 'stacked-chart.eps'), bbox_inches='tight', pad_inches=0)
     plt.savefig(os.path.join(directory, 'stacked-chart.png'), bbox_inches='tight', pad_inches=0)
 
-
     plot_stats('test', test_stats)
     plot_stats('training', train_stats)
     plot_stats('validation', val_stats)
@@ -172,7 +229,8 @@ def test_output_directory(directory: str, labels) -> Tuple[Dict, Dict, Dict]:
     return test_stats, train_stats, val_stats
 
 
-def bounding_box_stats(files):
+def bounding_box_stats(files: Dict) -> Dict:
+    """Generates statistics for available bounding boxes"""
     bbs = [BoundingBox(**elem['bbs']) for elem in files.values()]
     widths = [float(i.w) for i in bbs]
     heights = [float(i.h) for i in bbs]
@@ -197,9 +255,10 @@ def bounding_box_stats(files):
     }
 
 
-def generate_statistics(files: Dict, target_directory: str, labels):
+def generate_statistics(files: Dict, target_directory: str, label_names: Set[str]) -> None:
+    """Generate statistics over the processed data"""
     bb_stats = bounding_box_stats(files)
-    test, train, val = test_output_directory(target_directory, labels)
+    test, train, val = test_output_directory(target_directory, label_names)
 
     print('Bounding Box statistics:')
     print(bb_stats)
@@ -218,15 +277,16 @@ if __name__ == '__main__':
     # Initiate the parser
     parser = argparse.ArgumentParser()
     parser.add_argument('bbox_label_files', nargs='+', help='name of bbox label file(s) to load labels from')
-    parser.add_argument('-input_directory', help='name of the directory to load labeled images from')
-    parser.add_argument('-output_directory', help='name of the directory to save labeled images to')
-    parser.add_argument('-output_file', help='name of the output file')
+    parser.add_argument('input_directory', help='name of the directory to load labeled images from')
+    parser.add_argument('output_directory', help='name of the directory to save labeled images to')
     parser.add_argument('-val', '--validation-split', dest='val_split', default=0,
                         type=float, help='Share of samples for the validation set; in decimal format in range [0, 1]')
     parser.add_argument('-test', '--test-split', dest='test_split', default=0,
                         type=float, help='Share of samples for the test set; in decimal format in range [0, 1]')
     parser.add_argument('--reuse_directory', action='store_true', help='use existing files from this directory')
-    parser.add_argument('-r', dest='reuse_directory', action='store_true', help='use existing files from this directory')
+    parser.add_argument(
+        '-r', dest='reuse_directory', action='store_true', help='use existing files from this directory'
+    )
     parser.add_argument('--seed', default=42, type=int, help='Seed to use for rng')
     args = parser.parse_args()
 
@@ -237,10 +297,6 @@ if __name__ == '__main__':
 
     labeled_files = load_labels_from_bbox_files(args.bbox_label_files, args.input_directory)
 
-    fn = args.output_file or './data.npy'
-
-    labels = [genera.split('>')[0] for genera in CLASS_MAP.keys()]
-    if args.output_directory:
-        create_dataset_structure(labeled_files, labels, args.output_directory, args.test_split, args.val_split)
-
+    labels = {genera.split('>')[0] for genera in CLASS_MAP.keys()}
+    create_dataset_structure(labeled_files, labels, args.output_directory, args.test_split, args.val_split)
     generate_statistics(labeled_files, args.output_directory, labels)

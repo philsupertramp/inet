@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.metrics import confusion_matrix
 from sklearn.utils.multiclass import unique_labels
 
-from scripts.constants import CLASS_MAP, LABEL_MAP
+from scripts.constants import LABEL_MAP
 from src.models.data_structures import BoundingBox
 
 
@@ -76,28 +76,15 @@ def plot_confusion_matrix(y_true, y_pred, classes,
     fig.tight_layout()
 
 
-def plot_img_bbs(image, prediction, true_label):
-    height, width, _ = image.shape
-
-    def scale_bbs(y, x, h, w):
-        return x * width / 100., y * height / 100., w * width / 100., h * height / 100.
-
-    plt.imshow(image)
-    # bbs = scale_label(bbs)
-    scaled_bbs = BoundingBox(*scale_bbs(*prediction))
-    scaled_bbs2 = BoundingBox(*scale_bbs(*true_label))
-    scaled_bbs.draw(plt.gca(), 'red')
-    scaled_bbs2.draw(plt.gca(), 'green')
-    plt.axis('off')
-
-
-def plot_img_labels(image, predicted_label, true_label):
-    plt.imshow(image)
-    plt.xlabel(predicted_label)
-    plt.ylabel(true_label)
-
-
 def plot_histories(hists, keys, titles):
+    """
+    Method to visualize loss/accuracy course during the training phase
+
+    :param hists:
+    :param keys:
+    :param titles:
+    :return:
+    """
     def plot_val(h, n, k):
         plt.plot(np.arange(0, len(h.history[k])), h.history[k], '--', label=f'{n} train_{k}')
         plt.plot(np.arange(0, len(h.history[f'val_{k}'])), h.history[f'val_{k}'], label=f'{n} val_{k}')
@@ -124,34 +111,17 @@ def plot_histories(hists, keys, titles):
         plt.show()
 
 
-def plot_bbox_samples(predictions, validation_labels, validation_features, img_width=224, img_height=224):
-    index = 0
-    fig = plt.figure(figsize=(15, 15))
-    for i, pred in enumerate(predictions):
-        if index == 25:
-            break
-        index += 1
-        plt.subplot(5, 5, index)
+def plot_prediction(image, bb, true_bb=None, label=None, color='y'):
+    """
+    Helper method to plot bounding box and label of a single sample
 
-        scaled_img = validation_features[i] / 255.
-
-        plot_img_bbs(
-            scaled_img.reshape(img_height, img_width, 3),
-            pred,
-            list(validation_labels[i])
-        )
-
-    fig.legend(
-        ['Prediction', 'Ground truth'],
-        loc='upper center',  # Position of legend
-        borderaxespad=0.1,  # Small spacing around legend box
-        title='Bounding Boxes',  # Title for the legend,
-        fontsize=25
-    )
-    plt.show()
-
-
-def plot_prediction(image, bb, label, color='y'):
+    :param image:
+    :param bb:
+    :param true_bb:
+    :param label:
+    :param color:
+    :return:
+    """
     height, width, _ = image.shape
 
     def scale_bbs(y, x, h, w):
@@ -160,19 +130,36 @@ def plot_prediction(image, bb, label, color='y'):
     plt.imshow(image)
     scaled_bbs = BoundingBox(*scale_bbs(*bb))
     scaled_bbs.draw(plt.gca(), color)
-    plt.gca().text(
-        scaled_bbs.x_min + 0.02 * width,
-        scaled_bbs.y_min - height*0.05,
-        label,
-        backgroundcolor=color,
-        fontsize=10,
-        bbox={'color': color}
-    )
+    if true_bb:
+        scaled_bbs2 = BoundingBox(*scale_bbs(*true_bb))
+        scaled_bbs2.draw(plt.gca(), 'green')
+
+    if label:
+        plt.gca().text(
+            scaled_bbs.x_min + 0.02 * width,
+            scaled_bbs.y_min - height*0.05,
+            label,
+            backgroundcolor=color,
+            fontsize=10,
+            bbox={'color': color}
+        )
     plt.axis('off')
 
 
-def plot_prediction_samples(predicted_bbs, predicted_labels, validation_features, img_width=224, img_height=224,
-                            include_score=True):
+def plot_prediction_samples(predicted_bbs, validation_features, predicted_labels=None, validation_bbs=None,
+                            img_width=224, img_height=224, include_score=False) -> None:
+    """
+    Method to plot up to 25 samples of combined bounding box and class labels.
+
+    :param predicted_bbs: bounding box predictions by a method
+    :param predicted_labels: class labels predicted by a method
+    :param validation_features: used features to extract `predicted_bbs` and `predicted_labels`
+    :param validation_bbs: true class labels
+    :param img_width: original image width
+    :param img_height: original image height
+    :param include_score: if true renders class label confidence into label
+    :return:
+    """
     index = 0
     fig = plt.figure(figsize=(15, 15))
 
@@ -194,13 +181,14 @@ def plot_prediction_samples(predicted_bbs, predicted_labels, validation_features
         plot_prediction(
             scaled_img.reshape(img_height, img_width, 3),
             pred,
-            label_str
+            label=label_str,
+            true_bb=list(validation_bbs[i]) if validation_bbs else None
         )
 
     fig.legend(
-        ['Prediction'],
+        ['Prediction'] + ['Ground truth'] if validation_bbs else [],
         loc='upper center',  # Position of legend
         borderaxespad=0.1,  # Small spacing around legend box
         title='Bounding Boxes',  # Title for the legend,
-        #fontsize=25
+        fontsize=25
     )

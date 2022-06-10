@@ -1,12 +1,23 @@
 # thesisphilipp
 
 ## Thesis: Machine Learning Methods for Localization and Classification of Insects in Images
-
+A look into ML methods for single object detection, solving the tasks of insect genera classification
+and bounding box regression, individually as well as simultaneously.
 
 ## Description
-This project contains all content and things around the thesis to obtain the degree Bachelor of Science.
+This project contains all content and things around the underlying thesis.
+The submitted paper can be found in `./docs/thesisphilipp.pdf`.
 
-For now the repository contains the `./docs` directory for the theoretical part of the thesis, a demo webapp and several scripts used during the preparation of the first dataset as well
+The repository contains the `./docs` directory holding research and the theoretical part of the paper.
+A demo app is under development, that can be found in the `./src/webapp` directory.
+
+The accommodating code to the paper and the webapp is located in `./src`.
+- `./src/models`: Model architectures
+- `./src/data`: Data loading, augmentation and visualization untils
+- `./src/losses`: custom implementation for losses (implements `GIoULoss`)
+- `./src/helpers`:
+
+ a demo webapp and several scripts used during the preparation of the first dataset as well
 as the first design of model architectures.
 The directory `src/` contains different model architectures `src/models/` that are all designed to solve the supervised learning
 tasks of classification and bounding box regression, either individually or combined.
@@ -26,26 +37,9 @@ tasks of classification and bounding box regression, either individually or comb
 
 ## Usage
 ### Datasets
-#### iNaturalist
-**use available `*.npy` files:**
-All available `*.npy` files follow the same structure
-```text
-X
-labels
-bounding-boxes
-```
-to extract the data use
-```python
-import numpy as np
-
-with open('./data.npy', 'rb') as f:
-    X = np.load(f, allow_pickle=True)
-    labels = np.load(f, allow_pickle=True)
-    bbs = np.load(f, allow_pickle=True)
-```
-#### recreate a used training set:
+#### recreate a pre-labelled training set:
 ```shell
-$ sudo ./scripts/mount_volumes.sh on
+$ sudo ./scripts/mount_directories.sh on
 $ python -m scripts.reuse_labels bounding-boxes-2022-02-12-14-33.json mnt/KInsektDaten/data/iNat/train_Insecta/ data/iNat/storage
 ```
 #### generate a training set:
@@ -53,7 +47,7 @@ $ python -m scripts.reuse_labels bounding-boxes-2022-02-12-14-33.json mnt/KInsek
 1. Set environment variables `USERNAME` (username on NAS), `PASSWORD` (password for NAS), `VPN_USER` and `VPN_PASSWD` accordingly
 2. Run:
 ```shell
-$ sudo ./mount_volumes.sh on
+$ sudo ./mount_directories.sh on
 ```
 3. To generate a dataset from the source `mnt/KInsektDaten/data/iNat/train_Insecta/`:
 ```shell
@@ -80,10 +74,12 @@ $ python -m scripts.generate_cropped_dataset data/iNat/
 
 ## Features
 
-### Tex docs
+### Paper written in LaTeX
 To build the `./doc` directory see [`docs/tex/README.md`](docs/tex/README.md).
 
-### Webapp
+### Training/Validation Pipelines
+
+### Demo webapp
 To run the webapp see [`src/app/README.md`](src/webapp/README.md)
 
 
