@@ -100,17 +100,16 @@
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models.data_structures">src.models.data_structures module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models.hyper_parameter_optimization">src.models.hyper_parameter_optimization module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.html#module-src.helpers">src.helpers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -255,29 +254,50 @@
 In case you want to validate your model, perform a prediction prior to calling this method!</strong></p>
 <p>Hint:
 Use this in combination with CentroidInitialization.KMEANS_PLUS_PLUS
-for MobileNet on the Regression task, this preserves weights in the domain 1e-15 well.
-:param model:
-:param cluster_method: one of CentroidInitialization.KMEANS_PLUS_PLUS, CentroidInitialization.DENSITY_BASED,
-CentroidInitialization.RANDOM, CentroidInitialization.LINEAR
-:param number_clusters:
-:return:</p>
+for MobileNet on the Regression task, this preserves weights in the domain 1e-15 well.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – </p></li>
+<li><p><strong>cluster_method</strong> – one of CentroidInitialization.KMEANS_PLUS_PLUS, CentroidInitialization.DENSITY_BASED, CentroidInitialization.RANDOM, CentroidInitialization.LINEAR</p></li>
+<li><p><strong>number_clusters</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.models.tf_lite.convert_to_tflite.create_pruned_model">
 <span class="sig-name descname"><span class="pre">create_pruned_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_set</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/tf_lite/convert_to_tflite.html#create_pruned_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.tf_lite.convert_to_tflite.create_pruned_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to create and evaluate a pruned version of given <cite>model</cite>
-:param model: the model to prune
-:param test_set: test set for performance validation
-:return: pruned version of <cite>model</cite></p>
+<dd><p>Method to create and evaluate a pruned version of given <cite>model</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – the model to prune</p></li>
+<li><p><strong>test_set</strong> – test set for performance validation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>pruned version of <cite>model</cite></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.models.tf_lite.convert_to_tflite.create_q_aware_model">
 <span class="sig-name descname"><span class="pre">create_q_aware_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/tf_lite/convert_to_tflite.html#create_q_aware_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.tf_lite.convert_to_tflite.create_q_aware_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create quantization aware model
-:param model: model to convert
-:return: quantization aware model</p>
+<dd><p>Create quantization aware model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> – model to convert</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>quantization aware model</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -302,12 +322,20 @@ CentroidInitialization.RANDOM, CentroidInitialization.LINEAR
 <dl class="py function">
 <dt class="sig sig-object py" id="src.models.tf_lite.convert_to_tflite.create_tf_lite_q_model">
 <span class="sig-name descname"><span class="pre">create_tf_lite_q_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">q_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quant_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.models.tf_lite.convert_to_tflite.QuantizationMethod" title="src.models.tf_lite.convert_to_tflite.QuantizationMethod"><span class="pre">src.models.tf_lite.convert_to_tflite.QuantizationMethod</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">QuantizationMethod.FULL_INT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'bbreg'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/tf_lite/convert_to_tflite.html#create_tf_lite_q_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.tf_lite.convert_to_tflite.create_tf_lite_q_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>converts regular model to q aware model using provided <cite>quant_method</cite>
-:param q_model: a quantization aware model
-:param train_set: samples representing the train set
-:param quant_method: quantization method
-:param model_name: resulting model name
-:return: tf lite version of quantization aware model</p>
+<dd><p>converts regular model to q aware model using provided <cite>quant_method</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>q_model</strong> – a quantization aware model</p></li>
+<li><p><strong>train_set</strong> – samples representing the train set</p></li>
+<li><p><strong>quant_method</strong> – quantization method</p></li>
+<li><p><strong>model_name</strong> – resulting model name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>tf lite version of quantization aware model</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -334,19 +362,35 @@ CentroidInitialization.RANDOM, CentroidInitialization.LINEAR
 <dl class="py function">
 <dt class="sig sig-object py" id="src.models.tf_lite.tflite_methods.evaluate_interpreted_model">
 <span class="sig-name descname"><span class="pre">evaluate_interpreted_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interpreter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/tf_lite/tflite_methods.html#evaluate_interpreted_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.tf_lite.tflite_methods.evaluate_interpreted_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to evaluate an interpreted (tflite) model
-:param interpreter: interpreted model
-:param test_images: input to evaluate
-:return: predictions of interpreted model</p>
+<dd><p>Method to evaluate an interpreted (tflite) model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interpreter</strong> – interpreted model</p></li>
+<li><p><strong>test_images</strong> – input to evaluate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>predictions of interpreted model</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.models.tf_lite.tflite_methods.evaluate_q_model">
 <span class="sig-name descname"><span class="pre">evaluate_q_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tf_lite_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_images</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/tf_lite/tflite_methods.html#evaluate_q_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.tf_lite.tflite_methods.evaluate_q_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Evaluation method for quantization aware model
-:param tf_lite_model: q-aware tflite model
-:param test_images: input to perform prediction on
-:return: predictions for given images</p>
+<dd><p>Evaluation method for quantization aware model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tf_lite_model</strong> – q-aware tflite model</p></li>
+<li><p><strong>test_images</strong> – input to perform prediction on</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>predictions for given images</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -416,9 +460,6 @@ CentroidInitialization.RANDOM, CentroidInitialization.LINEAR
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-src.models.tf_lite">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.models.tf_lite" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

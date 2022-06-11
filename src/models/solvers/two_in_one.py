@@ -31,6 +31,7 @@ class TwoInOneModel(TaskModel):
     def __init__(self, backbone: Backbone, num_classes: int, dense_neurons: int = 128,
                  regularization_factor: float = 1e-3, dropout_factor: float = 0.5, batch_size: float = 32):
         """
+
         :param backbone: backbone CNN model
         :param dense_neurons: number dense neurons for FC layer
         :param regularization_factor: L2 regularization factor for output layer
@@ -160,6 +161,7 @@ class TwoInOneModel(TaskModel):
     def from_config(cls, cfg) -> 'TwoInOneModel':
         """
         Helper to bootstrap solver out of configuration dictionary
+
         :param cfg: configuration dictionary
         :return: new TwoInOneModel instance
         """
@@ -184,6 +186,7 @@ class TwoInOneTFLite:
 
     def __init__(self, weights):
         """
+
         :param weights: identifier of tflite weights
         """
         interpreter = tf.lite.Interpreter(model_path=weights)
@@ -194,6 +197,7 @@ class TwoInOneTFLite:
     def predict(self, X):
         """
         Performs prediction
+
         :param X: vector of input features
         :return: prediction done by the model
         """
@@ -244,6 +248,7 @@ class TwoInOneTFLite:
     def from_config(cls, cfg) -> 'TwoInOneTFLite':
         """
         Constructor to load model from config-dict
+
         :param cfg: configuration dictionary
         :return:
         """

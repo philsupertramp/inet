@@ -100,17 +100,16 @@
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models.data_structures">src.models.data_structures module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models.hyper_parameter_optimization">src.models.hyper_parameter_optimization module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.html#module-src.helpers">src.helpers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -250,9 +249,15 @@ A regressor predicts the location and a classifier the class label, based on the
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.solvers.independent.IndependentModel.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/independent.html#IndependentModel.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.independent.IndependentModel.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs independent predictions on raw input <cite>X</cite>
-:param X: given input features
-:return: vector of prediction tuples [label, bounding box]</p>
+<dd><p>Performs independent predictions on raw input <cite>X</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> – given input features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>vector of prediction tuples [label, bounding box]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -310,9 +315,15 @@ A regressor predicts the location and a classifier the class label, based on the
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel.crop_image">
 <span class="sig-name descname"><span class="pre">crop_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/tf_lite.html#MultiTaskModel.crop_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel.crop_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to crop an image.
-:param elem: Tuple of [image, bb]
-:return: cropped image</p>
+<dd><p>Method to crop an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>elem</strong> – Tuple of [image, bb]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>cropped image</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -506,9 +517,15 @@ Adds default <cite>Adam</cite> optimizer and Accuracy metric</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneModel.from_config">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.models.solvers.two_in_one.TwoInOneModel" title="src.models.solvers.two_in_one.TwoInOneModel"><span class="pre">src.models.solvers.two_in_one.TwoInOneModel</span></a></span></span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneModel.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneModel.from_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Helper to bootstrap solver out of configuration dictionary
-:param cfg: configuration dictionary
-:return: new TwoInOneModel instance</p>
+<dd><p>Helper to bootstrap solver out of configuration dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> – configuration dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>new TwoInOneModel instance</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -558,17 +575,29 @@ Adds default <cite>Adam</cite> optimizer and Accuracy metric</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneTFLite.from_config">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.models.solvers.two_in_one.TwoInOneTFLite" title="src.models.solvers.two_in_one.TwoInOneTFLite"><span class="pre">src.models.solvers.two_in_one.TwoInOneTFLite</span></a></span></span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneTFLite.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneTFLite.from_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Constructor to load model from config-dict
-:param cfg: configuration dictionary
-:return:</p>
+<dd><p>Constructor to load model from config-dict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> – configuration dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneTFLite.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneTFLite.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneTFLite.predict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Performs prediction
-:param X: vector of input features
-:return: prediction done by the model</p>
+<dd><p>Performs prediction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> – vector of input features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>prediction done by the model</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -621,9 +650,6 @@ Classifier receives <cite>X_hat</cite> -&gt; returns <cite>y</cite></p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-src.models.solvers">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.models.solvers" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

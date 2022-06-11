@@ -44,6 +44,7 @@ class ClusterMethod(Enum):
 def create_q_aware_model(model):
     """
     Create quantization aware model
+
     :param model: model to convert
     :return: quantization aware model
     """
@@ -64,6 +65,7 @@ def create_q_aware_model(model):
 def create_tf_lite_q_model(q_model, train_set, quant_method: QuantizationMethod = QuantizationMethod.FULL_INT, model_name='bbreg'):
     """
     converts regular model to q aware model using provided `quant_method`
+
     :param q_model: a quantization aware model
     :param train_set: samples representing the train set
     :param quant_method: quantization method
@@ -128,6 +130,7 @@ def create_quantize_model(model: TaskModel, train_set, test_set, quant_method: Q
 def create_pruned_model(model, test_set):
     """
     Method to create and evaluate a pruned version of given `model`
+
     :param model: the model to prune
     :param test_set: test set for performance validation
     :return: pruned version of `model`
@@ -168,9 +171,9 @@ def cluster_weights(model, cluster_method: ClusterMethod, number_clusters):
     Hint:
     Use this in combination with CentroidInitialization.KMEANS_PLUS_PLUS
     for MobileNet on the Regression task, this preserves weights in the domain 1e-15 well.
+
     :param model:
-    :param cluster_method: one of CentroidInitialization.KMEANS_PLUS_PLUS, CentroidInitialization.DENSITY_BASED,
-    CentroidInitialization.RANDOM, CentroidInitialization.LINEAR
+    :param cluster_method: one of CentroidInitialization.KMEANS_PLUS_PLUS, CentroidInitialization.DENSITY_BASED, CentroidInitialization.RANDOM, CentroidInitialization.LINEAR
     :param number_clusters:
     :return:
     """

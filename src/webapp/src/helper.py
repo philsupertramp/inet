@@ -24,6 +24,7 @@ def load_example_file(file_name):
 def decode_img(msg):
     """
     decode base64 encoded image
+
     :param msg:
     :return:
     """

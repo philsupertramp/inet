@@ -42,7 +42,8 @@
 
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="tests package" href="tests.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,9 +89,21 @@
             
             
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="src.html">src package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">scripts package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scripts.configs">scripts.configs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scripts.constants">scripts.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scripts.convert_models_to_tflite">scripts.convert_models_to_tflite module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scripts.generate_cropped_dataset">scripts.generate_cropped_dataset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scripts.helpers">scripts.helpers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scripts.preselect_files">scripts.preselect_files module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scripts.process_files">scripts.process_files module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scripts.reuse_labels">scripts.reuse_labels module</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -332,13 +345,21 @@ input parameters</p>
 <dt class="sig sig-object py" id="scripts.preselect_files.create_local_copy">
 <span class="sig-name descname"><span class="pre">create_local_copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combined_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requires_decisions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#create_local_copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.create_local_copy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates local copy of <cite>num_elements</cite> samples per record in <cite>combined_list</cite> from samples in <cite>base_dir</cite> into <cite>storage_dir</cite>.</p>
-<p>Uses multi-threading.
-:param combined_list: List of order directories
-:param base_dir: parent directory of input files
-:param storage_dir: storage directory to create copy in
-:param requires_decisions: if <cite>True</cite> asks for approval before adding a sample
-:param num_elements: required amount of samples per order
-:return: List of new file locations</p>
+<p>Uses multi-threading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combined_list</strong> – List of order directories</p></li>
+<li><p><strong>base_dir</strong> – parent directory of input files</p></li>
+<li><p><strong>storage_dir</strong> – storage directory to create copy in</p></li>
+<li><p><strong>requires_decisions</strong> – if <cite>True</cite> asks for approval before adding a sample</p></li>
+<li><p><strong>num_elements</strong> – required amount of samples per order</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of new file locations</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -373,10 +394,18 @@ input parameters</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.preselect_files.get_id_range_for_search_term">
 <span class="sig-name descname"><span class="pre">get_id_range_for_search_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_terms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#get_id_range_for_search_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.get_id_range_for_search_term" title="Permalink to this definition">¶</a></dt>
-<dd><p>Filters given file name list by a list of search terms
-:param file_list: list of file names
-:param search_terms: list of search terms to search for
-:return: list of ids matching the search terms</p>
+<dd><p>Filters given file name list by a list of search terms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_list</strong> – list of file names</p></li>
+<li><p><strong>search_terms</strong> – list of search terms to search for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of ids matching the search terms</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -459,17 +488,27 @@ Allows to require approval for each sample by adding <cite>requires_decision=Tru
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.preselect_files.scan_input_directory">
 <span class="sig-name descname"><span class="pre">scan_input_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#scan_input_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.scan_input_directory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Prints statistics from input directory</p>
+<dd><p>Prints statistics from input directory
+:param root_directory:
+:return:</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.preselect_files.test_dataset">
 <span class="sig-name descname"><span class="pre">test_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combined_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_num_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#test_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.test_dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Verifies the dataset for consistency/integrity
-:param combined_list:
-:param base_dir:
-:param expected_num_elements:
-:return:</p>
+<dd><p>Verifies the dataset for consistency/integrity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combined_list</strong> – </p></li>
+<li><p><strong>base_dir</strong> – </p></li>
+<li><p><strong>expected_num_elements</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -775,9 +814,6 @@ into the dedicated structure.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-scripts">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-scripts" title="Permalink to this headline">¶</a></h2>
-</div>
 </div>
 
 
@@ -785,6 +821,9 @@ into the dedicated structure.</p>
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="tests.html" class="btn btn-neutral float-left" title="tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

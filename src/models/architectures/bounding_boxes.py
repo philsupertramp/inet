@@ -135,6 +135,7 @@ class BoundingBoxHyperModel(keras_tuner.HyperModel):
     def build(self, hp):
         """
         Build model for HPO
+
         :param hp: hp storage
         :return: next model for HPO
         """

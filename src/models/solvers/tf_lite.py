@@ -28,6 +28,7 @@ class MultiTaskModel:
 
     def __init__(self, regressor, classifier, input_shape: Tuple[int, ...] = (224, 224, 3), is_tflite=False):
         """
+
         :param regressor: BBox Regressor model (4 outputs)
         :param classifier: Classifier model (N outputs)
         :param input_shape: used for rescaling
@@ -90,6 +91,7 @@ class MultiTaskModel:
     def crop_image(self, elem: Tuple):
         """
         Method to crop an image.
+
         :param elem: Tuple of [image, bb]
         :return: cropped image
         """

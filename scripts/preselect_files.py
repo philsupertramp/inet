@@ -148,6 +148,7 @@ def create_local_copy(combined_list: List[Union[str, int]], base_dir: str, stora
     Creates local copy of `num_elements` samples per record in `combined_list` from samples in `base_dir` into `storage_dir`.
 
     Uses multi-threading.
+
     :param combined_list: List of order directories
     :param base_dir: parent directory of input files
     :param storage_dir: storage directory to create copy in
@@ -227,6 +228,7 @@ def process_directories(
 def test_dataset(combined_list: List[Union[str, int]], base_dir: str, expected_num_elements: int) -> None:
     """
     Verifies the dataset for consistency/integrity
+
     :param combined_list:
     :param base_dir:
     :param expected_num_elements:
@@ -256,6 +258,7 @@ def test_dataset(combined_list: List[Union[str, int]], base_dir: str, expected_n
 def get_id_range_for_search_term(file_list: List[str], search_terms: List[str]) -> List[int]:
     """
     Filters given file name list by a list of search terms
+
     :param file_list: list of file names
     :param search_terms: list of search terms to search for
     :return: list of ids matching the search terms
@@ -265,6 +268,7 @@ def get_id_range_for_search_term(file_list: List[str], search_terms: List[str]) 
 
 def get_id_ranges_from_input_directory(root_directory: str) -> Dict[str, List[int]]:
     """
+
     :param root_directory: root directory to get labels from
     :return: a dictionary containing species-ID ranges for all genera
     """
@@ -279,7 +283,11 @@ def get_id_ranges_from_input_directory(root_directory: str) -> Dict[str, List[in
 
 
 def scan_input_directory(root_directory: str) -> None:
-    """Prints statistics from input directory"""
+    """
+    Prints statistics from input directory
+    :param root_directory:
+    :return:
+    """
     id_ranges = get_id_ranges_from_input_directory(root_directory)
     print('Species per Genera')
     print('=' * 20)

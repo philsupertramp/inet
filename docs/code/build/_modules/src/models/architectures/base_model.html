@@ -91,6 +91,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../src.html">src package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -183,6 +184,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="sd">        :param inputs: input parameters</span>
 <span class="sd">        :param outputs: output parameters</span>
 <span class="sd">        :param name: verbose name for the model</span>
@@ -258,6 +260,7 @@
             <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extended `keras.Model.fit` to add default callbacks</span>
+
 <span class="sd">        :param train_set: dataset for training</span>
 <span class="sd">        :param validation_set: dataset for validation</span>
 <span class="sd">        :param monitoring_val: value to monitor while using EarlyStopping/ModelCheckpoint callbacks</span>

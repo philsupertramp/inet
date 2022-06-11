@@ -143,6 +143,7 @@ class ClassifierHyperModel(keras_tuner.HyperModel):
     def build(self, hp):
         """
         Builds new classification model for HPO
+
         :param hp: current state of HPs
         :return: model for next iteration in HPO
         """

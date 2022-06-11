@@ -91,6 +91,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../src.html">src package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -207,6 +208,7 @@
 <div class="viewcode-block" id="create_q_aware_model"><a class="viewcode-back" href="../../../../src.models.tf_lite.html#src.models.tf_lite.convert_to_tflite.create_q_aware_model">[docs]</a><span class="k">def</span> <span class="nf">create_q_aware_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Create quantization aware model</span>
+
 <span class="sd">    :param model: model to convert</span>
 <span class="sd">    :return: quantization aware model</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -227,6 +229,7 @@
 <div class="viewcode-block" id="create_tf_lite_q_model"><a class="viewcode-back" href="../../../../src.models.tf_lite.html#src.models.tf_lite.convert_to_tflite.create_tf_lite_q_model">[docs]</a><span class="k">def</span> <span class="nf">create_tf_lite_q_model</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">quant_method</span><span class="p">:</span> <span class="n">QuantizationMethod</span> <span class="o">=</span> <span class="n">QuantizationMethod</span><span class="o">.</span><span class="n">FULL_INT</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;bbreg&#39;</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    converts regular model to q aware model using provided `quant_method`</span>
+
 <span class="sd">    :param q_model: a quantization aware model</span>
 <span class="sd">    :param train_set: samples representing the train set</span>
 <span class="sd">    :param quant_method: quantization method</span>
@@ -291,6 +294,7 @@
 <div class="viewcode-block" id="create_pruned_model"><a class="viewcode-back" href="../../../../src.models.tf_lite.html#src.models.tf_lite.convert_to_tflite.create_pruned_model">[docs]</a><span class="k">def</span> <span class="nf">create_pruned_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_set</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Method to create and evaluate a pruned version of given `model`</span>
+
 <span class="sd">    :param model: the model to prune</span>
 <span class="sd">    :param test_set: test set for performance validation</span>
 <span class="sd">    :return: pruned version of `model`</span>
@@ -331,9 +335,9 @@
 <span class="sd">    Hint:</span>
 <span class="sd">    Use this in combination with CentroidInitialization.KMEANS_PLUS_PLUS</span>
 <span class="sd">    for MobileNet on the Regression task, this preserves weights in the domain 1e-15 well.</span>
+
 <span class="sd">    :param model:</span>
-<span class="sd">    :param cluster_method: one of CentroidInitialization.KMEANS_PLUS_PLUS, CentroidInitialization.DENSITY_BASED,</span>
-<span class="sd">    CentroidInitialization.RANDOM, CentroidInitialization.LINEAR</span>
+<span class="sd">    :param cluster_method: one of CentroidInitialization.KMEANS_PLUS_PLUS, CentroidInitialization.DENSITY_BASED, CentroidInitialization.RANDOM, CentroidInitialization.LINEAR</span>
 <span class="sd">    :param number_clusters:</span>
 <span class="sd">    :return:</span>
 <span class="sd">    &quot;&quot;&quot;</span>

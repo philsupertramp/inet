@@ -19,6 +19,7 @@ class ModelManager:
 
     def __init__(self, default_model: Optional = None):
         """
+
         :param default_model: Optional defaMulti processing implementation of files movingult model
         """
         ## Storage of available models
