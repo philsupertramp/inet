@@ -82,30 +82,11 @@ Executes inference tests on TFLite compatible versions of pretrained optimized i
 - `TwoStageModel`
 - `SingleStageModel`
 
-### Results
-
-.. include:: ../../wiki/home.md
-.. include:: ../../wiki/RasPi.md
-
-## Additional features
-
-### Paper written in LaTeX
-To build the `./doc` directory see [`docs/tex/README.md`](docs/tex/README.md).
-
-### Training/Validation Pipelines
-
-### Demo webapp
-To run the webapp see [`src/app/README.md`](src/webapp/README.md)
-
-
-# TODO
-
 ## Support
 In case you need help setting up the project or run into issues please create a ticket within the repositories issue tracker
 
-## Authors and acknowledgment
-
 ## License
+This project is published under 
 
 ## Project status
-The project is currently Work in Progress (WIP).
+First release is v1.0.0
