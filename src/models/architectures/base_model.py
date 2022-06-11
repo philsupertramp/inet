@@ -136,8 +136,8 @@ class TaskModel(Model):
         Method to evaluate a models predictive power.
 
         :param validation_set: the validation data set to use
-        :param preprocessing_method: optional preprocessing_method for features.
-         Gets applied before feeding the features into the model
+        :param preprocessing_method: optional preprocessing_method for features. Gets applied before feeding the
+         features into the model
         :param render_samples: boolean flag to append visualization of samples
         :return:
         """
@@ -180,9 +180,9 @@ class SingleTaskModel(TaskModel):
     - 1 dropout layer with parameter `dropout_factor`
     - 1 dense layer with `dense_neurons` number neurons
     - 1 dense block
-        - batch normalization
-        - ReLU activation function
-        - dense layer with `num_classes` neurons and `regularization_factor` for L2 kernel regularization
+    * batch normalization
+    * ReLU activation function
+    * dense layer with `num_classes` neurons and `regularization_factor` for L2 kernel regularization
 
     Example:
         >>> from tensorflow.keras.applications.vgg16 import VGG16

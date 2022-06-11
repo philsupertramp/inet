@@ -1,0 +1,678 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>src.models.solvers package &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.models.tf_lite package" href="src.models.tf_lite.html" />
+    <link rel="prev" title="src.models.architectures package" href="src.models.architectures.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="src.data.html">src.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.losses.html">src.losses package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="src.models.html">src.models package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="src.models.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models.data_structures">src.models.data_structures module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models.hyper_parameter_optimization">src.models.hyper_parameter_optimization module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src.helpers">src.helpers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="src.html">src package</a> &raquo;</li>
+        
+          <li><a href="src.models.html">src.models package</a> &raquo;</li>
+        
+      <li>src.models.solvers package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/src.models.solvers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="src-models-solvers-package">
+<h1>src.models.solvers package<a class="headerlink" href="#src-models-solvers-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-src.models.solvers.common">
+<span id="src-models-solvers-common-module"></span><h2>src.models.solvers.common module<a class="headerlink" href="#module-src.models.solvers.common" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.models.solvers.common.evaluate_solver_predictions">
+<span class="sig-name descname"><span class="pre">evaluate_solver_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predicted_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_bbs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/common.html#evaluate_solver_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.common.evaluate_solver_predictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Common evaluation method for solvers</p>
+<p>Computes:
+- GIoU-Loss
+- RMSE
+- Accuracy
+- F1-Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predicted_labels</strong> – predicted class labels by the solver</p></li>
+<li><p><strong>predicted_bbs</strong> – predicted bboxes by the solver</p></li>
+<li><p><strong>validation_values</strong> – input samples used to perform predictions</p></li>
+<li><p><strong>validation_labels</strong> – ground truth labels for given samples</p></li>
+<li><p><strong>render_samples</strong> – if <cite>True</cite> renders confusion matrix of classification and up to 25 samples of bbox regression</p></li>
+<li><p><strong>model_name</strong> – used to save resulting plots</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.models.solvers.independent">
+<span id="src-models-solvers-independent-module"></span><h2>src.models.solvers.independent module<a class="headerlink" href="#module-src.models.solvers.independent" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.solvers.independent.IndependentModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">IndependentModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regressor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(224,</span> <span class="pre">224,</span> <span class="pre">3)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tflite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/independent.html#IndependentModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.independent.IndependentModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.models.solvers.tf_lite.MultiTaskModel" title="src.models.solvers.tf_lite.MultiTaskModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.models.solvers.tf_lite.MultiTaskModel</span></code></a></p>
+<p>Object detection model using independent methods to solve the localization and classification tasks.
+A regressor predicts the location and a classifier the class label, based on the original input.</p>
+<p>[Similar to <cite>TwoStageModel</cite>]</p>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tensorflow.keras.applications.mobilenet</span> <span class="kn">import</span> <span class="n">MobileNet</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">src.models.architectures.classifier</span> <span class="kn">import</span> <span class="n">Classifier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">src.models.architectures.bounding_boxes</span> <span class="kn">import</span> <span class="n">BoundingBoxRegressor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clf_backbone</span> <span class="o">=</span> <span class="n">MobileNet</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg_backbone</span> <span class="o">=</span> <span class="n">MobileNet</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">regressor</span> <span class="o">=</span> <span class="n">BoundingBoxRegressor</span><span class="p">(</span><span class="n">reg_backbone</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">classifier</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">clf_backbone</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">IndependentModel</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.solvers.independent.IndependentModel.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'independent-model'</span></em><a class="headerlink" href="#src.models.solvers.independent.IndependentModel.model_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.independent.IndependentModel.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/independent.html#IndependentModel.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.independent.IndependentModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs independent predictions on raw input <cite>X</cite>
+:param X: given input features
+:return: vector of prediction tuples [label, bounding box]</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.models.solvers.tf_lite">
+<span id="src-models-solvers-tf-lite-module"></span><h2>src.models.solvers.tf_lite module<a class="headerlink" href="#module-src.models.solvers.tf_lite" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultiTaskModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regressor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(224,</span> <span class="pre">224,</span> <span class="pre">3)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tflite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/tf_lite.html#MultiTaskModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>MultiTask solver implementation</p>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tensorflow.keras.applications.mobilenet</span> <span class="kn">import</span> <span class="n">MobileNet</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">src.models.architectures.classifier</span> <span class="kn">import</span> <span class="n">Classifier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">src.models.architectures.bounding_boxes</span> <span class="kn">import</span> <span class="n">BoundingBoxRegressor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clf_backbone</span> <span class="o">=</span> <span class="n">MobileNet</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg_backbone</span> <span class="o">=</span> <span class="n">MobileNet</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">regressor</span> <span class="o">=</span> <span class="n">BoundingBoxRegressor</span><span class="p">(</span><span class="n">reg_backbone</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">classifier</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">clf_backbone</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">MultiTaskModel</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">some_input</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel.create_classifier">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_classifier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.models.architectures.html#src.models.architectures.classifier.Classifier" title="src.models.architectures.classifier.Classifier"><span class="pre">src.models.architectures.classifier.Classifier</span></a></span></span><a class="reference internal" href="_modules/src/models/solvers/tf_lite.html#MultiTaskModel.create_classifier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel.create_classifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to bootstrap classifier based on provided config dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> – configuration dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a classifier model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel.create_regressor">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_regressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="src.models.architectures.html#src.models.architectures.bounding_boxes.BoundingBoxRegressor" title="src.models.architectures.bounding_boxes.BoundingBoxRegressor"><span class="pre">src.models.architectures.bounding_boxes.BoundingBoxRegressor</span></a></span></span><a class="reference internal" href="_modules/src/models/solvers/tf_lite.html#MultiTaskModel.create_regressor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel.create_regressor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to bootstrap bbreg model based on provided config dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cfg</strong> – configuration dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a bounding box regression model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel.crop_image">
+<span class="sig-name descname"><span class="pre">crop_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/tf_lite.html#MultiTaskModel.crop_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel.crop_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to crop an image.
+:param elem: Tuple of [image, bb]
+:return: cropped image</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel.evaluate_model">
+<span class="sig-name descname"><span class="pre">evaluate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validation_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/models/solvers/tf_lite.html#MultiTaskModel.evaluate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel.evaluate_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to evaluate predictive power of solver.</p>
+<p>Computes
+- Regression:
+* GIoU-Loss
+* RMSE
+- Classification:
+* Accuracy
+* F1-Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>validation_set</strong> – validation data set to use</p></li>
+<li><p><strong>preprocessing_method</strong> – preprocessing method to apply before predicting</p></li>
+<li><p><strong>render_samples</strong> – if <cite>True</cite> renders confusion matrix of classification and samples for bbox regression</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel.from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tflite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.models.solvers.tf_lite.MultiTaskModel" title="src.models.solvers.tf_lite.MultiTaskModel"><span class="pre">src.models.solvers.tf_lite.MultiTaskModel</span></a></span></span><a class="reference internal" href="_modules/src/models/solvers/tf_lite.html#MultiTaskModel.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to load <cite>MultiTaskModel</cite> from dictionary and essentially JSON files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg</strong> – dict holding solver configuration</p></li>
+<li><p><strong>is_tflite</strong> – if <cite>True</cite> treats config as for a tflite solver</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>new created solver</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel.model_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.tf_lite.MultiTaskModel.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/tf_lite.html#MultiTaskModel.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.tf_lite.MultiTaskModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface definition for prediction method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> – Vector of input features to perform predictions on.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>predicted outputs</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.models.solvers.two_in_one">
+<span id="src-models-solvers-two-in-one-module"></span><h2>src.models.solvers.two_in_one module<a class="headerlink" href="#module-src.models.solvers.two_in_one" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneHyperModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TwoInOneHyperModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tunable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneHyperModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneHyperModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">keras_tuner.engine.hypermodel.HyperModel</span></code></p>
+<p>HPO wrapper for TwoInOne model.</p>
+<p>Used Hyper parameters (HPs):
+- Regularization Factor <cite>alpha</cite>: [1e-4, 5e-2]
+- Dropout Factor <cite>dropout</cite>: [0.1, 0.75]
+- Learning rate <cite>learning_rate</cite>: [1e-4, 1e-2]</p>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">keras_tuner</span> <span class="k">as</span> <span class="nn">kt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hpo_model</span> <span class="o">=</span> <span class="n">TwoInOneModel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span> <span class="o">=</span> <span class="n">kt</span><span class="o">.</span><span class="n">BayesianOptimization</span><span class="p">(</span>
+<span class="gp">... </span>   <span class="n">hpo_model</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">objective</span><span class="o">=</span><span class="n">kt</span><span class="o">.</span><span class="n">Objective</span><span class="p">(</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">,</span> <span class="s1">&#39;max&#39;</span><span class="p">),</span>
+<span class="gp">... </span>   <span class="n">max_trials</span><span class="o">=</span><span class="mi">36</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">directory</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;./model-selection/my-model/&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">project_name</span><span class="o">=</span><span class="s1">&#39;proj_name&#39;</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="gp">... </span>   <span class="n">num_initial_points</span><span class="o">=</span><span class="mi">12</span>
+<span class="go">...)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuner</span><span class="o">.</span><span class="n">search</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">train_set</span><span class="o">=</span><span class="n">train_set</span><span class="o">.</span><span class="n">unbatch</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">validation_set</span><span class="o">=</span><span class="n">validation_set</span><span class="o">.</span><span class="n">unbatch</span><span class="p">(),</span>
+<span class="gp">... </span>    <span class="n">monitoring_val</span><span class="o">=</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneHyperModel.build">
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneHyperModel.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneHyperModel.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds model of next HPO iteration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hp</strong> – current HP state</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>next HPO model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneHyperModel.model_data">
+<span class="sig-name descname"><span class="pre">model_data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="src.models.html#src.models.data_structures.ModelArchitecture" title="src.models.data_structures.ModelArchitecture"><span class="pre">src.models.data_structures.ModelArchitecture</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneHyperModel.model_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TwoInOneModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="src.models.architectures.html#src.models.architectures.base_model.TaskModel" title="src.models.architectures.base_model.TaskModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.models.architectures.base_model.TaskModel</span></code></a></p>
+<p>Two-In-One model implementation, meaning the model solves both tasks simultaneously based on a single pass through
+the backbone (CNN)</p>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tensorflow.keras.applications.mobilenet</span> <span class="kn">import</span> <span class="n">MobileNet</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">backbone</span> <span class="o">=</span> <span class="n">MobileNet</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">TwoInOneModel</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="s1">&#39;my-weights.h5&#39;</span><span class="p">,</span> <span class="n">by_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">some_input</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneModel.compile">
+<span class="sig-name descname"><span class="pre">compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">losses</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneModel.compile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneModel.compile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extended <cite>keras.Model.compile</cite>.
+Adds default <cite>Adam</cite> optimizer and Accuracy metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>learning_rate</strong> – the learning rate to train with</p></li>
+<li><p><strong>loss_weights</strong> – Task individual weight, when calculating overall loss</p></li>
+<li><p><strong>losses</strong> – the loss functions to optimize</p></li>
+<li><p><strong>metrics</strong> – additional metrics to calculate during training</p></li>
+<li><p><strong>args</strong> – will be passed as args to parent implementation</p></li>
+<li><p><strong>kwargs</strong> – will be passed as kwargs to parent implementation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneModel.evaluate_model">
+<span class="sig-name descname"><span class="pre">evaluate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validation_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneModel.evaluate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneModel.evaluate_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to evaluate predictive power of solver.</p>
+<p>Computes
+- Regression:
+* GIoU-Loss
+* RMSE
+- Classification:
+* Accuracy
+* F1-Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>validation_set</strong> – validation data set to use</p></li>
+<li><p><strong>preprocessing_method</strong> – preprocessing method to apply before predicting</p></li>
+<li><p><strong>render_samples</strong> – if <cite>True</cite> renders confusion matrix of classification and samples for bbox regression</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneModel.evaluate_predictions">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">evaluate_predictions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneModel.evaluate_predictions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneModel.evaluate_predictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>shadowed method, nothing implemented here.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneModel.from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.models.solvers.two_in_one.TwoInOneModel" title="src.models.solvers.two_in_one.TwoInOneModel"><span class="pre">src.models.solvers.two_in_one.TwoInOneModel</span></a></span></span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneModel.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneModel.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to bootstrap solver out of configuration dictionary
+:param cfg: configuration dictionary
+:return: new TwoInOneModel instance</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneModel.model_type">
+<span class="sig-name descname"><span class="pre">model_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="src.data.html#src.data.constants.ModelType" title="src.data.constants.ModelType"><span class="pre">src.data.constants.ModelType</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneModel.model_type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneTFLite">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TwoInOneTFLite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneTFLite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneTFLite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>TFLite implementation of <cite>TwoInOneModel</cite></p>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">TwoInOneModel</span><span class="p">(</span><span class="s1">&#39;my-weights.tflite&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">some_input</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneTFLite.evaluate_model">
+<span class="sig-name descname"><span class="pre">evaluate_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validation_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing_method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneTFLite.evaluate_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneTFLite.evaluate_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to evaluate predictive power of solver.</p>
+<p>Computes
+- Regression:
+* GIoU-Loss
+* RMSE
+- Classification:
+* Accuracy
+* F1-Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>validation_set</strong> – validation data set to use</p></li>
+<li><p><strong>preprocessing_method</strong> – preprocessing method to apply before predicting</p></li>
+<li><p><strong>render_samples</strong> – if <cite>True</cite> renders confusion matrix of classification and samples for bbox regression</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneTFLite.from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#src.models.solvers.two_in_one.TwoInOneTFLite" title="src.models.solvers.two_in_one.TwoInOneTFLite"><span class="pre">src.models.solvers.two_in_one.TwoInOneTFLite</span></a></span></span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneTFLite.from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneTFLite.from_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor to load model from config-dict
+:param cfg: configuration dictionary
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_in_one.TwoInOneTFLite.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_in_one.html#TwoInOneTFLite.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_in_one.TwoInOneTFLite.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs prediction
+:param X: vector of input features
+:return: prediction done by the model</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.models.solvers.two_stage">
+<span id="src-models-solvers-two-stage-module"></span><h2>src.models.solvers.two_stage module<a class="headerlink" href="#module-src.models.solvers.two_stage" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.solvers.two_stage.TwoStageModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TwoStageModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">regressor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classifier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(224,</span> <span class="pre">224,</span> <span class="pre">3)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_tflite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_stage.html#TwoStageModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_stage.TwoStageModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.models.solvers.tf_lite.MultiTaskModel" title="src.models.solvers.tf_lite.MultiTaskModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.models.solvers.tf_lite.MultiTaskModel</span></code></a></p>
+<p>Object detection model using dependent/sequential methods to solve the localization and classification tasks.
+A regressor predicts the location, the original input image gets cropped to a patch containing the extracted
+Bounding Box. Afterwards a classifier predicts the class label, based on the cropped input.</p>
+<p>[Similar to <cite>IndependentModel</cite>]</p>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tensorflow.keras.applications.mobilenet</span> <span class="kn">import</span> <span class="n">MobileNet</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">src.models.architectures.classifier</span> <span class="kn">import</span> <span class="n">Classifier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">src.models.architectures.bounding_boxes</span> <span class="kn">import</span> <span class="n">BoundingBoxRegressor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clf_backbone</span> <span class="o">=</span> <span class="n">MobileNet</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reg_backbone</span> <span class="o">=</span> <span class="n">MobileNet</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s1">&#39;imagenet&#39;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">regressor</span> <span class="o">=</span> <span class="n">BoundingBoxRegressor</span><span class="p">(</span><span class="n">reg_backbone</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">classifier</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">clf_backbone</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">solver</span> <span class="o">=</span> <span class="n">TwoStageModel</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.solvers.two_stage.TwoStageModel.model_name">
+<span class="sig-name descname"><span class="pre">model_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'two-stage-model'</span></em><a class="headerlink" href="#src.models.solvers.two_stage.TwoStageModel.model_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.solvers.two_stage.TwoStageModel.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/solvers/two_stage.html#TwoStageModel.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.solvers.two_stage.TwoStageModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs dependent predictions on input <cite>X</cite>.</p>
+<p>Regressor receives raw <cite>X</cite> -&gt; returns <cite>c</cite>
+<cite>X</cite> is cropped using <cite>c</cite> -&gt; <cite>X_hat</cite>
+Classifier receives <cite>X_hat</cite> -&gt; returns <cite>y</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> – vector of input images</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Prediction Tuple [y, c]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.models.solvers">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.models.solvers" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="src.models.tf_lite.html" class="btn btn-neutral float-right" title="src.models.tf_lite package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="src.models.architectures.html" class="btn btn-neutral float-left" title="src.models.architectures package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

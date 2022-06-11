@@ -1,0 +1,589 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>scripts.process_files &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../src.html">src package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>scripts.process_files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for scripts.process_files</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">rng</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">copyfile</span>
+<span class="kn">from</span> <span class="nn">statistics</span> <span class="kn">import</span> <span class="n">mean</span><span class="p">,</span> <span class="n">median</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pytz</span>
+
+<span class="kn">from</span> <span class="nn">scripts.constants</span> <span class="kn">import</span> <span class="n">CLASS_MAP</span>
+<span class="kn">from</span> <span class="nn">src.data.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BBoxLabelType</span><span class="p">,</span> <span class="n">ClassLabelType</span><span class="p">,</span>
+                                <span class="n">LabeledFileDictType</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">src.models.data_structures</span> <span class="kn">import</span> <span class="n">BoundingBox</span>
+
+
+<div class="viewcode-block" id="extract_file_name"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.extract_file_name">[docs]</a><span class="k">def</span> <span class="nf">extract_file_name</span><span class="p">(</span><span class="n">elem</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts file name from dictionary</span>
+
+<span class="sd">    :param elem: dictionary holding image annotations</span>
+<span class="sd">    :return: the file name of the annotated image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">elem</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;image&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">fn</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="extract_label"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.extract_label">[docs]</a><span class="k">def</span> <span class="nf">extract_label</span><span class="p">(</span><span class="n">elem</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">BBoxLabelType</span><span class="p">,</span> <span class="n">ClassLabelType</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts labels from element dictionary</span>
+
+<span class="sd">    :param elem:</span>
+<span class="sd">    :return: Bounding Box coordinates and class label: ((y_min, x_min, y_max, x_max), label)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">elem</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;result&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;height&#39;</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;width&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">),</span> <span class="n">res</span><span class="p">[</span><span class="s1">&#39;rectanglelabels&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="load_element"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.load_element">[docs]</a><span class="k">def</span> <span class="nf">load_element</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">in_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    load element from data dict</span>
+
+<span class="sd">    :param elem: annotated image</span>
+<span class="sd">    :param in_directory: source directory of annotated image</span>
+<span class="sd">    :return: converted annotations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="n">extract_label</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">in_directory</span><span class="p">,</span> <span class="n">extract_file_name</span><span class="p">(</span><span class="n">elem</span><span class="p">)),</span>
+        <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">label</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="s1">&#39;bbs&#39;</span><span class="p">:</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="load_labels_from_bbox_file"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.load_labels_from_bbox_file">[docs]</a><span class="k">def</span> <span class="nf">load_labels_from_bbox_file</span><span class="p">(</span><span class="n">bbox_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">in_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LabeledFileDictType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    loads all available labels from dataset file</span>
+
+<span class="sd">    :param bbox_file: file holding BBox annotations</span>
+<span class="sd">    :param in_directory: source directory of annotations</span>
+<span class="sd">    :return: dictionary of annotated source image files</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">bbox_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">)</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+        <span class="n">labeled_element</span> <span class="o">=</span> <span class="n">load_element</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">in_directory</span><span class="p">)</span>
+        <span class="n">files</span><span class="p">[</span><span class="n">labeled_element</span><span class="p">[</span><span class="s1">&#39;path&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">labeled_element</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">files</span></div>
+
+
+<div class="viewcode-block" id="load_labels_from_bbox_files"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.load_labels_from_bbox_files">[docs]</a><span class="k">def</span> <span class="nf">load_labels_from_bbox_files</span><span class="p">(</span><span class="n">bbox_files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">in_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LabeledFileDictType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    loads all labels from all provided files</span>
+
+<span class="sd">    :param bbox_files: list of BBox annotation files</span>
+<span class="sd">    :param in_directory: source directory for annotated images</span>
+<span class="sd">    :return: dictionary holding annotated images</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">bbox_files</span><span class="p">:</span>
+        <span class="n">files</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">load_labels_from_bbox_file</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">in_directory</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">files</span></div>
+
+
+<div class="viewcode-block" id="create_directory_structure"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.create_directory_structure">[docs]</a><span class="k">def</span> <span class="nf">create_directory_structure</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">class_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates test, train and validation directories</span>
+
+<span class="sd">    :param directory: root directory to create directories in</span>
+<span class="sd">    :param class_names: set of available class names in the data set</span>
+<span class="sd">    :return: Tuple holding test, train and validation directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sub_dirs</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">),</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">),</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;validation&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">directories</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sub_dir</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">class_names</span>
+        <span class="k">for</span> <span class="n">sub_dir</span> <span class="ow">in</span> <span class="n">sub_dirs</span>
+    <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">directories</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sub_dirs</span></div>
+
+
+<div class="viewcode-block" id="split_labeled_files"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.split_labeled_files">[docs]</a><span class="k">def</span> <span class="nf">split_labeled_files</span><span class="p">(</span>
+        <span class="n">files</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">test_share</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">validation_share</span><span class="p">:</span> <span class="nb">float</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">LabeledFileDictType</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Splits given files into test/train/validation sets</span>
+
+<span class="sd">    :param files: Annotated image dictionary</span>
+<span class="sd">    :param test_share: pct of test samples (\in [0, 1])</span>
+<span class="sd">    :param validation_share: pct of validation samples (\in [0, 1])</span>
+<span class="sd">    :return: three annotation dictionaries: test, train, validation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filenames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">files</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="n">num_files</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
+    <span class="n">file_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_files</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">file_indices</span><span class="p">)</span>
+
+    <span class="c1"># calculate exact numbers of samples for each data set</span>
+    <span class="n">number_test_elements</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file_indices</span><span class="p">)</span> <span class="o">*</span> <span class="n">test_share</span><span class="p">))</span>
+    <span class="n">number_train_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_indices</span><span class="p">)</span> <span class="o">-</span> <span class="n">number_test_elements</span>
+    <span class="n">number_validation_elements</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">number_train_samples</span> <span class="o">*</span> <span class="n">validation_share</span><span class="p">))</span>
+
+    <span class="c1"># test/training split</span>
+    <span class="n">test_filenames</span> <span class="o">=</span> <span class="n">filenames</span><span class="p">[</span><span class="n">file_indices</span><span class="p">[:</span><span class="n">number_test_elements</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">training_indices</span> <span class="o">=</span> <span class="n">file_indices</span><span class="p">[</span><span class="n">number_test_elements</span><span class="p">:]</span>
+
+    <span class="c1"># del file_array</span>
+
+    <span class="c1"># validation/train split</span>
+    <span class="n">validation_filenames</span> <span class="o">=</span> <span class="n">filenames</span><span class="p">[</span><span class="n">training_indices</span><span class="p">[:</span><span class="n">number_validation_elements</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">train_filenames</span> <span class="o">=</span> <span class="n">filenames</span><span class="p">[</span><span class="n">training_indices</span><span class="p">[</span><span class="n">number_validation_elements</span><span class="p">:]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">files</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">test_filenames</span><span class="p">},</span>
+        <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">files</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">train_filenames</span><span class="p">},</span>
+        <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">files</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">validation_filenames</span><span class="p">}</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="spread_files"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.spread_files">[docs]</a><span class="k">def</span> <span class="nf">spread_files</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">target_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">LabeledFileDictType</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    copies files from input to target directory nested in class directories</span>
+
+<span class="sd">    :param files: annotated image dictionary</span>
+<span class="sd">    :param target_directory: target root directory</span>
+<span class="sd">    :param label_names: set of available class names in the data set</span>
+<span class="sd">    :return: copy of `files` with new location in `target_directory`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">directories</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">target_directory</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">label_names</span><span class="p">]</span>
+    <span class="n">new_files</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">files</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filepath</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">directories</span><span class="p">[</span><span class="n">CLASS_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">])]</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">copyfile</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+        <span class="n">new_files</span><span class="p">[</span><span class="n">filename</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="k">return</span> <span class="n">new_files</span></div>
+
+
+<div class="viewcode-block" id="create_config_file"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.create_config_file">[docs]</a><span class="k">def</span> <span class="nf">create_config_file</span><span class="p">(</span>
+        <span class="n">test_set</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">train_set</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">val_set</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span>
+        <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates JSON Dataset configuration file from given data</span>
+
+<span class="sd">    :param test_set: annotated test data set</span>
+<span class="sd">    :param train_set: annotated train data set</span>
+<span class="sd">    :param val_set:  annotated validation data set</span>
+<span class="sd">    :param label_names: set of available class labels in the data set</span>
+<span class="sd">    :param output_file: target file path + name for the configuration file</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">file_content</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">label_names</span><span class="p">),</span>
+        <span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="n">train_set</span><span class="p">,</span>
+        <span class="s1">&#39;validation&#39;</span><span class="p">:</span> <span class="n">val_set</span><span class="p">,</span>
+        <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="n">test_set</span><span class="p">,</span>
+        <span class="s1">&#39;created_at&#39;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">pytz</span><span class="o">.</span><span class="n">timezone</span><span class="p">(</span><span class="s1">&#39;Europe/Berlin&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%Y %H:%M:%S&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">file_content</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_dataset_structure"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.create_dataset_structure">[docs]</a><span class="k">def</span> <span class="nf">create_dataset_structure</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">dir_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">test_split</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                             <span class="n">val_split</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates dataset directory structure for given data.</span>
+
+<span class="sd">    :param files: files to process</span>
+<span class="sd">    :param label_names: set of available class labels</span>
+<span class="sd">    :param dir_name: name of target directory</span>
+<span class="sd">    :param test_split: share of test data (\in [0, 1])</span>
+<span class="sd">    :param val_split:  share of validation data  (\in [0, 1])</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">test_dir</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">val_dir</span> <span class="o">=</span> <span class="n">create_directory_structure</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+    <span class="n">test_set</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">val_set</span> <span class="o">=</span> <span class="n">split_labeled_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">test_split</span><span class="p">,</span> <span class="n">val_split</span><span class="p">)</span>
+
+    <span class="n">test_set</span> <span class="o">=</span> <span class="n">spread_files</span><span class="p">(</span><span class="n">test_set</span><span class="p">,</span> <span class="n">test_dir</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+    <span class="n">train_set</span> <span class="o">=</span> <span class="n">spread_files</span><span class="p">(</span><span class="n">train_set</span><span class="p">,</span> <span class="n">train_dir</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+    <span class="n">val_set</span> <span class="o">=</span> <span class="n">spread_files</span><span class="p">(</span><span class="n">val_set</span><span class="p">,</span> <span class="n">val_dir</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+
+    <span class="n">create_config_file</span><span class="p">(</span><span class="n">test_set</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">val_set</span><span class="p">,</span> <span class="n">label_names</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dir_name</span><span class="p">,</span> <span class="s1">&#39;dataset-structure.json&#39;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_genera_file_stats_for_directory"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.get_genera_file_stats_for_directory">[docs]</a><span class="k">def</span> <span class="nf">get_genera_file_stats_for_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Counts number of samples for each genus</span>
+
+<span class="sd">    :param directory: source root directory</span>
+<span class="sd">    :param label_names: set of class names/subdirectories to find in root directory</span>
+<span class="sd">    :return: Dictionary holding statistics `genus: file_count`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">files_per_genera</span> <span class="o">=</span> <span class="nb">dict</span><span class="o">.</span><span class="n">fromkeys</span><span class="p">(</span><span class="n">label_names</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">genera</span> <span class="ow">in</span> <span class="n">files_per_genera</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">genera</span><span class="p">))</span>
+        <span class="n">files_per_genera</span><span class="p">[</span><span class="n">genera</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;.jpg&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="n">files</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">files_per_genera</span></div>
+
+
+<div class="viewcode-block" id="test_output_directory"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.test_output_directory">[docs]</a><span class="k">def</span> <span class="nf">test_output_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Validates output directory for correctness</span>
+
+<span class="sd">    :param directory:  root directory of data set</span>
+<span class="sd">    :param label_names: available class labels in data set</span>
+<span class="sd">    :return: statistics for the test, train and validation sets</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">test_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+    <span class="n">train_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;train&#39;</span><span class="p">)</span>
+    <span class="n">val_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;validation&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">plot_stats</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">stats</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Distribution of samples per Order in the &quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot; set&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">-distribution&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">.eps&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">test_stats</span> <span class="o">=</span> <span class="n">get_genera_file_stats_for_directory</span><span class="p">(</span><span class="n">test_dir</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+    <span class="n">train_stats</span> <span class="o">=</span> <span class="n">get_genera_file_stats_for_directory</span><span class="p">(</span><span class="n">train_dir</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+    <span class="n">val_stats</span> <span class="o">=</span> <span class="n">get_genera_file_stats_for_directory</span><span class="p">(</span><span class="n">val_dir</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+    <span class="n">total_stats</span> <span class="o">=</span> <span class="p">{</span><span class="n">label</span><span class="p">:</span> <span class="nb">sum</span><span class="p">([</span><span class="n">test_stats</span><span class="p">[</span><span class="n">label</span><span class="p">],</span> <span class="n">train_stats</span><span class="p">[</span><span class="n">label</span><span class="p">],</span> <span class="n">val_stats</span><span class="p">[</span><span class="n">label</span><span class="p">]])</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">label_names</span><span class="p">}</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+    <span class="n">sample_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">total_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">train_share</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">train_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="n">sample_count</span>
+    <span class="n">validation_share</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">val_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="n">sample_count</span>
+    <span class="n">test_share</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">test_stats</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="o">/</span> <span class="n">sample_count</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">label_names</span><span class="p">,</span> <span class="n">train_stats</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;train set (</span><span class="si">{</span><span class="n">train_share</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">%)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">label_names</span><span class="p">,</span> <span class="n">val_stats</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;validation set (</span><span class="si">{</span><span class="n">validation_share</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">%)&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">label_names</span><span class="p">,</span> <span class="n">test_stats</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;test set (</span><span class="si">{</span><span class="n">test_share</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s1">.0f</span><span class="si">}</span><span class="s1">%)&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span>  <span class="c1"># Position of legend,</span>
+        <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>  <span class="c1"># Small spacing around legend box</span>
+        <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Distributions for samples per order&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;stacked-chart.eps&#39;</span><span class="p">),</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s1">&#39;stacked-chart.png&#39;</span><span class="p">),</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">,</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">plot_stats</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">test_stats</span><span class="p">)</span>
+    <span class="n">plot_stats</span><span class="p">(</span><span class="s1">&#39;training&#39;</span><span class="p">,</span> <span class="n">train_stats</span><span class="p">)</span>
+    <span class="n">plot_stats</span><span class="p">(</span><span class="s1">&#39;validation&#39;</span><span class="p">,</span> <span class="n">val_stats</span><span class="p">)</span>
+    <span class="n">plot_stats</span><span class="p">(</span><span class="s1">&#39;total data&#39;</span><span class="p">,</span> <span class="n">total_stats</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">test_stats</span><span class="p">,</span> <span class="n">train_stats</span><span class="p">,</span> <span class="n">val_stats</span></div>
+
+
+<div class="viewcode-block" id="bounding_box_stats"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.bounding_box_stats">[docs]</a><span class="k">def</span> <span class="nf">bounding_box_stats</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generates statistics for available bounding boxes.</span>
+<span class="sd">    Calculates min, max, mean and avg width and heights</span>
+
+<span class="sd">    :param files: dictionary of annotated image files</span>
+<span class="sd">    :return: general statistics for bounding boxes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bbs</span> <span class="o">=</span> <span class="p">[</span><span class="n">BoundingBox</span><span class="p">(</span><span class="o">**</span><span class="n">elem</span><span class="p">[</span><span class="s1">&#39;bbs&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">files</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">widths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bbs</span><span class="p">]</span>
+    <span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">h</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bbs</span><span class="p">]</span>
+
+    <span class="c1"># TODO: (PZ) extend with coordinate statistics</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s1">&#39;max&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">widths</span><span class="p">),</span>
+            <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="n">heights</span><span class="p">),</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;min&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">widths</span><span class="p">),</span>
+            <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="n">heights</span><span class="p">),</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;avg&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="n">mean</span><span class="p">(</span><span class="n">widths</span><span class="p">),</span>
+            <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="n">mean</span><span class="p">(</span><span class="n">heights</span><span class="p">),</span>
+        <span class="p">},</span>
+        <span class="s1">&#39;median&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s1">&#39;width&#39;</span><span class="p">:</span> <span class="n">median</span><span class="p">(</span><span class="n">widths</span><span class="p">),</span>
+            <span class="s1">&#39;height&#39;</span><span class="p">:</span> <span class="n">median</span><span class="p">(</span><span class="n">heights</span><span class="p">),</span>
+        <span class="p">},</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="generate_statistics"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.generate_statistics">[docs]</a><span class="k">def</span> <span class="nf">generate_statistics</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">target_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate statistics over the processed data sets</span>
+
+<span class="sd">    :param files: dictionary holding annotated image files</span>
+<span class="sd">    :param target_directory: root directory for files</span>
+<span class="sd">    :param label_names: available class labels in the data set</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bb_stats</span> <span class="o">=</span> <span class="n">bounding_box_stats</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">test</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">val</span> <span class="o">=</span> <span class="n">test_output_directory</span><span class="p">(</span><span class="n">target_directory</span><span class="p">,</span> <span class="n">label_names</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Bounding Box statistics:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">bb_stats</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Test dataset stats:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Train dataset stats:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Validation dataset stats:&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">val</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># Initiate the parser</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;bbox_label_files&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;name of bbox label file(s) to load labels from&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;input_directory&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;name of the directory to load labeled images from&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;output_directory&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;name of the directory to save labeled images to&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-val&#39;</span><span class="p">,</span> <span class="s1">&#39;--validation-split&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;val_split&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Share of samples for the validation set; in decimal format in range [0, 1]&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-test&#39;</span><span class="p">,</span> <span class="s1">&#39;--test-split&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;test_split&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Share of samples for the test set; in decimal format in range [0, 1]&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--reuse_directory&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;use existing files from this directory&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;reuse_directory&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;use existing files from this directory&#39;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--seed&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;Seed to use for rng&#39;</span><span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">args</span><span class="o">.</span><span class="n">test_split</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Test share </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">test_split</span><span class="si">}</span><span class="s1"> not in range [0, 1]&#39;</span>
+    <span class="k">assert</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">args</span><span class="o">.</span><span class="n">val_split</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Validation share </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">val_split</span><span class="si">}</span><span class="s1"> not in range [0, 1]&#39;</span>
+
+    <span class="n">rng</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="n">labeled_files</span> <span class="o">=</span> <span class="n">load_labels_from_bbox_files</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">bbox_label_files</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">input_directory</span><span class="p">)</span>
+
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="n">genera</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">genera</span> <span class="ow">in</span> <span class="n">CLASS_MAP</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+    <span class="n">create_dataset_structure</span><span class="p">(</span><span class="n">labeled_files</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">test_split</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">val_split</span><span class="p">)</span>
+    <span class="n">generate_statistics</span><span class="p">(</span><span class="n">labeled_files</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -129,11 +129,11 @@ class TwoInOneModel(TaskModel):
 
         Computes
         - Regression:
-            - GIoU-Loss
-            - RMSE
+        * GIoU-Loss
+        * RMSE
         - Classification:
-            - Accuracy
-            - F1-Score
+        * Accuracy
+        * F1-Score
 
         :param validation_set: validation data set to use
         :param preprocessing_method: preprocessing method to apply before predicting
@@ -210,11 +210,11 @@ class TwoInOneTFLite:
 
         Computes
         - Regression:
-            - GIoU-Loss
-            - RMSE
+        * GIoU-Loss
+        * RMSE
         - Classification:
-            - Accuracy
-            - F1-Score
+        * Accuracy
+        * F1-Score
 
         :param validation_set: validation data set to use
         :param preprocessing_method: preprocessing method to apply before predicting

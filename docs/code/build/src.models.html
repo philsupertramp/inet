@@ -1,0 +1,459 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>src.models package &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.models.architectures package" href="src.models.architectures.html" />
+    <link rel="prev" title="src.losses package" href="src.losses.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="src.data.html">src.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.losses.html">src.losses package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">src.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.models.data_structures">src.models.data_structures module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.models.hyper_parameter_optimization">src.models.hyper_parameter_optimization module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src.helpers">src.helpers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="src.html">src package</a> &raquo;</li>
+        
+      <li>src.models package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/src.models.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="src-models-package">
+<h1>src.models package<a class="headerlink" href="#src-models-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.models.architectures.html">src.models.architectures package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#module-src.models.architectures.base_model">src.models.architectures.base_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#module-src.models.architectures.bounding_boxes">src.models.architectures.bounding_boxes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#module-src.models.architectures.classifier">src.models.architectures.classifier module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#module-src.models.architectures">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.models.solvers.html">src.models.solvers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#module-src.models.solvers.common">src.models.solvers.common module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#module-src.models.solvers.independent">src.models.solvers.independent module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#module-src.models.solvers.tf_lite">src.models.solvers.tf_lite module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#module-src.models.solvers.two_in_one">src.models.solvers.two_in_one module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#module-src.models.solvers.two_stage">src.models.solvers.two_stage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#module-src.models.solvers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.models.tf_lite.html">src.models.tf_lite package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.models.tf_lite.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.tf_lite.html#module-src.models.tf_lite.convert_to_tflite">src.models.tf_lite.convert_to_tflite module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.tf_lite.html#module-src.models.tf_lite.tflite_methods">src.models.tf_lite.tflite_methods module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.tf_lite.html#module-src.models.tf_lite">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-src.models.data_structures">
+<span id="src-models-data-structures-module"></span><h2>src.models.data_structures module<a class="headerlink" href="#module-src.models.data_structures" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BoundingBox</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/data_structures.html#BoundingBox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.data_structures.BoundingBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>BoundingBox representation to parse, draw and evaluate</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.A_I">
+<span class="sig-name descname"><span class="pre">A_I</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.models.data_structures.BoundingBox" title="src.models.data_structures.BoundingBox"><span class="pre">src.models.data_structures.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/src/models/data_structures.html#BoundingBox.A_I"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.data_structures.BoundingBox.A_I" title="Permalink to this definition">¶</a></dt>
+<dd><p>Area of intersection with another BBox <cite>other</cite>
+:param other: a different BBox
+:return: the area of intersection</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.A_U">
+<span class="sig-name descname"><span class="pre">A_U</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.models.data_structures.BoundingBox" title="src.models.data_structures.BoundingBox"><span class="pre">src.models.data_structures.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/src/models/data_structures.html#BoundingBox.A_U"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.data_structures.BoundingBox.A_U" title="Permalink to this definition">¶</a></dt>
+<dd><p>Area of union with other BBox <cite>other</cite>
+:param other: a different BBox
+:return: the area of union</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.GIoU">
+<span class="sig-name descname"><span class="pre">GIoU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.models.data_structures.BoundingBox" title="src.models.data_structures.BoundingBox"><span class="pre">src.models.data_structures.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/src/models/data_structures.html#BoundingBox.GIoU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.data_structures.BoundingBox.GIoU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generalized intersection over union (GIoU) based on [the paper](<a class="reference external" href="https://giou.stanford.edu/GIoU.pdf">https://giou.stanford.edu/GIoU.pdf</a>)
+:param other: other BB to compute GIoU with
+:return: GIoU for <cite>self</cite> and <cite>other</cite></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.IoU">
+<span class="sig-name descname"><span class="pre">IoU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.models.data_structures.BoundingBox" title="src.models.data_structures.BoundingBox"><span class="pre">src.models.data_structures.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/src/models/data_structures.html#BoundingBox.IoU"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.data_structures.BoundingBox.IoU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the intersection over union (IoU) with a different BBox <cite>other</cite>
+:param other: a different BBox
+:return: intersection over union value</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.area">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#src.models.data_structures.BoundingBox.area" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'red'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/models/data_structures.html#BoundingBox.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.data_structures.BoundingBox.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to render BBox into a graphic-context <cite>gc</cite>
+:param gc: graphics-context, e.g. <cite>matplotlib.pyplot.gca()</cite>
+:param color: the color of the BBox
+:return:</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.half_h">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">half_h</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#src.models.data_structures.BoundingBox.half_h" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>half of the bbs height</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.half_w">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">half_w</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#src.models.data_structures.BoundingBox.half_w" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>half of the bbs width</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.overlap">
+<span class="sig-name descname"><span class="pre">overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bb2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#src.models.data_structures.BoundingBox" title="src.models.data_structures.BoundingBox"><span class="pre">src.models.data_structures.BoundingBox</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#src.models.data_structures.BoundingBox" title="src.models.data_structures.BoundingBox"><span class="pre">src.models.data_structures.BoundingBox</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/src/models/data_structures.html#BoundingBox.overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.data_structures.BoundingBox.overlap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates an overlapping BBox/convex hull around <cite>self</cite> and <cite>bb2</cite>
+:param bb2: a different BBox
+:return: when overlapping, a new BBox containing both BBoxes</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.x_max">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#src.models.data_structures.BoundingBox.x_max" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>x-max coordinate</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.models.data_structures.BoundingBox.y_max">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y_max</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#src.models.data_structures.BoundingBox.y_max" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>y-max coordinate</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.data_structures.ModelArchitecture">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ModelArchitecture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tensorflow.python.keras.engine.sequential.Sequential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">tensorflow.python.keras.engine.sequential.Sequential</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="src.models.architectures.html#src.models.architectures.base_model.TaskModel" title="src.models.architectures.base_model.TaskModel"><span class="pre">src.models.architectures.base_model.TaskModel</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/data_structures.html#ModelArchitecture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.data_structures.ModelArchitecture" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Helper dataclass to simplify creation of model architecture, mostly used in development notebooks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.data_structures.ModelArchitecture.backbone">
+<span class="sig-name descname"><span class="pre">backbone</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tensorflow.python.keras.engine.sequential.Sequential</span></em><a class="headerlink" href="#src.models.data_structures.ModelArchitecture.backbone" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.data_structures.ModelArchitecture.create_model">
+<span class="sig-name descname"><span class="pre">create_model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">tensorflow.python.keras.engine.sequential.Sequential</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="src.models.architectures.html#src.models.architectures.base_model.TaskModel" title="src.models.architectures.base_model.TaskModel"><span class="pre">src.models.architectures.base_model.TaskModel</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.models.data_structures.ModelArchitecture.create_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.data_structures.ModelArchitecture.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#src.models.data_structures.ModelArchitecture.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.models.hyper_parameter_optimization">
+<span id="src-models-hyper-parameter-optimization-module"></span><h2>src.models.hyper_parameter_optimization module<a class="headerlink" href="#module-src.models.hyper_parameter_optimization" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FrozenBlockConf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#FrozenBlockConf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Helper to freeze layers in a sequential model</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_ALL">
+<span class="sig-name descname"><span class="pre">TRAIN_ALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_ALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_HALF">
+<span class="sig-name descname"><span class="pre">TRAIN_HALF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_HALF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_NONE">
+<span class="sig-name descname"><span class="pre">TRAIN_NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.choices">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">choices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#FrozenBlockConf.choices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.choices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to get list of available choices</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#FrozenBlockConf.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to propagate selection through a model instance
+:param backbone: the model to configure
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.plot_hpo_values">
+<span class="sig-name descname"><span class="pre">plot_hpo_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#plot_hpo_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.plot_hpo_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to display course of HP values during a HPO</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.read_trials">
+<span class="sig-name descname"><span class="pre">read_trials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#read_trials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.read_trials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads trial files provided by [keras-tuner](<a class="reference external" href="https://keras.io/keras_tuner/">https://keras.io/keras_tuner/</a>).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.models" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="src.models.architectures.html" class="btn btn-neutral float-right" title="src.models.architectures package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="src.losses.html" class="btn btn-neutral float-left" title="src.losses package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

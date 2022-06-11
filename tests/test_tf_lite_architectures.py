@@ -1,3 +1,6 @@
+"""
+Inference tests using TFLite models
+"""
 import numpy as np
 from tensorflow.keras.applications.mobilenet import MobileNet
 from tensorflow.keras.applications.mobilenet import \

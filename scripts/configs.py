@@ -1,20 +1,30 @@
+"""
+
+"""
 import functools
+from typing import Dict, Tuple
 
 from tensorflow.keras.applications.mobilenet import \
     preprocess_input as mobilenet_preprocess_input
 
 from src.data.load_dataset import directory_to_classification_dataset
 from src.losses.giou_loss import GIoULoss
-from src.models.independent import IndependentModel
-from src.models.two_in_one import TwoInOneTFLite
-from src.models.two_stage import TwoStageModel
+from src.models.solvers.independent import IndependentModel
+from src.models.solvers.two_in_one import TwoInOneTFLite
+from src.models.solvers.two_stage import TwoStageModel
 
 
-def create_conversion_config(input_shape):
-    from src.models.convert_to_tflite import (ClusterMethod,
-                                              QuantizationMethod,
-                                              cluster_weights,
-                                              create_quantize_model)
+def create_conversion_config(input_shape: Tuple[int, int, int]) -> Dict:
+    """
+    Creates configuration to convert trained TF models to TFLite models
+
+    :param input_shape: shape of the expected input features
+    :return: Conversion configuration
+    """
+    from src.models.tf_lite.convert_to_tflite import (ClusterMethod,
+                                                      QuantizationMethod,
+                                                      cluster_weights,
+                                                      create_quantize_model)
     cropped_test_set, cropped_train_set, _ = directory_to_classification_dataset(
         'data/iNat/cropped-data',
         img_width=input_shape[1],
@@ -134,6 +144,17 @@ def create_conversion_config(input_shape):
 
 
 def create_config():
+    """
+    Creates configuration to build three final models:
+
+    #. Independent
+
+    #. Two-Stage
+
+    #. Single-Stage
+
+    :return: Final model configuration
+    """
     return {
         'independent': {
             'model_cls': IndependentModel,
@@ -212,6 +233,17 @@ def create_config():
 
 
 def create_tflite_config():
+    """
+    Creates TFLite configuration for the final three models:
+
+    #. Independent
+
+    #. Two-Stage
+
+    #. Single-Stage
+
+    :return: Final TFLite model configuration
+    """
     return {
         'independent': {
             'model_cls': IndependentModel,

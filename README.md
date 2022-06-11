@@ -12,20 +12,13 @@ The repository contains the `./docs` directory holding research and the theoreti
 A demo app is under development, that can be found in the `./src/webapp` directory.
 
 The accommodating code to the paper and the webapp is located in `./src`.
-- `./src/models`: Model architectures
-- `./src/data`: Data loading, augmentation and visualization untils
-- `./src/losses`: custom implementation for losses (implements `GIoULoss`)
-- `./src/helpers`: collection of common helper/utility methods
-
- a demo webapp and several scripts used during the preparation of the first dataset as well
-as the first design of model architectures.
-The directory `src/` contains different model architectures `src/models/` that are all designed to solve the supervised learning
-tasks of classification and bounding box regression, either individually or combined.
+For more details consult the documentation pages.
 
 ## Visuals
 
 ### Data Augmentation
-![Augmentation examples](./notebooks/visualizations/classification-test.png)
+![](_static/data.png)
+![](./data.png)
 
 ## Installation
 

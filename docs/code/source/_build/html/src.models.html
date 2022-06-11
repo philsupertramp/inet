@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>src.models package &#8212; inet  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.models.architectures package" href="src.models.architectures.html" />
+    <link rel="prev" title="src.losses package" href="src.losses.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="src-models-package">
+<h1>src.models package<a class="headerlink" href="#src-models-package" title="Permalink to this heading">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.models.architectures.html">src.models.architectures package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#src-models-architectures-base-model-module">src.models.architectures.base_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#src-models-architectures-bounding-boxes-module">src.models.architectures.bounding_boxes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#src-models-architectures-classifier-module">src.models.architectures.classifier module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.architectures.html#module-src.models.architectures">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.models.solvers.html">src.models.solvers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#src-models-solvers-common-module">src.models.solvers.common module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#src-models-solvers-independent-module">src.models.solvers.independent module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#src-models-solvers-tf-lite-module">src.models.solvers.tf_lite module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#src-models-solvers-two-in-one-module">src.models.solvers.two_in_one module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#src-models-solvers-two-stage-module">src.models.solvers.two_stage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.solvers.html#module-src.models.solvers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.models.tf_lite.html">src.models.tf_lite package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.models.tf_lite.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.tf_lite.html#src-models-tf-lite-convert-to-tflite-module">src.models.tf_lite.convert_to_tflite module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.tf_lite.html#src-models-tf-lite-tflite-methods-module">src.models.tf_lite.tflite_methods module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.tf_lite.html#module-src.models.tf_lite">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="src-models-data-structures-module">
+<h2>src.models.data_structures module<a class="headerlink" href="#src-models-data-structures-module" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-src.models.hyper_parameter_optimization">
+<span id="src-models-hyper-parameter-optimization-module"></span><h2>src.models.hyper_parameter_optimization module<a class="headerlink" href="#module-src.models.hyper_parameter_optimization" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.models.hyper_parameter_optimization.</span></span><span class="sig-name descname"><span class="pre">FrozenBlockConf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#FrozenBlockConf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Helper to freeze layers in a sequential model</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_ALL">
+<span class="sig-name descname"><span class="pre">TRAIN_ALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_ALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_HALF">
+<span class="sig-name descname"><span class="pre">TRAIN_HALF</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_HALF" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_NONE">
+<span class="sig-name descname"><span class="pre">TRAIN_NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.TRAIN_NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.choices">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">choices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#FrozenBlockConf.choices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.choices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to get list of available choices</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.FrozenBlockConf.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#FrozenBlockConf.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.FrozenBlockConf.process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to propagate selection through a model instance
+:param backbone: the model to configure
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.plot_hpo_values">
+<span class="sig-prename descclassname"><span class="pre">src.models.hyper_parameter_optimization.</span></span><span class="sig-name descname"><span class="pre">plot_hpo_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#plot_hpo_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.plot_hpo_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to display course of HP values during a HPO</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.models.hyper_parameter_optimization.read_trials">
+<span class="sig-prename descclassname"><span class="pre">src.models.hyper_parameter_optimization.</span></span><span class="sig-name descname"><span class="pre">read_trials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span></span></span><a class="reference internal" href="_modules/src/models/hyper_parameter_optimization.html#read_trials"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.hyper_parameter_optimization.read_trials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads trial files provided by [keras-tuner](<a class="reference external" href="https://keras.io/keras_tuner/">https://keras.io/keras_tuner/</a>).</p>
+</dd></dl>
+
+</section>
+<section id="module-src.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.models" title="Permalink to this heading">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">inet</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="src.data.html">src.data package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.losses.html">src.losses package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">src.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src-models-data-structures-module">src.models.data_structures module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.models.hyper_parameter_optimization">src.models.hyper_parameter_optimization module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#src-helpers-module">src.helpers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="src.html">src package</a><ul>
+      <li>Previous: <a href="src.losses.html" title="previous chapter">src.losses package</a></li>
+      <li>Next: <a href="src.models.architectures.html" title="next chapter">src.models.architectures package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, B. Sc. Philipp Zettl.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/src.models.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

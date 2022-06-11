@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>src.losses package &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="src.models package" href="src.models.html" />
+    <link rel="prev" title="src.data package" href="src.data.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="src.data.html">src.data package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">src.losses package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.losses.giou_loss">src.losses.giou_loss module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-src.losses">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.models.html">src.models package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src.helpers">src.helpers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="src.html">src package</a> &raquo;</li>
+        
+      <li>src.losses package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/src.losses.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="src-losses-package">
+<h1>src.losses package<a class="headerlink" href="#src-losses-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-src.losses.giou_loss">
+<span id="src-losses-giou-loss-module"></span><h2>src.losses.giou_loss module<a class="headerlink" href="#module-src.losses.giou_loss" title="Permalink to this headline">¶</a></h2>
+<p>Wrapper implementation for GIoU-Loss.</p>
+<p>Fork of tensorflow_addons.losses.giou_loss
+<a class="reference external" href="https://github.com/tensorflow/addons/blob/b2dafcfa74c5de268b8a5c53813bc0b89cadf386/tensorflow_addons/losses/giou_loss.py">https://github.com/tensorflow/addons/blob/b2dafcfa74c5de268b8a5c53813bc0b89cadf386/tensorflow_addons/losses/giou_loss.py</a></p>
+<p>Forked to bypass version issue with TF 2.4 and unavailable package tensorflow_addons.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.losses.giou_loss.GIoULoss">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GIoULoss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'giou'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'giou_loss'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/losses/giou_loss.html#GIoULoss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.losses.giou_loss.GIoULoss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#src.losses.giou_loss.LossFunctionWrapper" title="src.losses.giou_loss.LossFunctionWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">src.losses.giou_loss.LossFunctionWrapper</span></code></a></p>
+<p>GIoULoss as class instance</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.losses.giou_loss.LossFunctionWrapper">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">LossFunctionWrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/losses/giou_loss.html#LossFunctionWrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.losses.giou_loss.LossFunctionWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tensorflow.python.keras.losses.Loss</span></code></p>
+<p>Wraps a loss function in the <cite>Loss</cite> class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.losses.giou_loss.LossFunctionWrapper.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/losses/giou_loss.html#LossFunctionWrapper.call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.losses.giou_loss.LossFunctionWrapper.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invokes the <cite>LossFunctionWrapper</cite> instance.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>y_true: Ground truth values.
+y_pred: The predicted values.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Loss values per sample.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.losses.giou_loss.LossFunctionWrapper.get_config">
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/losses/giou_loss.html#LossFunctionWrapper.get_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.losses.giou_loss.LossFunctionWrapper.get_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration getter for LossWrapper</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.losses.giou_loss.convert_values">
+<span class="sig-name descname"><span class="pre">convert_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tensorflow.python.framework.ops.Tensor</span></span></span><a class="reference internal" href="_modules/src/losses/giou_loss.html#convert_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.losses.giou_loss.convert_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>converts values of shape [y, x, h, w] into [y_min, x_min, y_max, x_max]
+:param data: bounding box coordinates
+:return: converted bounding box coordinates</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.losses.giou_loss.giou_loss">
+<span class="sig-name descname"><span class="pre">giou_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bb1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bb2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'giou'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tensorflow.python.framework.ops.Tensor</span></span></span><a class="reference internal" href="_modules/src/losses/giou_loss.html#giou_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.losses.giou_loss.giou_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>fork of <cite>tensorflow_addons.losses.giou_loss.giou_loss</cite> internally converts
+<cite>[y, x, h, w] -&gt; [y_min, x_min, y_max, x_max]</cite>
+:param bb1: ground truth bounding box
+:param bb2: predicted bounding box
+:param mode: Mode to use, either ‘giou’ (default) or ‘iou’
+:return: computed giou-loss</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.losses.giou_loss.tf_giou_loss">
+<span class="sig-name descname"><span class="pre">tf_giou_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'giou'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tensorflow.python.framework.ops.Tensor</span></span></span><a class="reference internal" href="_modules/src/losses/giou_loss.html#tf_giou_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.losses.giou_loss.tf_giou_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the GIoU loss function.</p>
+<p>GIoU loss was first introduced in the
+[Generalized Intersection over Union:
+A Metric and A Loss for Bounding Box Regression]
+(<a class="reference external" href="https://giou.stanford.edu/GIoU.pdf">https://giou.stanford.edu/GIoU.pdf</a>).
+GIoU is an enhancement for models which use IoU in object detection.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>y_true: true targets tensor. The coordinates of the each bounding</dt><dd><p>box in boxes are encoded as [y_min, x_min, y_max, x_max].</p>
+</dd>
+<dt>y_pred: predictions tensor. The coordinates of the each bounding</dt><dd><p>box in boxes are encoded as [y_min, x_min, y_max, x_max].</p>
+</dd>
+</dl>
+<p>mode: one of [‘giou’, ‘iou’], decided to calculate GIoU or IoU loss.</p>
+</dd>
+<dt>Returns:</dt><dd><p>GIoU loss float <cite>Tensor</cite>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-src.losses">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.losses" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="src.models.html" class="btn btn-neutral float-right" title="src.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="src.data.html" class="btn btn-neutral float-left" title="src.data package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
