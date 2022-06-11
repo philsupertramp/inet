@@ -1,5 +1,3 @@
-# thesisphilipp
-
 ## Thesis: Machine Learning Methods for Localization and Classification of Insects in Images
 A look into ML methods for single object detection, solving the tasks of insect genera classification
 and bounding box regression, individually as well as simultaneously.
@@ -16,6 +14,7 @@ For more details consult the documentation pages.
 
 ## Visuals
 
+![](_static/dataset-representation.png)
 ### Data Augmentation
 ![](_static/data.png)
 ![](./data.png)
@@ -25,8 +24,8 @@ For more details consult the documentation pages.
 ### Prerequesites:
 - An account to access the VPN, as well as an account to access the NAS is required
 - `openfortivpn`
-- set environment variables according to [`mount_volumes.sh`](mount_volumes.sh)
-- `python >= 3.8, virtualenv`
+- set environment variables according to `./scripts/mount_directories.sh`
+- `python >= 3.8, virtualenv`, optional `docker`
 
 ## Usage
 ### Datasets
@@ -48,9 +47,9 @@ $ python -m scripts.preselect_files --seed 42 -g 20 -s 25 -rng -l ../mnt/KInsekt
 ```
 for more options see `-h`.
 
-4. Upload the files within the (default) target directory `./data/iNat/storage` into ["Label-Studio"](https://labelstudio-kinsekt.app.datexis.com) and generate bounding boxes.
+4. Upload the files within the (default) target directory `./data/iNat/storage` into ["Label-Studio"](https://labelstudio-kinsekt.app.datexis.com) and annotate bounding boxes.
 
-optionally Launch [LabelStudio]()
+optionally Launch [LabelStudio](https://labelstud.io/)
 ```shell
 $ docker run -it -p 8080:8080 -v $PWD/data/iNat:/label-studio/data -e LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true -e LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data heartexlabs/label-studio:latest
 ```
@@ -65,7 +64,30 @@ $ python -m scripts.process_files -input_directory data/iNat/storage -output_dir
 $ python -m scripts.generate_cropped_dataset data/iNat/
 ```
 
-## Features
+### Inference tests
+To test inference of trained models run scripts from the `./tests` directory.
+
+#### `test_tf_architectures.py`
+Executes inference tests on pretrained optimized instances of
+- `IndependentModel`
+- `TwoStageModel`
+- `SingleStageModel`
+
+#### `test_yolo_inference.py`
+Executes inference tests on [YoloV5](https://github.com/ultralytics/yolov5).
+
+#### `test_tf_lite_architectures.py`
+Executes inference tests on TFLite compatible versions of pretrained optimized instances of
+- `IndependentModel`
+- `TwoStageModel`
+- `SingleStageModel`
+
+### Results
+
+.. include:: ../../wiki/home.md
+.. include:: ../../wiki/RasPi.md
+
+## Additional features
 
 ### Paper written in LaTeX
 To build the `./doc` directory see [`docs/tex/README.md`](docs/tex/README.md).

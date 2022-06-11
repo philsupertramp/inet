@@ -91,6 +91,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../src.html">src package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -191,6 +192,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regressor</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">is_tflite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="sd">        :param regressor: BBox Regressor model (4 outputs)</span>
 <span class="sd">        :param classifier: Classifier model (N outputs)</span>
 <span class="sd">        :param input_shape: used for rescaling</span>
@@ -253,6 +255,7 @@
 <div class="viewcode-block" id="MultiTaskModel.crop_image"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.tf_lite.MultiTaskModel.crop_image">[docs]</a>    <span class="k">def</span> <span class="nf">crop_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Method to crop an image.</span>
+
 <span class="sd">        :param elem: Tuple of [image, bb]</span>
 <span class="sd">        :return: cropped image</span>
 <span class="sd">        &quot;&quot;&quot;</span>

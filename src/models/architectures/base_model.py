@@ -20,6 +20,7 @@ class Model(KerasModel):
     """
     def __init__(self, inputs, outputs, name: Optional[str] = None):
         """
+
         :param inputs: input parameters
         :param outputs: output parameters
         :param name: verbose name for the model
@@ -95,6 +96,7 @@ class TaskModel(Model):
             verbose: bool = True, *args, **kwargs):
         """
         Extended `keras.Model.fit` to add default callbacks
+
         :param train_set: dataset for training
         :param validation_set: dataset for validation
         :param monitoring_val: value to monitor while using EarlyStopping/ModelCheckpoint callbacks

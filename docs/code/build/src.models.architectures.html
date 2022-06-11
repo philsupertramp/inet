@@ -100,17 +100,16 @@
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models.data_structures">src.models.data_structures module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models.hyper_parameter_optimization">src.models.hyper_parameter_optimization module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="src.models.html#module-src.models">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="src.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.html#module-src.helpers">src.helpers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="src.html#module-src">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -348,16 +347,24 @@ For examples see <cite>.classifier.Classifier</cite> or <cite>.bounding_boxes.Bo
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.architectures.base_model.TaskModel.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monitoring_val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/architectures/base_model.html#TaskModel.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.architectures.base_model.TaskModel.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extended <cite>keras.Model.fit</cite> to add default callbacks
-:param train_set: dataset for training
-:param validation_set: dataset for validation
-:param monitoring_val: value to monitor while using EarlyStopping/ModelCheckpoint callbacks
-:param batch_size: the batch size to use when training the model
-:param epochs: number of epochs used in the training process
-:param verbose: verbosity setting
-:param args: further args to pass to <cite>keras.Model.fit</cite>
-:param kwargs: further kwargs to pass to <cite>keras.Model.fit</cite>
-:return:</p>
+<dd><p>Extended <cite>keras.Model.fit</cite> to add default callbacks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_set</strong> – dataset for training</p></li>
+<li><p><strong>validation_set</strong> – dataset for validation</p></li>
+<li><p><strong>monitoring_val</strong> – value to monitor while using EarlyStopping/ModelCheckpoint callbacks</p></li>
+<li><p><strong>batch_size</strong> – the batch size to use when training the model</p></li>
+<li><p><strong>epochs</strong> – number of epochs used in the training process</p></li>
+<li><p><strong>verbose</strong> – verbosity setting</p></li>
+<li><p><strong>args</strong> – further args to pass to <cite>keras.Model.fit</cite></p></li>
+<li><p><strong>kwargs</strong> – further kwargs to pass to <cite>keras.Model.fit</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -410,9 +417,15 @@ For examples see <cite>.classifier.Classifier</cite> or <cite>.bounding_boxes.Bo
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.architectures.bounding_boxes.BoundingBoxHyperModel.build">
 <span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/architectures/bounding_boxes.html#BoundingBoxHyperModel.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.architectures.bounding_boxes.BoundingBoxHyperModel.build" title="Permalink to this definition">¶</a></dt>
-<dd><p>Build model for HPO
-:param hp: hp storage
-:return: next model for HPO</p>
+<dd><p>Build model for HPO</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hp</strong> – hp storage</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>next model for HPO</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -591,9 +604,15 @@ Adds default <cite>Adam</cite> optimizer and Accuracy metric</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.models.architectures.classifier.ClassifierHyperModel.build">
 <span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hp</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/models/architectures/classifier.html#ClassifierHyperModel.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.models.architectures.classifier.ClassifierHyperModel.build" title="Permalink to this definition">¶</a></dt>
-<dd><p>Builds new classification model for HPO
-:param hp: current state of HPs
-:return: model for next iteration in HPO</p>
+<dd><p>Builds new classification model for HPO</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hp</strong> – current state of HPs</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>model for next iteration in HPO</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -608,9 +627,6 @@ Adds default <cite>Adam</cite> optimizer and Accuracy metric</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-src.models.architectures">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.models.architectures" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

@@ -27,11 +27,3 @@ src.models.architectures.classifier module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: src.models.architectures
-   :members:
-   :undoc-members:
-   :show-inheritance:

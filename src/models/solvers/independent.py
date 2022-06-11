@@ -27,6 +27,7 @@ class IndependentModel(MultiTaskModel):
     def predict(self, X):
         """
         Performs independent predictions on raw input `X`
+
         :param X: given input features
         :return: vector of prediction tuples [label, bounding box]
         """

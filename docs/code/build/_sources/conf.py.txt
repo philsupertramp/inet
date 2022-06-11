@@ -68,3 +68,5 @@ source_suffix = {
 
 }
 add_module_names = False
+
+autosummary_generate = True

@@ -34,6 +34,7 @@ def get_gzipped_model_size(model):
 def evaluate_interpreted_model(interpreter, test_images):
     """
     Method to evaluate an interpreted (tflite) model
+
     :param interpreter: interpreted model
     :param test_images: input to evaluate
     :return: predictions of interpreted model
@@ -72,6 +73,7 @@ def evaluate_interpreted_model(interpreter, test_images):
 def evaluate_q_model(tf_lite_model, test_images):
     """
     Evaluation method for quantization aware model
+
     :param tf_lite_model: q-aware tflite model
     :param test_images: input to perform prediction on
     :return: predictions for given images

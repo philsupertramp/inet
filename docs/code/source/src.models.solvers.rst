@@ -43,11 +43,3 @@ src.models.solvers.two\_stage module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: src.models.solvers
-   :members:
-   :undoc-members:
-   :show-inheritance:

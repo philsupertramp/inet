@@ -19,11 +19,3 @@ src.models.tf\_lite.tflite\_methods module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: src.models.tf_lite
-   :members:
-   :undoc-members:
-   :show-inheritance:

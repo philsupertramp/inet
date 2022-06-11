@@ -29,11 +29,3 @@ src.models.hyper\_parameter\_optimization module
    :members:
    :undoc-members:
    :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: src.models
-   :members:
-   :undoc-members:
-   :show-inheritance:

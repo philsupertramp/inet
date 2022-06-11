@@ -91,6 +91,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../src.html">src package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -311,6 +312,7 @@
 <span class="sd">    Creates local copy of `num_elements` samples per record in `combined_list` from samples in `base_dir` into `storage_dir`.</span>
 
 <span class="sd">    Uses multi-threading.</span>
+
 <span class="sd">    :param combined_list: List of order directories</span>
 <span class="sd">    :param base_dir: parent directory of input files</span>
 <span class="sd">    :param storage_dir: storage directory to create copy in</span>
@@ -390,6 +392,7 @@
 <div class="viewcode-block" id="test_dataset"><a class="viewcode-back" href="../../scripts.html#scripts.preselect_files.test_dataset">[docs]</a><span class="k">def</span> <span class="nf">test_dataset</span><span class="p">(</span><span class="n">combined_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]],</span> <span class="n">base_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">expected_num_elements</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Verifies the dataset for consistency/integrity</span>
+
 <span class="sd">    :param combined_list:</span>
 <span class="sd">    :param base_dir:</span>
 <span class="sd">    :param expected_num_elements:</span>
@@ -419,6 +422,7 @@
 <div class="viewcode-block" id="get_id_range_for_search_term"><a class="viewcode-back" href="../../scripts.html#scripts.preselect_files.get_id_range_for_search_term">[docs]</a><span class="k">def</span> <span class="nf">get_id_range_for_search_term</span><span class="p">(</span><span class="n">file_list</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">search_terms</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filters given file name list by a list of search terms</span>
+
 <span class="sd">    :param file_list: list of file names</span>
 <span class="sd">    :param search_terms: list of search terms to search for</span>
 <span class="sd">    :return: list of ids matching the search terms</span>
@@ -428,6 +432,7 @@
 
 <div class="viewcode-block" id="get_id_ranges_from_input_directory"><a class="viewcode-back" href="../../scripts.html#scripts.preselect_files.get_id_ranges_from_input_directory">[docs]</a><span class="k">def</span> <span class="nf">get_id_ranges_from_input_directory</span><span class="p">(</span><span class="n">root_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="sd">    :param root_directory: root directory to get labels from</span>
 <span class="sd">    :return: a dictionary containing species-ID ranges for all genera</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -442,7 +447,11 @@
 
 
 <div class="viewcode-block" id="scan_input_directory"><a class="viewcode-back" href="../../scripts.html#scripts.preselect_files.scan_input_directory">[docs]</a><span class="k">def</span> <span class="nf">scan_input_directory</span><span class="p">(</span><span class="n">root_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Prints statistics from input directory&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prints statistics from input directory</span>
+<span class="sd">    :param root_directory:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">id_ranges</span> <span class="o">=</span> <span class="n">get_id_ranges_from_input_directory</span><span class="p">(</span><span class="n">root_directory</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Species per Genera&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">20</span><span class="p">)</span>

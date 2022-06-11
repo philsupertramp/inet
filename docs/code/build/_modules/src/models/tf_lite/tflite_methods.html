@@ -91,6 +91,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../src.html">src package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -197,6 +198,7 @@
 <div class="viewcode-block" id="evaluate_interpreted_model"><a class="viewcode-back" href="../../../../src.models.tf_lite.html#src.models.tf_lite.tflite_methods.evaluate_interpreted_model">[docs]</a><span class="k">def</span> <span class="nf">evaluate_interpreted_model</span><span class="p">(</span><span class="n">interpreter</span><span class="p">,</span> <span class="n">test_images</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Method to evaluate an interpreted (tflite) model</span>
+
 <span class="sd">    :param interpreter: interpreted model</span>
 <span class="sd">    :param test_images: input to evaluate</span>
 <span class="sd">    :return: predictions of interpreted model</span>
@@ -235,6 +237,7 @@
 <div class="viewcode-block" id="evaluate_q_model"><a class="viewcode-back" href="../../../../src.models.tf_lite.html#src.models.tf_lite.tflite_methods.evaluate_q_model">[docs]</a><span class="k">def</span> <span class="nf">evaluate_q_model</span><span class="p">(</span><span class="n">tf_lite_model</span><span class="p">,</span> <span class="n">test_images</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Evaluation method for quantization aware model</span>
+
 <span class="sd">    :param tf_lite_model: q-aware tflite model</span>
 <span class="sd">    :param test_images: input to perform prediction on</span>
 <span class="sd">    :return: predictions for given images</span>

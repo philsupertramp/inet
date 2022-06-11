@@ -91,6 +91,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../src.html">src package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../scripts.html">scripts package</a></li>
 </ul>
 
             
@@ -194,6 +195,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="n">Backbone</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">dense_neurons</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
                  <span class="n">regularization_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">dropout_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">32</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="sd">        :param backbone: backbone CNN model</span>
 <span class="sd">        :param dense_neurons: number dense neurons for FC layer</span>
 <span class="sd">        :param regularization_factor: L2 regularization factor for output layer</span>
@@ -323,6 +325,7 @@
     <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;TwoInOneModel&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper to bootstrap solver out of configuration dictionary</span>
+
 <span class="sd">        :param cfg: configuration dictionary</span>
 <span class="sd">        :return: new TwoInOneModel instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -347,6 +350,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="sd">        :param weights: identifier of tflite weights</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">interpreter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">Interpreter</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">weights</span><span class="p">)</span>
@@ -357,6 +361,7 @@
 <div class="viewcode-block" id="TwoInOneTFLite.predict"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.two_in_one.TwoInOneTFLite.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Performs prediction</span>
+
 <span class="sd">        :param X: vector of input features</span>
 <span class="sd">        :return: prediction done by the model</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -407,6 +412,7 @@
     <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;TwoInOneTFLite&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Constructor to load model from config-dict</span>
+
 <span class="sd">        :param cfg: configuration dictionary</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
