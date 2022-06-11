@@ -10,6 +10,7 @@ class IndependentModel(MultiTaskModel):
     A regressor predicts the location and a classifier the class label, based on the original input.
 
     [Similar to `TwoStageModel`]
+
     Example:
         >>> from tensorflow.keras.applications.mobilenet import MobileNet
         >>> from src.models.architectures.classifier import Classifier
@@ -19,7 +20,6 @@ class IndependentModel(MultiTaskModel):
         >>> regressor = BoundingBoxRegressor(reg_backbone)
         >>> classifier = Classifier(clf_backbone)
         >>> solver = IndependentModel(regressor, classifier, (224, 224, 3), False)
-
     """
     ## Name of the model architecture
     model_name = 'independent-model'

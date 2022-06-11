@@ -6,6 +6,7 @@ input parameters
 import argparse
 import os
 import random as rng
+import shutil
 from shutil import rmtree
 from typing import Dict, List, Set, Union
 
@@ -106,13 +107,15 @@ def get_directory_by_prefix(prefix: str, base_dir: str) -> str:
 def process_directory(dir_prefix: str, base_dir: str, out_dir: str, requires_decisions: bool = False,
                       num_samples: int = 30) -> List[str]:
     """
+    Copies `num_samples` files from input to target directory.
+    Allows to require approval for each sample by adding `requires_decision=True`
 
-    :param dir_prefix:
-    :param base_dir:
-    :param out_dir:
-    :param requires_decisions:
-    :param num_samples:
-    :return:
+    :param dir_prefix: prefix of source/input directory, e.g. 00420
+    :param base_dir: root directory of source
+    :param out_dir: target/output directory
+    :param requires_decisions: if `True` asks for approval before copying each sample
+    :param num_samples: required amount of samples
+    :return: List of new file locations
     """
     directory = get_directory_by_prefix(dir_prefix, base_dir)
     files = os.listdir(directory)
@@ -135,20 +138,22 @@ def process_directory(dir_prefix: str, base_dir: str, out_dir: str, requires_dec
 
         if not requires_decisions or decide_image(file_path):
             output_path = f'{out_dir}/{out_name}'
-            Image.open(file_path).save(output_path)
+            shutil.copy(file_path, output_path)
             stored_files.append(output_path)
     return stored_files
 
 
 def create_local_copy(combined_list: List[Union[str, int]], base_dir: str, storage_dir: str, requires_decisions: bool, num_elements: int) -> List[str]:
     """
+    Creates local copy of `num_elements` samples per record in `combined_list` from samples in `base_dir` into `storage_dir`.
 
-    :param combined_list:
-    :param base_dir:
-    :param storage_dir:
-    :param requires_decisions:
-    :param num_elements:
-    :return:
+    Uses multi-threading.
+    :param combined_list: List of order directories
+    :param base_dir: parent directory of input files
+    :param storage_dir: storage directory to create copy in
+    :param requires_decisions: if `True` asks for approval before adding a sample
+    :param num_elements: required amount of samples per order
+    :return: List of new file locations
     """
     print(f'\rStart processing file directories.')
     file_list = []
@@ -194,13 +199,14 @@ def process_directories(
         combined_list: List[Union[str, int]], base_dir: str, out_dir: str = '../data/iNat',
         requires_decisions: bool = False, num_elements: int = 30, move_files_only: bool = False) -> None:
     """
+    Method to generate a local copy of the data set.
 
-    :param combined_list:
-    :param base_dir:
-    :param out_dir:
-    :param requires_decisions:
-    :param num_elements:
-    :param move_files_only:
+    :param combined_list: List of sample directories
+    :param base_dir: root directory of source files
+    :param out_dir: target directory
+    :param requires_decisions: if `True` requires approval before adding a sample
+    :param num_elements: required number of samples per order/species
+    :param move_files_only: if `True` moves
     :return:
     """
     # clean target directory

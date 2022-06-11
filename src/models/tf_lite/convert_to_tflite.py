@@ -14,6 +14,9 @@ CentroidInitialization = tfmot.clustering.keras.CentroidInitialization
 
 
 class QuantizationMethod(Enum):
+    """
+    Helper enum to determine a quantization method
+    """
     ## No quantization
     NONE = None
     ## Dynamic quantization
@@ -25,6 +28,9 @@ class QuantizationMethod(Enum):
 
 
 class ClusterMethod(Enum):
+    """
+    Helper enum to determine a cluster methods
+    """
     ## Linear clustering method
     LINEAR = CentroidInitialization.LINEAR
     ## Random clustering method
@@ -157,7 +163,7 @@ def cluster_weights(model, cluster_method: ClusterMethod, number_clusters):
     Clusters weights of given model in `number_clusters` clusters, using given method `cluster_method`.
 
     **Note this will change the underlying weights of `model`.
-      In case you want to validate your model, perform a prediction prior to calling this method!**
+    In case you want to validate your model, perform a prediction prior to calling this method!**
 
     Hint:
     Use this in combination with CentroidInitialization.KMEANS_PLUS_PLUS

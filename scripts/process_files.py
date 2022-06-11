@@ -19,7 +19,12 @@ from src.models.data_structures import BoundingBox
 
 
 def extract_file_name(elem: Dict) -> str:
-    """extracts file name from dictionary"""
+    """
+    Extracts file name from dictionary
+
+    :param elem: dictionary holding image annotations
+    :return: the file name of the annotated image
+    """
     fn = elem['data']['image']
     return fn.split('/')[-1]
 
@@ -27,6 +32,7 @@ def extract_file_name(elem: Dict) -> str:
 def extract_label(elem: Dict) -> Tuple[BBoxLabelType, ClassLabelType]:
     """
     Extracts labels from element dictionary
+
     :param elem:
     :return: Bounding Box coordinates and class label: ((y_min, x_min, y_max, x_max), label)
     """
@@ -39,7 +45,13 @@ def extract_label(elem: Dict) -> Tuple[BBoxLabelType, ClassLabelType]:
 
 
 def load_element(elem, in_directory: str) -> Dict:
-    """load element from data dict"""
+    """
+    load element from data dict
+
+    :param elem: annotated image
+    :param in_directory: source directory of annotated image
+    :return: converted annotations
+    """
     label = extract_label(elem)
     return {
         'path': os.path.join(in_directory, extract_file_name(elem)),
@@ -51,7 +63,13 @@ def load_element(elem, in_directory: str) -> Dict:
 
 
 def load_labels_from_bbox_file(bbox_file: str, in_directory: str) -> LabeledFileDictType:
-    """loads all available labels from dataset file"""
+    """
+    loads all available labels from dataset file
+
+    :param bbox_file: file holding BBox annotations
+    :param in_directory: source directory of annotations
+    :return: dictionary of annotated source image files
+    """
     with open(bbox_file) as json_file:
         content = json.load(json_file)
     files = dict()
@@ -63,7 +81,13 @@ def load_labels_from_bbox_file(bbox_file: str, in_directory: str) -> LabeledFile
 
 
 def load_labels_from_bbox_files(bbox_files: List[str], in_directory: str) -> LabeledFileDictType:
-    """loads all labels from all provided files"""
+    """
+    loads all labels from all provided files
+
+    :param bbox_files: list of BBox annotation files
+    :param in_directory: source directory for annotated images
+    :return: dictionary holding annotated images
+    """
     files = dict()
     for elem in bbox_files:
         files.update(**load_labels_from_bbox_file(elem, in_directory))
@@ -71,7 +95,13 @@ def load_labels_from_bbox_files(bbox_files: List[str], in_directory: str) -> Lab
 
 
 def create_directory_structure(directory: str, class_names: Set[str]) -> Tuple[str, str, str]:
-    """Generates test, train and validation directories"""
+    """
+    Generates test, train and validation directories
+
+    :param directory: root directory to create directories in
+    :param class_names: set of available class names in the data set
+    :return: Tuple holding test, train and validation directory
+    """
     sub_dirs = (
         os.path.join(directory, 'test'),
         os.path.join(directory, 'train'),
@@ -92,8 +122,14 @@ def create_directory_structure(directory: str, class_names: Set[str]) -> Tuple[s
 def split_labeled_files(
         files: LabeledFileDictType, test_share: float, validation_share: float
 ) -> Tuple[LabeledFileDictType, LabeledFileDictType, LabeledFileDictType]:
-    """Method to split given files into test/train/validation sets"""
+    """
+    Splits given files into test/train/validation sets
 
+    :param files: Annotated image dictionary
+    :param test_share: pct of test samples (\in [0, 1])
+    :param validation_share: pct of validation samples (\in [0, 1])
+    :return: three annotation dictionaries: test, train, validation
+    """
     filenames = np.array(list(files.keys()))
     num_files = len(filenames)
     file_indices = np.arange(0, num_files, dtype=int)
@@ -122,7 +158,14 @@ def split_labeled_files(
 
 
 def spread_files(files: LabeledFileDictType, target_directory: str, label_names: Set[str]) -> LabeledFileDictType:
-    """copies files from input to target directory nested in class directories"""
+    """
+    copies files from input to target directory nested in class directories
+
+    :param files: annotated image dictionary
+    :param target_directory: target root directory
+    :param label_names: set of available class names in the data set
+    :return: copy of `files` with new location in `target_directory`
+    """
     directories = [os.path.join(target_directory, n) for n in label_names]
     new_files = dict()
     for filepath, data in files.items():
@@ -138,7 +181,16 @@ def spread_files(files: LabeledFileDictType, target_directory: str, label_names:
 def create_config_file(
         test_set: LabeledFileDictType, train_set: LabeledFileDictType, val_set: LabeledFileDictType,
         label_names: Set[str], output_file: str) -> None:
-    """Creates JSON Dataset configuration file from given data"""
+    """
+    Creates JSON Dataset configuration file from given data
+
+    :param test_set: annotated test data set
+    :param train_set: annotated train data set
+    :param val_set:  annotated validation data set
+    :param label_names: set of available class labels in the data set
+    :param output_file: target file path + name for the configuration file
+    :return:
+    """
     file_content = {
         'labels': list(label_names),
         'train': train_set,
@@ -152,7 +204,7 @@ def create_config_file(
 
 def create_dataset_structure(files: LabeledFileDictType, label_names: Set[str], dir_name: str, test_split: float,
                              val_split: float) -> None:
-    r"""
+    """
     Generates dataset directory structure for given data.
 
     :param files: files to process
@@ -173,7 +225,13 @@ def create_dataset_structure(files: LabeledFileDictType, label_names: Set[str], 
 
 
 def get_genera_file_stats_for_directory(directory: str, label_names: Set[str]) -> Dict[str, int]:
-    """Calculates statistics for each genus"""
+    """
+    Counts number of samples for each genus
+
+    :param directory: source root directory
+    :param label_names: set of class names/subdirectories to find in root directory
+    :return: Dictionary holding statistics `genus: file_count`
+    """
     files_per_genera = dict.fromkeys(label_names, 0)
 
     for genera in files_per_genera.keys():
@@ -184,7 +242,13 @@ def get_genera_file_stats_for_directory(directory: str, label_names: Set[str]) -
 
 
 def test_output_directory(directory: str, label_names: Set[str]) -> Tuple[Dict, Dict, Dict]:
-    """Validates output directory for correctness"""
+    """
+    Validates output directory for correctness
+
+    :param directory:  root directory of data set
+    :param label_names: available class labels in data set
+    :return: statistics for the test, train and validation sets
+    """
     test_dir = os.path.join(directory, 'test')
     train_dir = os.path.join(directory, 'train')
     val_dir = os.path.join(directory, 'validation')
@@ -230,11 +294,18 @@ def test_output_directory(directory: str, label_names: Set[str]) -> Tuple[Dict, 
 
 
 def bounding_box_stats(files: Dict) -> Dict:
-    """Generates statistics for available bounding boxes"""
+    """
+    Generates statistics for available bounding boxes.
+    Calculates min, max, mean and avg width and heights
+
+    :param files: dictionary of annotated image files
+    :return: general statistics for bounding boxes
+    """
     bbs = [BoundingBox(**elem['bbs']) for elem in files.values()]
     widths = [float(i.w) for i in bbs]
     heights = [float(i.h) for i in bbs]
 
+    # TODO: (PZ) extend with coordinate statistics
     return {
         'max': {
             'width': max(widths),
@@ -256,7 +327,14 @@ def bounding_box_stats(files: Dict) -> Dict:
 
 
 def generate_statistics(files: Dict, target_directory: str, label_names: Set[str]) -> None:
-    """Generate statistics over the processed data"""
+    """
+    Generate statistics over the processed data sets
+
+    :param files: dictionary holding annotated image files
+    :param target_directory: root directory for files
+    :param label_names: available class labels in the data set
+    :return:
+    """
     bb_stats = bounding_box_stats(files)
     test, train, val = test_output_directory(target_directory, label_names)
 

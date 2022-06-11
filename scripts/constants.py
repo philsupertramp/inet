@@ -1,8 +1,5 @@
 """
 Commonly used constant values
-
-.. data:: COLEOPTERA_IDS
-
 """
 
 ## ID range of Coleopterans

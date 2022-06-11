@@ -1,3 +1,6 @@
+"""
+Inference tests using originally trained models
+"""
 import numpy as np
 from tensorflow.keras.applications.mobilenet import MobileNet
 from tensorflow.keras.applications.mobilenet import \
@@ -5,8 +8,9 @@ from tensorflow.keras.applications.mobilenet import \
 
 from scripts.configs import create_config
 from src.data.load_dataset import directory_to_two_in_one_dataset
-from src.models.two_in_one import TwoInOneModel
+from src.models.solvers.two_in_one import TwoInOneModel
 from tests.helper import Timer
+
 
 if __name__ == '__main__':
     input_shape = (224, 224, 3)

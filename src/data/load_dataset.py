@@ -29,8 +29,7 @@ def _directory_to_dataset(dataset_cls, directory: str, batch_size: int = 32, img
 
 def directory_to_classification_dataset(
         directory: str, batch_size: int = 32, img_height: int = 224, img_width: int = 224,
-        class_names: Optional[List[str]] = None
-) -> Tuple[ImageLabelDataSet, ImageLabelDataSet, ImageLabelDataSet]:
+        class_names: Optional[List[str]] = None):
     return _directory_to_dataset(ImageLabelDataSet, directory, batch_size, img_height, img_width, class_names)
 
 

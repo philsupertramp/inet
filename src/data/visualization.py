@@ -11,16 +11,15 @@ def plot_confusion_matrix(y_true, y_pred, classes,
                           normalize=False, colormap=plt.cm.cool_r,
                           title=None):
     """
-
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
     potentially good color maps from matplotlib:
 
     Color maps to visualize positive cases
     ['Blues', 'BuGn', 'BuPu', 'GnBu', 'Greens', 'Greys', 'OrRd', 'Oranges', 'PuBu', 'PuBuGn', 'PuRd', 'Purples', 'RdPu',
-     'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd', 'afmhot_r', 'autumn_r', 'binary', 'bone_r', 'cividis_r', 'cool_r', ]
+    'Reds', 'YlGn', 'YlGnBu', 'YlOrBr', 'YlOrRd', 'afmhot_r', 'autumn_r', 'binary', 'bone_r', 'cividis_r', 'cool_r', ]
 
-     Color maps to visualize negative cases
+    Color maps to visualize negative cases
     ['Wistia', 'brg_r', 'bwr_r']
 
     :param y_true: array of ground truth values

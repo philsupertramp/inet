@@ -4,7 +4,7 @@ from tensorflow.keras.applications.mobilenet import \
 
 from src.data.load_dataset import directory_to_classification_dataset
 from src.losses.giou_loss import GIoULoss
-from src.models.two_stage import TwoStageModel
+from src.models.solvers.two_stage import TwoStageModel
 
 if __name__ == '__main__':
     input_shape = (224, 224, 3)

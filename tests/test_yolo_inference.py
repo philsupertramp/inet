@@ -1,14 +1,24 @@
+"""
+Inference tests using weights of pretrained YOLOv5
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 
 from src.data.load_dataset import directory_to_two_in_one_dataset
 from src.losses.giou_loss import GIoULoss
 from src.models.data_structures import BoundingBox
-from src.models.tflite_methods import evaluate_interpreted_model
+from src.models.tf_lite.tflite_methods import evaluate_interpreted_model
 from tests.helper import Timer, build_tf_model_from_file
 
 
 def filter_classes(classes_in):
+    """
+    transforms one-hot-encoded prediction into class indices
+
+    :param classes_in: one-hot-encoded predictions
+    :return: converted labels
+    """
     classes_out = []
     for i in range(classes_in.shape[0]):
         classes_out.append(classes_in.argmax())
@@ -16,6 +26,12 @@ def filter_classes(classes_in):
 
 
 def process_best_prediction(prediction):
+    """
+    Select best prediction for each sample
+
+    :param prediction: iterable holding performed predictions
+    :return: The best prediction for each input sample
+    """
     processed_predictions = []
     for pred in prediction:
         preds = pred[0]
@@ -32,23 +48,31 @@ def process_best_prediction(prediction):
     return processed_predictions
 
 
-def yolo2voc(image_height, image_width, bboxes):
+def yolo2voc(bboxes):
     """
+    Converts yolo output to VOC format
+
     yolo => [xmid, ymid, w, h] (normalized)
     voc  => [x1, y1, x2, y1]
 
+    :param bboxes: bounding boxes to convert
+    :return: converted bboxes
     """
     bboxes = bboxes.copy().astype(float)  # otherwise all value will be 0 as voc_pascal dtype is np.int
 
-    bboxes[..., [0, 2]] = bboxes[..., [0, 2]]# * image_width
-    bboxes[..., [1, 3]] = bboxes[..., [1, 3]]# * image_height
-
-    #bboxes[..., [0, 1]] = bboxes[..., [0, 1]] - bboxes[..., [2, 3]]/2
-
+    bboxes[..., [0, 2]] = bboxes[..., [0, 2]]
+    bboxes[..., [1, 3]] = bboxes[..., [1, 3]]
     return bboxes
 
 
 def scale_bb(bb, h, w):
+    """
+    Scales percentage BB into real sized BB
+    :param bb: the bb to scale
+    :param h: image width
+    :param w: image height
+    :return: scaled BBox
+    """
     bb_vals = np.array(bb) / 100.
     bb_vals[::2] *= w
     bb_vals[1::2] *= h
@@ -78,12 +102,9 @@ if __name__ == '__main__':
         for sample in batch:
             img = o_test_images[index]
             sample = sample[sample[:, 4] >= 1.]  # [-1:, :]
-            bbs = yolo2voc(img.shape[0], img.shape[1], sample[:, :4])
+            bbs = yolo2voc(sample[:, :4])
             conf = sample[:, 4:5]
             cls = sample[:, 5:]
-            # Do whatever you want
-
-            #cv2.rectangle(frame, (x1, y1), (x2, y2), COLORS[0], 2)
             fig = plt.figure()
             gc = plt.gca()
             gc.imshow(img/255.)

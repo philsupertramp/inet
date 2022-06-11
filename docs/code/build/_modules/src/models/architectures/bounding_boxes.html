@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>src.models.architectures.bounding_boxes &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src.html">src package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">tests package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>src.models.architectures.bounding_boxes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for src.models.architectures.bounding_boxes</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">keras_tuner</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+
+<span class="kn">from</span> <span class="nn">src.data.constants</span> <span class="kn">import</span> <span class="n">ModelType</span>
+<span class="kn">from</span> <span class="nn">src.data.visualization</span> <span class="kn">import</span> <span class="n">plot_prediction_samples</span>
+<span class="kn">from</span> <span class="nn">src.losses.giou_loss</span> <span class="kn">import</span> <span class="n">GIoULoss</span>
+<span class="kn">from</span> <span class="nn">src.models.architectures.base_model</span> <span class="kn">import</span> <span class="n">Backbone</span><span class="p">,</span> <span class="n">SingleTaskModel</span>
+<span class="kn">from</span> <span class="nn">src.models.data_structures</span> <span class="kn">import</span> <span class="n">ModelArchitecture</span>
+
+
+<div class="viewcode-block" id="BoundingBoxRegressor"><a class="viewcode-back" href="../../../../src.models.architectures.html#src.models.architectures.bounding_boxes.BoundingBoxRegressor">[docs]</a><span class="k">class</span> <span class="nc">BoundingBoxRegressor</span><span class="p">(</span><span class="n">SingleTaskModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Bounding Box Regression model</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from tensorflow.keras.applications.mobilenet import MobileNet</span>
+<span class="sd">        &gt;&gt;&gt; backbone = MobileNet(weights=&#39;imagenet&#39;, include_top=False, input_shape=(224, 224))</span>
+<span class="sd">        &gt;&gt;&gt; regressor = BoundingBoxRegressor(backbone, 128, True, &#39;my-model&#39;, 0.125, 0.5, 64, &#39;relu&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; regressor.load_weights(&#39;my-weights.h5&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; regressor.predict([some_image])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">## Fixed type of model</span>
+    <span class="n">model_type</span> <span class="o">=</span> <span class="n">ModelType</span><span class="o">.</span><span class="n">REGRESSION</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="n">Backbone</span><span class="p">,</span> <span class="n">dense_neurons</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">include_pooling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">regularization_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">dropout_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+                 <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">activation_fn</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;relu&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param backbone: backbone model</span>
+<span class="sd">        :param dense_neurons: number dense neurons for FC layer</span>
+<span class="sd">        :param include_pooling: uses pooling before FC layer</span>
+<span class="sd">        :param name: name of model</span>
+<span class="sd">        :param regularization_factor: L2 regularization factor for output layer</span>
+<span class="sd">        :param dropout_factor: factor of dropout before FC layer</span>
+<span class="sd">        :param batch_size: batch size of the dataset</span>
+<span class="sd">        :param activation_fn: activation function of output layer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">backbone</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">activation_fn</span><span class="p">,</span> <span class="n">dense_neurons</span><span class="o">=</span><span class="n">dense_neurons</span><span class="p">,</span> <span class="n">include_pooling</span><span class="o">=</span><span class="n">include_pooling</span><span class="p">,</span>
+                         <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">regularization_factor</span><span class="o">=</span><span class="n">regularization_factor</span><span class="p">,</span> <span class="n">dropout_factor</span><span class="o">=</span><span class="n">dropout_factor</span><span class="p">)</span>
+        <span class="c1">## GIoU-Loss function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">giou_loss_fn</span> <span class="o">=</span> <span class="n">GIoULoss</span><span class="p">()</span>
+        <span class="c1">## RMSE function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rmse_loss_fn</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">RootMeanSquaredError</span><span class="p">()</span>
+        <span class="c1">## Number dense neurons in FC layer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense_neurons</span> <span class="o">=</span> <span class="n">dense_neurons</span>
+        <span class="c1">## Batch size used for training</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+
+<div class="viewcode-block" id="BoundingBoxRegressor.compile"><a class="viewcode-back" href="../../../../src.models.architectures.html#src.models.architectures.bounding_boxes.BoundingBoxRegressor.compile">[docs]</a>    <span class="k">def</span> <span class="nf">compile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-6</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s1">&#39;mse&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extended `keras.Model.compile`.</span>
+<span class="sd">        Adds default `Adam` optimizer and metrics RMSE &amp; GIoU-Loss</span>
+
+<span class="sd">        :param learning_rate: the learning rate to train with</span>
+<span class="sd">        :param loss: the loss function to optimize</span>
+<span class="sd">        :param metrics: additional metrics to calculate during training</span>
+<span class="sd">        :param args: will be passed as args to parent implementation</span>
+<span class="sd">        :param kwargs:  will be passed as kwargs to parent implementation</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="n">loss</span><span class="o">=</span><span class="n">loss</span><span class="p">,</span>
+            <span class="n">optimizer</span><span class="o">=</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">clipnorm</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rmse_loss_fn</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">giou_loss_fn</span><span class="p">,</span> <span class="o">*</span><span class="n">metrics</span><span class="p">],</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="BoundingBoxRegressor.evaluate_predictions"><a class="viewcode-back" href="../../../../src.models.architectures.html#src.models.architectures.bounding_boxes.BoundingBoxRegressor.evaluate_predictions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">evaluate_predictions</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">render_samples</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Evaluation method for BBox-Regression.</span>
+<span class="sd">        Calculates metrics:</span>
+<span class="sd">        - GIoU-Loss</span>
+<span class="sd">        - GIoU</span>
+<span class="sd">        - RMSE</span>
+
+<span class="sd">        :param predictions: predictions done by the model</span>
+<span class="sd">        :param labels: ground truth for predictions</span>
+<span class="sd">        :param features: used input features to perform predictions</span>
+<span class="sd">        :param render_samples: when `True` renders up to 25 BBox prediction samples</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">giou_loss_fn</span> <span class="o">=</span> <span class="n">GIoULoss</span><span class="p">()</span>
+        <span class="n">rmse_loss_fn</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">RootMeanSquaredError</span><span class="p">()</span>
+
+        <span class="n">giou_loss</span> <span class="o">=</span> <span class="n">giou_loss_fn</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s1">&#39;=&#39;</span> <span class="o">*</span> <span class="mi">35</span><span class="p">,</span>
+            <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">GIoU Loss:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">giou_loss</span><span class="p">,</span>
+            <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">GIoU:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">giou_loss</span><span class="p">,</span>
+            <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1">RMSE:</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">rmse_loss_fn</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">render_samples</span><span class="p">:</span>
+            <span class="n">plot_prediction_samples</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">validation_features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span> <span class="n">validation_bbs</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="BoundingBoxHyperModel"><a class="viewcode-back" href="../../../../src.models.architectures.html#src.models.architectures.bounding_boxes.BoundingBoxHyperModel">[docs]</a><span class="k">class</span> <span class="nc">BoundingBoxHyperModel</span><span class="p">(</span><span class="n">keras_tuner</span><span class="o">.</span><span class="n">HyperModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    HPO wrapper for Bounding Box Regression model.</span>
+
+<span class="sd">    Used Hyper parameters (HPs):</span>
+<span class="sd">    - Dropout Factor `alpha`: [1e-4, 5e-4, 1e-3, 5e-3, 1e-2]</span>
+<span class="sd">    - Learning rate `learning_rate`: [1e-4, 5e-4, 1e-3, 5e-3, 1e-2]</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; import keras_tuner as kt</span>
+<span class="sd">        &gt;&gt;&gt; hpo_model = BoundingBoxHyperModel()</span>
+<span class="sd">        &gt;&gt;&gt; tuner = kt.BayesianOptimization(</span>
+<span class="sd">        ...    hpo_model,</span>
+<span class="sd">        ...    objective=kt.Objective(&#39;val_loss&#39;, &#39;min&#39;),</span>
+<span class="sd">        ...    max_trials=36,</span>
+<span class="sd">        ...    directory=f&#39;./model-selection/my-model/&#39;,</span>
+<span class="sd">        ...    project_name=&#39;proj_name&#39;,</span>
+<span class="sd">        ...    seed=42,</span>
+<span class="sd">        ...    overwrite=False,</span>
+<span class="sd">        ...    num_initial_points=12</span>
+<span class="sd">        ...)</span>
+<span class="sd">        &gt;&gt;&gt; tuner.search(</span>
+<span class="sd">        ...     train_set=train_set.unbatch(),</span>
+<span class="sd">        ...     validation_set=validation_set.unbatch(),</span>
+<span class="sd">        ...     monitoring_val=&#39;val_loss&#39;,</span>
+<span class="sd">        ...     epochs=50,</span>
+<span class="sd">        ... )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">## model configuration to use when creating a new model for HPO</span>
+    <span class="n">model_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelArchitecture</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="BoundingBoxHyperModel.build"><a class="viewcode-back" href="../../../../src.models.architectures.html#src.models.architectures.bounding_boxes.BoundingBoxHyperModel.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Build model for HPO</span>
+<span class="sd">        :param hp: hp storage</span>
+<span class="sd">        :return: next model for HPO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hp_alpha</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">5e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">5e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">])</span>
+        <span class="n">hp_lr</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Choice</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">1e-4</span><span class="p">,</span> <span class="mf">5e-4</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="mf">5e-3</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">])</span>
+
+        <span class="n">backbone_clone</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">clone_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_data</span><span class="o">.</span><span class="n">backbone</span><span class="p">)</span>
+        <span class="n">backbone_clone</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_data</span><span class="o">.</span><span class="n">backbone</span><span class="o">.</span><span class="n">get_weights</span><span class="p">())</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="n">BoundingBoxRegressor</span><span class="p">(</span>
+            <span class="n">backbone_clone</span><span class="p">,</span> <span class="n">dense_neurons</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">include_pooling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_data</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">regularization_factor</span><span class="o">=</span><span class="n">hp_alpha</span><span class="p">,</span> <span class="n">dropout_factor</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span>
+        <span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">hp_lr</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">GIoULoss</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">model</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

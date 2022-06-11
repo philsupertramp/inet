@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>src.models.solvers.tf_lite &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../src.html">src package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tests.html">tests package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>src.models.solvers.tf_lite</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for src.models.solvers.tf_lite</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">src.helpers</span> <span class="kn">import</span> <span class="n">extract_labels_and_features</span>
+<span class="kn">from</span> <span class="nn">src.models.architectures.bounding_boxes</span> <span class="kn">import</span> <span class="n">BoundingBoxRegressor</span>
+<span class="kn">from</span> <span class="nn">src.models.architectures.classifier</span> <span class="kn">import</span> <span class="n">Classifier</span>
+<span class="kn">from</span> <span class="nn">src.models.solvers.common</span> <span class="kn">import</span> <span class="n">evaluate_solver_predictions</span>
+
+
+<div class="viewcode-block" id="MultiTaskModel"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.tf_lite.MultiTaskModel">[docs]</a><span class="k">class</span> <span class="nc">MultiTaskModel</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    MultiTask solver implementation</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from tensorflow.keras.applications.mobilenet import MobileNet</span>
+<span class="sd">        &gt;&gt;&gt; from src.models.architectures.classifier import Classifier</span>
+<span class="sd">        &gt;&gt;&gt; from src.models.architectures.bounding_boxes import BoundingBoxRegressor</span>
+<span class="sd">        &gt;&gt;&gt; clf_backbone = MobileNet(weights=&#39;imagenet&#39;, include_top=False, input_shape=(224, 224))</span>
+<span class="sd">        &gt;&gt;&gt; reg_backbone = MobileNet(weights=&#39;imagenet&#39;, include_top=False, input_shape=(224, 224))</span>
+<span class="sd">        &gt;&gt;&gt; regressor = BoundingBoxRegressor(reg_backbone)</span>
+<span class="sd">        &gt;&gt;&gt; classifier = Classifier(clf_backbone)</span>
+<span class="sd">        &gt;&gt;&gt; solver = MultiTaskModel(regressor, classifier, (224, 224, 3), False)</span>
+<span class="sd">        &gt;&gt;&gt; solver.predict([some_input])</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model_name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regressor</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">is_tflite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param regressor: BBox Regressor model (4 outputs)</span>
+<span class="sd">        :param classifier: Classifier model (N outputs)</span>
+<span class="sd">        :param input_shape: used for rescaling</span>
+<span class="sd">        :param is_tflite: indicates if model is tflite version</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">## Expected input image height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_height</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1">## Expected input image width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_width</span> <span class="o">=</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1">## BBox Regression model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regressor</span> <span class="o">=</span> <span class="n">regressor</span>
+        <span class="c1">## Classifier model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span>
+        <span class="c1">## indicates if model is tflite version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_tflite</span> <span class="o">=</span> <span class="n">is_tflite</span>
+
+<div class="viewcode-block" id="MultiTaskModel.predict"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.tf_lite.MultiTaskModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Interface definition for prediction method.</span>
+
+<span class="sd">        :param X: Vector of input features to perform predictions on.</span>
+<span class="sd">        :return: predicted outputs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MultiTaskModel.evaluate_model"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.tf_lite.MultiTaskModel.evaluate_model">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validation_set</span><span class="p">,</span> <span class="n">preprocessing_method</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">render_samples</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to evaluate predictive power of solver.</span>
+
+<span class="sd">        Computes</span>
+<span class="sd">        - Regression:</span>
+<span class="sd">        * GIoU-Loss</span>
+<span class="sd">        * RMSE</span>
+<span class="sd">        - Classification:</span>
+<span class="sd">        * Accuracy</span>
+<span class="sd">        * F1-Score</span>
+
+<span class="sd">        :param validation_set: validation data set to use</span>
+<span class="sd">        :param preprocessing_method: preprocessing method to apply before predicting</span>
+<span class="sd">        :param render_samples: if `True` renders confusion matrix of classification and samples for bbox regression</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">preprocess_input</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">preprocessing_method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">x</span>
+            <span class="k">return</span> <span class="n">preprocessing_method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">validation_values</span><span class="p">,</span> <span class="n">validation_labels</span> <span class="o">=</span> <span class="n">extract_labels_and_features</span><span class="p">(</span><span class="n">validation_set</span><span class="p">)</span>
+        <span class="n">processed_validation_values</span> <span class="o">=</span> <span class="n">preprocess_input</span><span class="p">(</span><span class="n">validation_values</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">processed_validation_values</span><span class="p">)</span>
+
+        <span class="n">predicted_labels</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+        <span class="n">predicted_bbs</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">:]</span>
+
+        <span class="n">evaluate_solver_predictions</span><span class="p">(</span>
+            <span class="n">predicted_labels</span><span class="p">,</span> <span class="n">predicted_bbs</span><span class="p">,</span> <span class="n">validation_values</span><span class="p">,</span> <span class="n">validation_labels</span><span class="p">,</span> <span class="n">render_samples</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MultiTaskModel.crop_image"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.tf_lite.MultiTaskModel.crop_image">[docs]</a>    <span class="k">def</span> <span class="nf">crop_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to crop an image.</span>
+<span class="sd">        :param elem: Tuple of [image, bb]</span>
+<span class="sd">        :return: cropped image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image</span><span class="p">,</span> <span class="n">bb</span> <span class="o">=</span> <span class="n">elem</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bb</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">bb</span> <span class="o">=</span> <span class="n">bb</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">bb</span>
+        <span class="n">scaled_bb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">])</span> <span class="o">/</span> <span class="mf">100.</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">image</span><span class="o">.</span><span class="n">crop_and_resize</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">image</span><span class="p">],</span>
+            <span class="p">[</span><span class="n">scaled_bb</span><span class="p">],</span>  <span class="c1"># bb</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">image_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_width</span><span class="p">]</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="MultiTaskModel.create_regressor"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.tf_lite.MultiTaskModel.create_regressor">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_regressor</span><span class="p">(</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BoundingBoxRegressor</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper to bootstrap bbreg model based on provided config dict.</span>
+
+<span class="sd">        :param cfg: configuration dictionary</span>
+<span class="sd">        :return: a bounding box regression model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">backbone_clone</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">clone_model</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;backbone&#39;</span><span class="p">))</span>
+
+        <span class="n">regressor</span> <span class="o">=</span> <span class="n">BoundingBoxRegressor</span><span class="p">(</span><span class="n">backbone_clone</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">))</span>
+
+        <span class="n">regressor</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weights&#39;</span><span class="p">),</span> <span class="n">by_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">regressor</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">),</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">regressor</span></div>
+
+<div class="viewcode-block" id="MultiTaskModel.create_classifier"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.tf_lite.MultiTaskModel.create_classifier">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_classifier</span><span class="p">(</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Classifier</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper to bootstrap classifier based on provided config dict.</span>
+
+<span class="sd">        :param cfg: configuration dictionary</span>
+<span class="sd">        :return: a classifier model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">backbone_clone</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">clone_model</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;backbone&#39;</span><span class="p">))</span>
+
+        <span class="n">classifier</span> <span class="o">=</span> <span class="n">Classifier</span><span class="p">(</span><span class="n">backbone_clone</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">))</span>
+
+        <span class="n">classifier</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weights&#39;</span><span class="p">),</span> <span class="n">by_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">classifier</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">),</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">classifier</span></div>
+
+<div class="viewcode-block" id="MultiTaskModel.from_config"><a class="viewcode-back" href="../../../../src.models.solvers.html#src.models.solvers.tf_lite.MultiTaskModel.from_config">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">is_tflite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;MultiTaskModel&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to load `MultiTaskModel` from dictionary and essentially JSON files.</span>
+
+<span class="sd">        :param cfg: dict holding solver configuration</span>
+<span class="sd">        :param is_tflite: if `True` treats config as for a tflite solver</span>
+<span class="sd">        :return: new created solver</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">is_tflite</span><span class="p">:</span>
+            <span class="n">reg_interpreter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">Interpreter</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;reg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weights&#39;</span><span class="p">))</span>
+            <span class="n">reg_interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+            <span class="n">regressor</span> <span class="o">=</span> <span class="n">reg_interpreter</span>
+            <span class="n">clf_interpreter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">Interpreter</span><span class="p">(</span><span class="n">model_path</span><span class="o">=</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weights&#39;</span><span class="p">))</span>
+            <span class="n">clf_interpreter</span><span class="o">.</span><span class="n">allocate_tensors</span><span class="p">()</span>
+            <span class="n">classifier</span> <span class="o">=</span> <span class="n">clf_interpreter</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">regressor</span><span class="p">,</span> <span class="n">classifier</span><span class="p">,</span> <span class="n">is_tflite</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">create_regressor</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;reg&#39;</span><span class="p">)),</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">create_classifier</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">))</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

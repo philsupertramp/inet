@@ -1,3 +1,11 @@
+"""
+Script to convert TF models to TFLite models.
+
+Example:
+    $ python -m scripts.convert_models_to_tflite
+
+To change the underlying configuration consult `./scripts/configs.py`
+"""
 import os
 
 import tensorflow as tf

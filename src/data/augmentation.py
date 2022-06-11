@@ -19,7 +19,7 @@ class AugmentationMethod(abc.ABC):
 
     Require implementation of `process` method, as well as passing `probability` to the constructor.
     """
-    ## Expected type of label
+    ## Expected type of label in the input dataset
     label_value_type: Optional[LabelType] = None
 
     def __init__(self, probability: float = 1.0):
@@ -53,7 +53,16 @@ class AugmentationMethod(abc.ABC):
         :return: augmented sample or input sample
         """
         @functools.wraps(func)
-        def wrap(self, features, labels=None, **kwargs):
+        def wrap(self: 'AugmentationMethod', features, labels=None, **kwargs):
+            """
+            Wrapper method to perform augmentation method, or pass through in case of incomplete data.
+
+            :param self: the method object
+            :param features: a feature vector
+            :param labels: a label vector
+            :param kwargs: kwargs for the augmentation function
+            :return: either the raw input features and labels, or processed features and processed labels
+            """
             if (features is None or labels is None) or self.label_value_type == LabelType.NONE.value:
                 return features, labels
             return func(self, features, labels, **kwargs)
@@ -461,12 +470,24 @@ class RandomRotate90(MultiProbabilityAugmentationMethod):
 
 
 class DataAugmentationHelper:
+    """
+    Augmentation helper to generate an augmentation pipeline.
+
+    Example:
+        >>> helper = DataAugmentationHelper(
+        ...     1024,
+        ...     operations=[
+        ...         RandomCrop(0.5),
+        ...         RandomFlip(0.5),
+        ...     ]
+        ... )
+        >>> augmented_dataset = helper.transform(my_dataset)
+    """
     def __init__(self, number_samples: int, operations: Optional[List[AugmentationMethod]] = None,
                  batch_size: int = 32, seed: int = 42, bbox_label_index: Optional[int] = None,
                  label_value_type: LabelType = LabelType.SINGLE.value, output_signature: Optional[Tuple] = None):
         """
         Class to simplify data augmentation on a given tf.data.Dataset.
-
 
         :param number_samples: desired number of total augmented samples in the dataset
         :param operations: Array of augmentation methods to perform on the dataset

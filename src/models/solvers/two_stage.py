@@ -11,6 +11,7 @@ class TwoStageModel(MultiTaskModel):
     Bounding Box. Afterwards a classifier predicts the class label, based on the cropped input.
 
     [Similar to `IndependentModel`]
+
     Example:
         >>> from tensorflow.keras.applications.mobilenet import MobileNet
         >>> from src.models.architectures.classifier import Classifier
@@ -20,7 +21,6 @@ class TwoStageModel(MultiTaskModel):
         >>> regressor = BoundingBoxRegressor(reg_backbone)
         >>> classifier = Classifier(clf_backbone)
         >>> solver = TwoStageModel(regressor, classifier, (224, 224, 3), False)
-
     """
     ## Name of model architecture
     model_name = 'two-stage-model'

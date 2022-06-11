@@ -109,7 +109,8 @@ def _calculate_giou(b1, b2, mode: str = 'giou') -> tf.Tensor:
 
 
 def tf_giou_loss(y_true, y_pred, mode: str = 'giou') -> tf.Tensor:
-    """Implements the GIoU loss function.
+    """
+    Implements the GIoU loss function.
 
     GIoU loss was first introduced in the
     [Generalized Intersection over Union:
@@ -126,6 +127,7 @@ def tf_giou_loss(y_true, y_pred, mode: str = 'giou') -> tf.Tensor:
 
     Returns:
         GIoU loss float `Tensor`.
+
     """
     if mode not in ['giou', 'iou']:
         raise ValueError("Value of mode should be 'iou' or 'giou'")
@@ -144,10 +146,18 @@ END Fork
 
 
 class GIoULoss(LossFunctionWrapper):
+    """
+    GIoULoss as class instance
+    """
     def __init__(self,
                  mode: str = 'giou',
                  reduction: str = tf.keras.losses.Reduction.AUTO,
                  name: Optional[str] = 'giou_loss'):
+        """
+        :param mode: either 'giou' or 'iou'
+        :param reduction: tf.keras reduction
+        :param name: verbose name for loss
+        """
         super().__init__(giou_loss, name=name, reduction=reduction, mode=mode)
 
 
