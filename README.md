@@ -14,12 +14,11 @@ The accommodating code to the paper and the webapp is located in `./src`.
 For more details consult the documentation pages.
 
 ## Visuals
-
-![](_static/dataset-representation.png)
 ### Data Augmentation
-![](_static/data.png)
 ![](./data.png)
-
+### Predictions
+![](./docs/imgs/validation_plots/independent-model-predictions.png =250x250)
+![](./docs/imgs/validation_plots/independent-model-confusion.png =250x250)
 ## Installation
 
 ### Prerequesites:
@@ -38,22 +37,22 @@ $ python -m scripts.reuse_labels bounding-boxes-2022-02-12-14-33.json mnt/KInsek
 #### generate a training set:
 
 1. Set environment variables `USERNAME` (username on NAS), `PASSWORD` (password for NAS), `VPN_USER` and `VPN_PASSWD` accordingly
-2. Run:
+2. Run 
 ```shell
-$ sudo ./mount_directories.sh on
+$ sudo ./scripts/mount_directories.sh on
 ```
 3. To generate a dataset from the source `mnt/KInsektDaten/data/iNat/train_Insecta/`:
-```shell
-$ python -m scripts.preselect_files --seed 42 -g 20 -s 25 -rng -l ../mnt/KInsektDaten/data/iNat/train_Insecta/ ../data/iNat/
-```
+    ```shell
+    $ python -m scripts.preselect_files --seed 42 -g 20 -s 25 -rng -l ../mnt/KInsektDaten/data/iNat/train_Insecta/ ../data/iNat/
+    ```
 for more options see `-h`.
 
 4. Upload the files within the (default) target directory `./data/iNat/storage` into ["Label-Studio"](https://labelstudio-kinsekt.app.datexis.com) and annotate bounding boxes.
 
 optionally Launch [LabelStudio](https://labelstud.io/)
-```shell
-$ docker run -it -p 8080:8080 -v $PWD/data/iNat:/label-studio/data -e LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true -e LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data heartexlabs/label-studio:latest
-```
+
+    $ docker run -it -p 8080:8080 -v $PWD/data/iNat:/label-studio/data -e LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true -e LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data heartexlabs/label-studio:latest
+    
 5. Create labels for image files
 6. Export the labels from LStudio
 7. Generate file structure for train, test and validation sets by running
@@ -83,11 +82,11 @@ Executes inference tests on TFLite compatible versions of pretrained optimized i
 - `TwoStageModel`
 - `SingleStageModel`
 
+
 ## Support
 In case you need help setting up the project or run into issues please create a ticket within the repositories issue tracker
 
 ## License
-This project is published under 
-
+Unless marked differently all code and content in this repository is published under [GNU GPL-3.0](LICENSE).
 ## Project status
 First release is v1.0.0

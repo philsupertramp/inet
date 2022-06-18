@@ -89,8 +89,10 @@
             
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../src.html">src package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">inet</a></li>
 </ul>
 
             
@@ -168,10 +170,10 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">src.data.load_dataset</span> <span class="kn">import</span> <span class="n">directory_to_two_in_one_dataset</span>
-<span class="kn">from</span> <span class="nn">src.losses.giou_loss</span> <span class="kn">import</span> <span class="n">GIoULoss</span>
-<span class="kn">from</span> <span class="nn">src.models.data_structures</span> <span class="kn">import</span> <span class="n">BoundingBox</span>
-<span class="kn">from</span> <span class="nn">src.models.tf_lite.tflite_methods</span> <span class="kn">import</span> <span class="n">evaluate_interpreted_model</span>
+<span class="kn">from</span> <span class="nn">inet.data.load_dataset</span> <span class="kn">import</span> <span class="n">directory_to_two_in_one_dataset</span>
+<span class="kn">from</span> <span class="nn">inet.losses.giou_loss</span> <span class="kn">import</span> <span class="n">GIoULoss</span>
+<span class="kn">from</span> <span class="nn">inet.models.data_structures</span> <span class="kn">import</span> <span class="n">BoundingBox</span>
+<span class="kn">from</span> <span class="nn">inet.models.tf_lite.tflite_methods</span> <span class="kn">import</span> <span class="n">evaluate_interpreted_model</span>
 <span class="kn">from</span> <span class="nn">tests.helper</span> <span class="kn">import</span> <span class="n">Timer</span><span class="p">,</span> <span class="n">build_tf_model_from_file</span>
 
 
@@ -230,7 +232,8 @@
 
 <div class="viewcode-block" id="scale_bb"><a class="viewcode-back" href="../../tests.html#tests.test_yolo_inference.scale_bb">[docs]</a><span class="k">def</span> <span class="nf">scale_bb</span><span class="p">(</span><span class="n">bb</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Scales percentage BB into real sized BB</span>
+<span class="sd">    Scales percentage BB into real sized BB.</span>
+
 <span class="sd">    :param bb: the bb to scale</span>
 <span class="sd">    :param h: image width</span>
 <span class="sd">    :param w: image height</span>

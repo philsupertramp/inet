@@ -7,11 +7,11 @@ from typing import Dict, Tuple
 from tensorflow.keras.applications.mobilenet import \
     preprocess_input as mobilenet_preprocess_input
 
-from src.data.load_dataset import directory_to_classification_dataset
-from src.losses.giou_loss import GIoULoss
-from src.models.solvers.independent import IndependentModel
-from src.models.solvers.two_in_one import TwoInOneTFLite
-from src.models.solvers.two_stage import TwoStageModel
+from inet.data.load_dataset import directory_to_classification_dataset
+from inet.losses.giou_loss import GIoULoss
+from inet.models.solvers.independent import IndependentModel
+from inet.models.solvers.two_in_one import TwoInOneTFLite
+from inet.models.solvers.two_stage import TwoStageModel
 
 
 def create_conversion_config(input_shape: Tuple[int, int, int]) -> Dict:
@@ -21,10 +21,10 @@ def create_conversion_config(input_shape: Tuple[int, int, int]) -> Dict:
     :param input_shape: shape of the expected input features
     :return: Conversion configuration
     """
-    from src.models.tf_lite.convert_to_tflite import (ClusterMethod,
-                                                      QuantizationMethod,
-                                                      cluster_weights,
-                                                      create_quantize_model)
+    from inet.models.tf_lite.convert_to_tflite import (ClusterMethod,
+                                                       QuantizationMethod,
+                                                       cluster_weights,
+                                                       create_quantize_model)
     cropped_test_set, cropped_train_set, _ = directory_to_classification_dataset(
         'data/iNat/cropped-data',
         img_width=input_shape[1],

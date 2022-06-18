@@ -89,8 +89,10 @@
             
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../src.html">src package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">inet</a></li>
 </ul>
 
             
@@ -170,11 +172,11 @@
 <span class="kn">from</span> <span class="nn">tensorflow.keras.applications.mobilenet</span> <span class="kn">import</span> \
     <span class="n">preprocess_input</span> <span class="k">as</span> <span class="n">mobilenet_preprocess_input</span>
 
-<span class="kn">from</span> <span class="nn">src.data.load_dataset</span> <span class="kn">import</span> <span class="n">directory_to_classification_dataset</span>
-<span class="kn">from</span> <span class="nn">src.losses.giou_loss</span> <span class="kn">import</span> <span class="n">GIoULoss</span>
-<span class="kn">from</span> <span class="nn">src.models.solvers.independent</span> <span class="kn">import</span> <span class="n">IndependentModel</span>
-<span class="kn">from</span> <span class="nn">src.models.solvers.two_in_one</span> <span class="kn">import</span> <span class="n">TwoInOneTFLite</span>
-<span class="kn">from</span> <span class="nn">src.models.solvers.two_stage</span> <span class="kn">import</span> <span class="n">TwoStageModel</span>
+<span class="kn">from</span> <span class="nn">inet.data.load_dataset</span> <span class="kn">import</span> <span class="n">directory_to_classification_dataset</span>
+<span class="kn">from</span> <span class="nn">inet.losses.giou_loss</span> <span class="kn">import</span> <span class="n">GIoULoss</span>
+<span class="kn">from</span> <span class="nn">inet.models.solvers.independent</span> <span class="kn">import</span> <span class="n">IndependentModel</span>
+<span class="kn">from</span> <span class="nn">inet.models.solvers.two_in_one</span> <span class="kn">import</span> <span class="n">TwoInOneTFLite</span>
+<span class="kn">from</span> <span class="nn">inet.models.solvers.two_stage</span> <span class="kn">import</span> <span class="n">TwoStageModel</span>
 
 
 <div class="viewcode-block" id="create_conversion_config"><a class="viewcode-back" href="../../scripts.html#scripts.configs.create_conversion_config">[docs]</a><span class="k">def</span> <span class="nf">create_conversion_config</span><span class="p">(</span><span class="n">input_shape</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
@@ -184,10 +186,10 @@
 <span class="sd">    :param input_shape: shape of the expected input features</span>
 <span class="sd">    :return: Conversion configuration</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="kn">from</span> <span class="nn">src.models.tf_lite.convert_to_tflite</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ClusterMethod</span><span class="p">,</span>
-                                                      <span class="n">QuantizationMethod</span><span class="p">,</span>
-                                                      <span class="n">cluster_weights</span><span class="p">,</span>
-                                                      <span class="n">create_quantize_model</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">inet.models.tf_lite.convert_to_tflite</span> <span class="kn">import</span> <span class="p">(</span><span class="n">ClusterMethod</span><span class="p">,</span>
+                                                       <span class="n">QuantizationMethod</span><span class="p">,</span>
+                                                       <span class="n">cluster_weights</span><span class="p">,</span>
+                                                       <span class="n">create_quantize_model</span><span class="p">)</span>
     <span class="n">cropped_test_set</span><span class="p">,</span> <span class="n">cropped_train_set</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">directory_to_classification_dataset</span><span class="p">(</span>
         <span class="s1">&#39;data/iNat/cropped-data&#39;</span><span class="p">,</span>
         <span class="n">img_width</span><span class="o">=</span><span class="n">input_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>

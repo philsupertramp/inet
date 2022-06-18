@@ -22,7 +22,7 @@ from PIL import Image
 
 from scripts.constants import CLASS_MAP
 from scripts.process_files import create_directory_structure
-from src.models.data_structures import BoundingBox
+from inet.models.data_structures import BoundingBox
 
 if __name__ == '__main__':
     ## Argument parser

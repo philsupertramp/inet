@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inet.models.tf_lite.convert_to_tflite &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">inet</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inet.models.tf_lite.convert_to_tflite</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inet.models.tf_lite.convert_to_tflite</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">tensorflow_model_optimization</span> <span class="k">as</span> <span class="nn">tfmot</span>
+
+<span class="kn">from</span> <span class="nn">inet.models.architectures.base_model</span> <span class="kn">import</span> <span class="n">TaskModel</span>
+<span class="kn">from</span> <span class="nn">inet.models.tf_lite.tflite_methods</span> <span class="kn">import</span> <span class="n">evaluate_q_model</span><span class="p">,</span> <span class="n">validate_q_model_prediction</span>
+
+<span class="n">tf_cluster_weights</span> <span class="o">=</span> <span class="n">tfmot</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">cluster_weights</span>
+<span class="n">CentroidInitialization</span> <span class="o">=</span> <span class="n">tfmot</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">CentroidInitialization</span>
+
+
+<div class="viewcode-block" id="QuantizationMethod"><a class="viewcode-back" href="../../../../inet.models.tf_lite.html#inet.models.tf_lite.convert_to_tflite.QuantizationMethod">[docs]</a><span class="k">class</span> <span class="nc">QuantizationMethod</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper enum to determine a quantization method</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">## No quantization</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1">## Dynamic quantization</span>
+    <span class="n">DYNAMIC</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1">## Conversion to float16</span>
+    <span class="n">FLOAT_16</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="c1">## Conversion to uint8</span>
+    <span class="n">FULL_INT</span> <span class="o">=</span> <span class="mi">3</span></div>
+
+
+<div class="viewcode-block" id="ClusterMethod"><a class="viewcode-back" href="../../../../inet.models.tf_lite.html#inet.models.tf_lite.convert_to_tflite.ClusterMethod">[docs]</a><span class="k">class</span> <span class="nc">ClusterMethod</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper enum to determine a cluster methods</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">## Linear clustering method</span>
+    <span class="n">LINEAR</span> <span class="o">=</span> <span class="n">CentroidInitialization</span><span class="o">.</span><span class="n">LINEAR</span>
+    <span class="c1">## Random clustering method</span>
+    <span class="n">RANDOM</span> <span class="o">=</span> <span class="n">CentroidInitialization</span><span class="o">.</span><span class="n">RANDOM</span>
+    <span class="c1">## Clustering based on density</span>
+    <span class="n">DENSITY_BASED</span> <span class="o">=</span> <span class="n">CentroidInitialization</span><span class="o">.</span><span class="n">DENSITY_BASED</span>
+    <span class="c1">## Clustering using KMeans++ algo</span>
+    <span class="n">KMEANS_PLUS_PLUS</span> <span class="o">=</span> <span class="n">CentroidInitialization</span><span class="o">.</span><span class="n">KMEANS_PLUS_PLUS</span></div>
+
+
+<div class="viewcode-block" id="create_q_aware_model"><a class="viewcode-back" href="../../../../inet.models.tf_lite.html#inet.models.tf_lite.convert_to_tflite.create_q_aware_model">[docs]</a><span class="k">def</span> <span class="nf">create_q_aware_model</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create quantization aware model</span>
+
+<span class="sd">    :param model: model to convert</span>
+<span class="sd">    :return: quantization aware model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">quant_aware_model</span> <span class="o">=</span> <span class="n">tfmot</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">quantize_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="c1"># Save or checkpoint the model.</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">keras_model_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="s1">&#39;.h5&#39;</span><span class="p">)</span>
+    <span class="n">quant_aware_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">keras_model_file</span><span class="p">)</span>
+
+    <span class="c1"># `quantize_scope` is needed for deserializing HDF5 models.</span>
+    <span class="k">with</span> <span class="n">tfmot</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">quantize_scope</span><span class="p">():</span>
+        <span class="n">loaded_model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="n">keras_model_file</span><span class="p">)</span>
+
+    <span class="n">loaded_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">loaded_model</span></div>
+
+
+<div class="viewcode-block" id="create_tf_lite_q_model"><a class="viewcode-back" href="../../../../inet.models.tf_lite.html#inet.models.tf_lite.convert_to_tflite.create_tf_lite_q_model">[docs]</a><span class="k">def</span> <span class="nf">create_tf_lite_q_model</span><span class="p">(</span><span class="n">q_model</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">quant_method</span><span class="p">:</span> <span class="n">QuantizationMethod</span> <span class="o">=</span> <span class="n">QuantizationMethod</span><span class="o">.</span><span class="n">FULL_INT</span><span class="p">,</span> <span class="n">model_name</span><span class="o">=</span><span class="s1">&#39;bbreg&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    converts regular model to q aware model using provided `quant_method`</span>
+
+<span class="sd">    :param q_model: a quantization aware model</span>
+<span class="sd">    :param train_set: samples representing the train set</span>
+<span class="sd">    :param quant_method: quantization method</span>
+<span class="sd">    :param model_name: resulting model name</span>
+<span class="sd">    :return: tf lite version of quantization aware model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">TFLiteConverter</span><span class="o">.</span><span class="n">from_keras_model</span><span class="p">(</span><span class="n">q_model</span><span class="p">)</span>
+    <span class="c1"># This step is needed in all quantization strategies</span>
+    <span class="n">tf_file</span> <span class="o">=</span> <span class="n">model_name</span> <span class="o">+</span> <span class="s1">&#39;.tflite&#39;</span>
+    <span class="k">if</span> <span class="n">quant_method</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="n">QuantizationMethod</span><span class="o">.</span><span class="n">NONE</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">converter</span><span class="o">.</span><span class="n">optimizations</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">Optimize</span><span class="o">.</span><span class="n">DEFAULT</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">quant_method</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">QuantizationMethod</span><span class="o">.</span><span class="n">FLOAT_16</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>  <span class="c1"># float16-quantization</span>
+            <span class="n">converter</span><span class="o">.</span><span class="n">target_spec</span><span class="o">.</span><span class="n">supported_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">float16</span><span class="p">]</span>
+
+        <span class="k">elif</span> <span class="n">quant_method</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">QuantizationMethod</span><span class="o">.</span><span class="n">FULL_INT</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>  <span class="c1"># full integer quantization</span>
+
+            <span class="c1"># You need to measure the dynamic range of activations and inputs</span>
+            <span class="c1"># by supplying sample input data to the converter</span>
+            <span class="k">def</span> <span class="nf">representative_data_gen</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">feature_batch</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">train_set</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">feature_batch</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">feature_batch</span><span class="p">:</span>
+                            <span class="k">yield</span> <span class="p">[</span><span class="n">feature</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]]</span>  <span class="c1"># Inputs to TFLite models require one extra dim.</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">yield</span> <span class="p">[</span><span class="n">feature_batch</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]]</span>
+
+            <span class="n">converter</span><span class="o">.</span><span class="n">representative_dataset</span> <span class="o">=</span> <span class="n">representative_data_gen</span>
+
+        <span class="c1"># Define name of quantized TFLite model</span>
+        <span class="n">tf_file</span> <span class="o">=</span> <span class="n">model_name</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">quant_method</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.tflite&#39;</span>
+    <span class="n">tflite_model</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+    <span class="c1"># Save the TFLite model</span>
+    <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">gfile</span><span class="o">.</span><span class="n">GFile</span><span class="p">(</span><span class="n">tf_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">tflite_model</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Model in Mb:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">tf_file</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">20</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">tflite_model</span></div>
+
+
+<div class="viewcode-block" id="create_quantize_model"><a class="viewcode-back" href="../../../../inet.models.tf_lite.html#inet.models.tf_lite.convert_to_tflite.create_quantize_model">[docs]</a><span class="k">def</span> <span class="nf">create_quantize_model</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">TaskModel</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">,</span> <span class="n">quant_method</span><span class="p">:</span> <span class="n">QuantizationMethod</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to create and validate a quantized version of `model` using `quant_method`.</span>
+
+<span class="sd">    :param model: the model instance to quantize</span>
+<span class="sd">    :param train_set: the train set, will be used as representation when using QuantizationMethod.FULL_INT</span>
+<span class="sd">    :param test_set: to evaluate the models</span>
+<span class="sd">    :param quant_method: quantization method applied onto the model</span>
+<span class="sd">    :return: q-aware-model</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">test_set</span><span class="o">.</span><span class="n">unbatch</span><span class="p">()))</span>
+
+    <span class="n">test_images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_images</span><span class="p">)</span>
+    <span class="n">test_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_labels</span><span class="p">)</span>
+    <span class="n">model_prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">tf_lite_model</span> <span class="o">=</span> <span class="n">create_tf_lite_q_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">quant_method</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span>
+
+    <span class="n">tfl_model_prediction</span> <span class="o">=</span> <span class="n">evaluate_q_model</span><span class="p">(</span><span class="n">tf_lite_model</span><span class="p">,</span> <span class="n">test_images</span><span class="p">)</span>
+    <span class="n">validate_q_model_prediction</span><span class="p">(</span><span class="n">model_prediction</span><span class="p">,</span> <span class="n">tfl_model_prediction</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">model_type</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">tf_lite_model</span></div>
+
+
+<div class="viewcode-block" id="create_pruned_model"><a class="viewcode-back" href="../../../../inet.models.tf_lite.html#inet.models.tf_lite.convert_to_tflite.create_pruned_model">[docs]</a><span class="k">def</span> <span class="nf">create_pruned_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">test_set</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to create and evaluate a pruned version of given `model`</span>
+
+<span class="sd">    :param model: the model to prune</span>
+<span class="sd">    :param test_set: test set for performance validation</span>
+<span class="sd">    :return: pruned version of `model`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model_for_export</span> <span class="o">=</span> <span class="n">tfmot</span><span class="o">.</span><span class="n">sparsity</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">strip_pruning</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">pruned_keras_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="s1">&#39;.h5&#39;</span><span class="p">)</span>
+    <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">save_model</span><span class="p">(</span><span class="n">model_for_export</span><span class="p">,</span> <span class="n">pruned_keras_file</span><span class="p">,</span> <span class="n">include_optimizer</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">TFLiteConverter</span><span class="o">.</span><span class="n">from_keras_model</span><span class="p">(</span><span class="n">model_for_export</span><span class="p">)</span>
+    <span class="n">pruned_tflite_model</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">pruned_tflite_file</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkstemp</span><span class="p">(</span><span class="s1">&#39;.tflite&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">pruned_tflite_file</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">pruned_tflite_model</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Saved pruned TFLite model to:&#39;</span><span class="p">,</span> <span class="n">pruned_tflite_file</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Model in Mb:&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">pruned_tflite_file</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">20</span><span class="p">))</span>
+
+    <span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">test_set</span><span class="o">.</span><span class="n">unbatch</span><span class="p">()))</span>
+    <span class="n">test_images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_images</span><span class="p">)</span>
+    <span class="n">test_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">test_labels</span><span class="p">)</span>
+    <span class="n">tflite_predictions</span> <span class="o">=</span> <span class="n">evaluate_q_model</span><span class="p">(</span><span class="n">pruned_tflite_model</span><span class="p">,</span> <span class="n">test_images</span><span class="p">)</span>
+    <span class="n">model_prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">validate_q_model_prediction</span><span class="p">(</span><span class="n">model_prediction</span><span class="p">,</span> <span class="n">tflite_predictions</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">model_type</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pruned_tflite_model</span></div>
+
+
+<div class="viewcode-block" id="cluster_weights"><a class="viewcode-back" href="../../../../inet.models.tf_lite.html#inet.models.tf_lite.convert_to_tflite.cluster_weights">[docs]</a><span class="k">def</span> <span class="nf">cluster_weights</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">cluster_method</span><span class="p">:</span> <span class="n">ClusterMethod</span><span class="p">,</span> <span class="n">number_clusters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clusters weights of given model in `number_clusters` clusters, using given method `cluster_method`.</span>
+
+<span class="sd">    **Note this will change the underlying weights of `model`.</span>
+<span class="sd">    In case you want to validate your model, perform a prediction prior to calling this method!**</span>
+
+<span class="sd">    Hint:</span>
+<span class="sd">    Use this in combination with CentroidInitialization.KMEANS_PLUS_PLUS</span>
+<span class="sd">    for MobileNet on the Regression task, this preserves weights in the domain 1e-15 well.</span>
+
+<span class="sd">    :param model:</span>
+<span class="sd">    :param cluster_method: one of CentroidInitialization.KMEANS_PLUS_PLUS, CentroidInitialization.DENSITY_BASED, CentroidInitialization.RANDOM, CentroidInitialization.LINEAR</span>
+<span class="sd">    :param number_clusters:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">clustering_params</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;number_of_clusters&#39;</span><span class="p">:</span> <span class="n">number_clusters</span><span class="p">,</span>
+        <span class="s1">&#39;cluster_centroids_init&#39;</span><span class="p">:</span> <span class="n">cluster_method</span><span class="o">.</span><span class="n">value</span>
+    <span class="p">}</span>
+
+    <span class="c1"># Cluster a whole model</span>
+    <span class="n">clustered_model</span> <span class="o">=</span> <span class="n">tf_cluster_weights</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">clustering_params</span><span class="p">)</span>
+    <span class="n">keras_model</span> <span class="o">=</span> <span class="n">tfmot</span><span class="o">.</span><span class="n">clustering</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">strip_clustering</span><span class="p">(</span><span class="n">clustered_model</span><span class="p">)</span>
+
+    <span class="n">converter</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">lite</span><span class="o">.</span><span class="n">TFLiteConverter</span><span class="o">.</span><span class="n">from_keras_model</span><span class="p">(</span><span class="n">keras_model</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">converter</span><span class="o">.</span><span class="n">convert</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

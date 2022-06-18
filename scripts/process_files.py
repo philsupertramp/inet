@@ -13,14 +13,14 @@ import numpy as np
 import pytz
 
 from scripts.constants import CLASS_MAP
-from src.data.constants import (BBoxLabelType, ClassLabelType,
-                                LabeledFileDictType)
-from src.models.data_structures import BoundingBox
+from inet.data.constants import (BBoxLabelType, ClassLabelType,
+                                 LabeledFileDictType)
+from inet.models.data_structures import BoundingBox
 
 
 def extract_file_name(elem: Dict) -> str:
     """
-    Extracts file name from dictionary
+    Extracts file name from dictionary.
 
     :param elem: dictionary holding image annotations
     :return: the file name of the annotated image
@@ -31,7 +31,7 @@ def extract_file_name(elem: Dict) -> str:
 
 def extract_label(elem: Dict) -> Tuple[BBoxLabelType, ClassLabelType]:
     """
-    Extracts labels from element dictionary
+    Extracts labels from element dictionary.
 
     :param elem:
     :return: Bounding Box coordinates and class label: ((y_min, x_min, y_max, x_max), label)
@@ -46,7 +46,7 @@ def extract_label(elem: Dict) -> Tuple[BBoxLabelType, ClassLabelType]:
 
 def load_element(elem, in_directory: str) -> Dict:
     """
-    load element from data dict
+    load element from data dict.
 
     :param elem: annotated image
     :param in_directory: source directory of annotated image
@@ -64,7 +64,7 @@ def load_element(elem, in_directory: str) -> Dict:
 
 def load_labels_from_bbox_file(bbox_file: str, in_directory: str) -> LabeledFileDictType:
     """
-    loads all available labels from dataset file
+    loads all available labels from dataset file.
 
     :param bbox_file: file holding BBox annotations
     :param in_directory: source directory of annotations
@@ -82,7 +82,7 @@ def load_labels_from_bbox_file(bbox_file: str, in_directory: str) -> LabeledFile
 
 def load_labels_from_bbox_files(bbox_files: List[str], in_directory: str) -> LabeledFileDictType:
     """
-    loads all labels from all provided files
+    loads all labels from all provided files.
 
     :param bbox_files: list of BBox annotation files
     :param in_directory: source directory for annotated images
@@ -96,7 +96,7 @@ def load_labels_from_bbox_files(bbox_files: List[str], in_directory: str) -> Lab
 
 def create_directory_structure(directory: str, class_names: Set[str]) -> Tuple[str, str, str]:
     """
-    Generates test, train and validation directories
+    Generates test, train and validation directories.
 
     :param directory: root directory to create directories in
     :param class_names: set of available class names in the data set
@@ -123,7 +123,7 @@ def split_labeled_files(
         files: LabeledFileDictType, test_share: float, validation_share: float
 ) -> Tuple[LabeledFileDictType, LabeledFileDictType, LabeledFileDictType]:
     """
-    Splits given files into test/train/validation sets
+    Splits given files into test/train/validation sets.
 
     :param files: Annotated image dictionary
     :param test_share: pct of test samples (\in [0, 1])
@@ -159,7 +159,7 @@ def split_labeled_files(
 
 def spread_files(files: LabeledFileDictType, target_directory: str, label_names: Set[str]) -> LabeledFileDictType:
     """
-    copies files from input to target directory nested in class directories
+    copies files from input to target directory nested in class directories.
 
     :param files: annotated image dictionary
     :param target_directory: target root directory
@@ -182,7 +182,7 @@ def create_config_file(
         test_set: LabeledFileDictType, train_set: LabeledFileDictType, val_set: LabeledFileDictType,
         label_names: Set[str], output_file: str) -> None:
     """
-    Creates JSON Dataset configuration file from given data
+    Creates JSON Dataset configuration file from given data.
 
     :param test_set: annotated test data set
     :param train_set: annotated train data set
@@ -226,7 +226,7 @@ def create_dataset_structure(files: LabeledFileDictType, label_names: Set[str], 
 
 def get_genera_file_stats_for_directory(directory: str, label_names: Set[str]) -> Dict[str, int]:
     """
-    Counts number of samples for each genus
+    Counts number of samples for each genus.
 
     :param directory: source root directory
     :param label_names: set of class names/subdirectories to find in root directory
@@ -243,7 +243,7 @@ def get_genera_file_stats_for_directory(directory: str, label_names: Set[str]) -
 
 def test_output_directory(directory: str, label_names: Set[str]) -> Tuple[Dict, Dict, Dict]:
     """
-    Validates output directory for correctness
+    Validates output directory for correctness.
 
     :param directory:  root directory of data set
     :param label_names: available class labels in data set
@@ -296,7 +296,7 @@ def test_output_directory(directory: str, label_names: Set[str]) -> Tuple[Dict, 
 def bounding_box_stats(files: Dict) -> Dict:
     """
     Generates statistics for available bounding boxes.
-    Calculates min, max, mean and avg width and heights
+    Calculates min, max, mean and avg width and heights.
 
     :param files: dictionary of annotated image files
     :return: general statistics for bounding boxes
@@ -328,7 +328,7 @@ def bounding_box_stats(files: Dict) -> Dict:
 
 def generate_statistics(files: Dict, target_directory: str, label_names: Set[str]) -> None:
     """
-    Generate statistics over the processed data sets
+    Generate statistics over the processed data sets.
 
     :param files: dictionary holding annotated image files
     :param target_directory: root directory for files

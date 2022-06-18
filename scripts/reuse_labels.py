@@ -16,7 +16,8 @@ from scripts.helpers import ProgressBar, ThreadWithReturnValue
 
 def extract_file_name(elem: Dict) -> str:
     """
-    Extract file name from element dictionary
+    Extract file name from element dictionary.
+
     :param elem: element dictionary
     :return: file name
     """
@@ -29,7 +30,8 @@ def extract_file_name(elem: Dict) -> str:
 
 def get_directory_from_prefix(in_dir, prefix):
     """
-    search function for directory with prefix `prefix` within `in_dir`
+    search function for directory with prefix `prefix` within `in_dir`.
+
     :param in_dir: parent directory
     :param prefix: search term to look for
     :return: path to target directory
@@ -41,7 +43,8 @@ def get_directory_from_prefix(in_dir, prefix):
 
 def move_file(elem, input_dir, target_dir):
     """
-    moves files from one directory into another
+    moves files from one directory into another.
+
     :param elem: files to move
     :param input_dir: source to move from
     :param target_dir: target to move files to
@@ -58,7 +61,8 @@ def move_file(elem, input_dir, target_dir):
 
 def process_in_multi_threads(file_content, input_dir, target_dir) -> None:
     """
-    Moves files `file_content` from `input_dir` to `target_dir` using multiple threads
+    Moves files `file_content` from `input_dir` to `target_dir` using multiple threads.
+
     :param file_content: list of file names
     :param input_dir: source directory
     :param target_dir: target directory

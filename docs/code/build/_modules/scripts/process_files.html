@@ -89,8 +89,10 @@
             
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../src.html">src package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">inet</a></li>
 </ul>
 
             
@@ -176,14 +178,14 @@
 <span class="kn">import</span> <span class="nn">pytz</span>
 
 <span class="kn">from</span> <span class="nn">scripts.constants</span> <span class="kn">import</span> <span class="n">CLASS_MAP</span>
-<span class="kn">from</span> <span class="nn">src.data.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BBoxLabelType</span><span class="p">,</span> <span class="n">ClassLabelType</span><span class="p">,</span>
-                                <span class="n">LabeledFileDictType</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">src.models.data_structures</span> <span class="kn">import</span> <span class="n">BoundingBox</span>
+<span class="kn">from</span> <span class="nn">inet.data.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BBoxLabelType</span><span class="p">,</span> <span class="n">ClassLabelType</span><span class="p">,</span>
+                                 <span class="n">LabeledFileDictType</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">inet.models.data_structures</span> <span class="kn">import</span> <span class="n">BoundingBox</span>
 
 
 <div class="viewcode-block" id="extract_file_name"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.extract_file_name">[docs]</a><span class="k">def</span> <span class="nf">extract_file_name</span><span class="p">(</span><span class="n">elem</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extracts file name from dictionary</span>
+<span class="sd">    Extracts file name from dictionary.</span>
 
 <span class="sd">    :param elem: dictionary holding image annotations</span>
 <span class="sd">    :return: the file name of the annotated image</span>
@@ -194,7 +196,7 @@
 
 <div class="viewcode-block" id="extract_label"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.extract_label">[docs]</a><span class="k">def</span> <span class="nf">extract_label</span><span class="p">(</span><span class="n">elem</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">BBoxLabelType</span><span class="p">,</span> <span class="n">ClassLabelType</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extracts labels from element dictionary</span>
+<span class="sd">    Extracts labels from element dictionary.</span>
 
 <span class="sd">    :param elem:</span>
 <span class="sd">    :return: Bounding Box coordinates and class label: ((y_min, x_min, y_max, x_max), label)</span>
@@ -209,7 +211,7 @@
 
 <div class="viewcode-block" id="load_element"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.load_element">[docs]</a><span class="k">def</span> <span class="nf">load_element</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">in_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    load element from data dict</span>
+<span class="sd">    load element from data dict.</span>
 
 <span class="sd">    :param elem: annotated image</span>
 <span class="sd">    :param in_directory: source directory of annotated image</span>
@@ -227,7 +229,7 @@
 
 <div class="viewcode-block" id="load_labels_from_bbox_file"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.load_labels_from_bbox_file">[docs]</a><span class="k">def</span> <span class="nf">load_labels_from_bbox_file</span><span class="p">(</span><span class="n">bbox_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">in_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LabeledFileDictType</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    loads all available labels from dataset file</span>
+<span class="sd">    loads all available labels from dataset file.</span>
 
 <span class="sd">    :param bbox_file: file holding BBox annotations</span>
 <span class="sd">    :param in_directory: source directory of annotations</span>
@@ -245,7 +247,7 @@
 
 <div class="viewcode-block" id="load_labels_from_bbox_files"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.load_labels_from_bbox_files">[docs]</a><span class="k">def</span> <span class="nf">load_labels_from_bbox_files</span><span class="p">(</span><span class="n">bbox_files</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">in_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LabeledFileDictType</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    loads all labels from all provided files</span>
+<span class="sd">    loads all labels from all provided files.</span>
 
 <span class="sd">    :param bbox_files: list of BBox annotation files</span>
 <span class="sd">    :param in_directory: source directory for annotated images</span>
@@ -259,7 +261,7 @@
 
 <div class="viewcode-block" id="create_directory_structure"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.create_directory_structure">[docs]</a><span class="k">def</span> <span class="nf">create_directory_structure</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">class_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates test, train and validation directories</span>
+<span class="sd">    Generates test, train and validation directories.</span>
 
 <span class="sd">    :param directory: root directory to create directories in</span>
 <span class="sd">    :param class_names: set of available class names in the data set</span>
@@ -286,7 +288,7 @@
         <span class="n">files</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">test_share</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">validation_share</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">LabeledFileDictType</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Splits given files into test/train/validation sets</span>
+<span class="sd">    Splits given files into test/train/validation sets.</span>
 
 <span class="sd">    :param files: Annotated image dictionary</span>
 <span class="sd">    :param test_share: pct of test samples (\in [0, 1])</span>
@@ -322,7 +324,7 @@
 
 <div class="viewcode-block" id="spread_files"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.spread_files">[docs]</a><span class="k">def</span> <span class="nf">spread_files</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">target_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">LabeledFileDictType</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    copies files from input to target directory nested in class directories</span>
+<span class="sd">    copies files from input to target directory nested in class directories.</span>
 
 <span class="sd">    :param files: annotated image dictionary</span>
 <span class="sd">    :param target_directory: target root directory</span>
@@ -345,7 +347,7 @@
         <span class="n">test_set</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">train_set</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">val_set</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span>
         <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">output_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates JSON Dataset configuration file from given data</span>
+<span class="sd">    Creates JSON Dataset configuration file from given data.</span>
 
 <span class="sd">    :param test_set: annotated test data set</span>
 <span class="sd">    :param train_set: annotated train data set</span>
@@ -389,7 +391,7 @@
 
 <div class="viewcode-block" id="get_genera_file_stats_for_directory"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.get_genera_file_stats_for_directory">[docs]</a><span class="k">def</span> <span class="nf">get_genera_file_stats_for_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Counts number of samples for each genus</span>
+<span class="sd">    Counts number of samples for each genus.</span>
 
 <span class="sd">    :param directory: source root directory</span>
 <span class="sd">    :param label_names: set of class names/subdirectories to find in root directory</span>
@@ -406,7 +408,7 @@
 
 <div class="viewcode-block" id="test_output_directory"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.test_output_directory">[docs]</a><span class="k">def</span> <span class="nf">test_output_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Validates output directory for correctness</span>
+<span class="sd">    Validates output directory for correctness.</span>
 
 <span class="sd">    :param directory:  root directory of data set</span>
 <span class="sd">    :param label_names: available class labels in data set</span>
@@ -459,7 +461,7 @@
 <div class="viewcode-block" id="bounding_box_stats"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.bounding_box_stats">[docs]</a><span class="k">def</span> <span class="nf">bounding_box_stats</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates statistics for available bounding boxes.</span>
-<span class="sd">    Calculates min, max, mean and avg width and heights</span>
+<span class="sd">    Calculates min, max, mean and avg width and heights.</span>
 
 <span class="sd">    :param files: dictionary of annotated image files</span>
 <span class="sd">    :return: general statistics for bounding boxes</span>
@@ -491,7 +493,7 @@
 
 <div class="viewcode-block" id="generate_statistics"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.generate_statistics">[docs]</a><span class="k">def</span> <span class="nf">generate_statistics</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">target_directory</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate statistics over the processed data sets</span>
+<span class="sd">    Generate statistics over the processed data sets.</span>
 
 <span class="sd">    :param files: dictionary holding annotated image files</span>
 <span class="sd">    :param target_directory: root directory for files</span>
