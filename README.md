@@ -17,8 +17,21 @@ For more details consult the documentation pages.
 ### Data Augmentation
 ![](./data.png)
 ### Predictions
-![](./docs/imgs/validation_plots/independent-model-predictions.png =250x250)
-![](./docs/imgs/validation_plots/independent-model-confusion.png =250x250)
+
+```text
+Classification:
+ ===================================
+    Accuracy:   0.916
+    f1 score:   0.9167668857681328
+
+Localization:
+ ===================================
+    GIoU:   0.4361618
+```
+
+<img src="docs/code/source/_static/independent-model-predictions.png" width="300px">
+<img src="docs/code/source/_static/independent-model-confusion.png" width="300px">
+
 ## Installation
 
 ### Prerequesites:
