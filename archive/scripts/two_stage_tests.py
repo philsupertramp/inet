@@ -2,9 +2,9 @@ from tensorflow.keras.applications.mobilenet import MobileNet
 from tensorflow.keras.applications.mobilenet import \
     preprocess_input as mobilenet_preprocess_input
 
-from src.data.load_dataset import directory_to_classification_dataset
-from src.losses.giou_loss import GIoULoss
-from src.models.solvers.two_stage import TwoStageModel
+from inet.data.load_dataset import directory_to_classification_dataset
+from inet.losses.giou_loss import GIoULoss
+from inet.models.solvers.two_stage import TwoStageModel
 
 if __name__ == '__main__':
     input_shape = (224, 224, 3)

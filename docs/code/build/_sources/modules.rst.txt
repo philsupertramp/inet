@@ -4,6 +4,6 @@ inet
 .. toctree::
    :maxdepth: 8
 
-   src
+   inet
    tests
    scripts

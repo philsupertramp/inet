@@ -11,16 +11,13 @@ A look into Machine Learning Methods for Localization and Classification of Inse
 :download:`download paper <../../thesisphilipp.pdf>`
 
 
-.. mdinclude:: ./docs_index.md
-
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
    :caption: Contents:
 
-   index
-   src
-   tests
-   scripts
+   docs_index
+   results
+   modules
 
 
 Indices and tables

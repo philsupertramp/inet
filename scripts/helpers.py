@@ -55,7 +55,8 @@ class ProgressBar:
     def step(self, index: int) -> None:
         """
         Executes a step in the progress bar, this can change the output or
-        reapply previous version, depending on the current index
+        reapply previous version, depending on the current index.
+
         :param index: current index
         """
         j = (index + 1) / self.max_num_elements

@@ -1,7 +1,7 @@
 import tensorflow as tf
 from tensorflow import keras
 
-from src.models.base_model import TaskModel
+from inet.models.base_model import TaskModel
 
 
 class BoundingBoxRegressionLayer(keras.layers.Layer):

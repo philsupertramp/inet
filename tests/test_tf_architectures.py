@@ -7,8 +7,8 @@ from tensorflow.keras.applications.mobilenet import \
     preprocess_input as mobilenet_preprocess_input
 
 from scripts.configs import create_config
-from src.data.load_dataset import directory_to_two_in_one_dataset
-from src.models.solvers.two_in_one import TwoInOneModel
+from inet.data.load_dataset import directory_to_two_in_one_dataset
+from inet.models.solvers.two_in_one import TwoInOneModel
 from tests.helper import Timer
 
 

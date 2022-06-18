@@ -25,7 +25,8 @@ USED_ID_RANGES = {}
 
 def get_n_random_elements(container: List[Union[str, int]], num_elements: int) -> Set[Union[str, int]]:
     """
-    Getter for `num_elements` random elements out of `container`
+    Getter for `num_elements` random elements out of `container`.
+
     :param container: the container to extract the elements from
     :param num_elements: number of random elements to extract
     :return: list of `num_elements` random elements out of `container`

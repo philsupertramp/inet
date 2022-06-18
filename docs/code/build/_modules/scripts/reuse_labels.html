@@ -89,8 +89,10 @@
             
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../src.html">src package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tests.html">tests package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">inet</a></li>
 </ul>
 
             
@@ -179,7 +181,8 @@
 
 <div class="viewcode-block" id="extract_file_name"><a class="viewcode-back" href="../../scripts.html#scripts.reuse_labels.extract_file_name">[docs]</a><span class="k">def</span> <span class="nf">extract_file_name</span><span class="p">(</span><span class="n">elem</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extract file name from element dictionary</span>
+<span class="sd">    Extract file name from element dictionary.</span>
+
 <span class="sd">    :param elem: element dictionary</span>
 <span class="sd">    :return: file name</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -192,7 +195,8 @@
 
 <div class="viewcode-block" id="get_directory_from_prefix"><a class="viewcode-back" href="../../scripts.html#scripts.reuse_labels.get_directory_from_prefix">[docs]</a><span class="k">def</span> <span class="nf">get_directory_from_prefix</span><span class="p">(</span><span class="n">in_dir</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    search function for directory with prefix `prefix` within `in_dir`</span>
+<span class="sd">    search function for directory with prefix `prefix` within `in_dir`.</span>
+
 <span class="sd">    :param in_dir: parent directory</span>
 <span class="sd">    :param prefix: search term to look for</span>
 <span class="sd">    :return: path to target directory</span>
@@ -204,7 +208,8 @@
 
 <div class="viewcode-block" id="move_file"><a class="viewcode-back" href="../../scripts.html#scripts.reuse_labels.move_file">[docs]</a><span class="k">def</span> <span class="nf">move_file</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    moves files from one directory into another</span>
+<span class="sd">    moves files from one directory into another.</span>
+
 <span class="sd">    :param elem: files to move</span>
 <span class="sd">    :param input_dir: source to move from</span>
 <span class="sd">    :param target_dir: target to move files to</span>
@@ -221,7 +226,8 @@
 
 <div class="viewcode-block" id="process_in_multi_threads"><a class="viewcode-back" href="../../scripts.html#scripts.reuse_labels.process_in_multi_threads">[docs]</a><span class="k">def</span> <span class="nf">process_in_multi_threads</span><span class="p">(</span><span class="n">file_content</span><span class="p">,</span> <span class="n">input_dir</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Moves files `file_content` from `input_dir` to `target_dir` using multiple threads</span>
+<span class="sd">    Moves files `file_content` from `input_dir` to `target_dir` using multiple threads.</span>
+
 <span class="sd">    :param file_content: list of file names</span>
 <span class="sd">    :param input_dir: source directory</span>
 <span class="sd">    :param target_dir: target directory</span>

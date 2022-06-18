@@ -2,7 +2,7 @@ from datetime import datetime
 
 import tensorflow as tf
 
-from src.models.tf_lite.tflite_methods import evaluate_interpreted_model
+from inet.models.tf_lite.tflite_methods import evaluate_interpreted_model
 
 
 class Timer:

@@ -5,10 +5,10 @@ Inference tests using weights of pretrained YOLOv5
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.data.load_dataset import directory_to_two_in_one_dataset
-from src.losses.giou_loss import GIoULoss
-from src.models.data_structures import BoundingBox
-from src.models.tf_lite.tflite_methods import evaluate_interpreted_model
+from inet.data.load_dataset import directory_to_two_in_one_dataset
+from inet.losses.giou_loss import GIoULoss
+from inet.models.data_structures import BoundingBox
+from inet.models.tf_lite.tflite_methods import evaluate_interpreted_model
 from tests.helper import Timer, build_tf_model_from_file
 
 
@@ -67,7 +67,8 @@ def yolo2voc(bboxes):
 
 def scale_bb(bb, h, w):
     """
-    Scales percentage BB into real sized BB
+    Scales percentage BB into real sized BB.
+
     :param bb: the bb to scale
     :param h: image width
     :param w: image height

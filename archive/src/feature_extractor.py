@@ -3,8 +3,8 @@ from typing import Tuple
 import keras_tuner
 from tensorflow import keras
 
-from src.models.architectures.base_model import Backbone
-from src.models.data_structures import ModelArchitecture
+from inet.models.architectures.base_model import Backbone
+from inet.models.data_structures import ModelArchitecture
 
 
 class FeatureExtractor(Backbone):
