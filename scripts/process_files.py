@@ -1,4 +1,11 @@
 #!/usr/bin/env python
+"""
+Script to convert an input directory into a data set directory based on
+a provided bounding box configuration file.
+
+For usage:
+    python -m scripts.process_files -h
+"""
 import argparse
 import datetime
 import json
@@ -12,10 +19,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pytz
 
-from scripts.constants import CLASS_MAP
 from inet.data.constants import (BBoxLabelType, ClassLabelType,
                                  LabeledFileDictType)
 from inet.models.data_structures import BoundingBox
+from scripts.constants import CLASS_MAP
 
 
 def extract_file_name(elem: Dict) -> str:
@@ -122,7 +129,7 @@ def create_directory_structure(directory: str, class_names: Set[str]) -> Tuple[s
 def split_labeled_files(
         files: LabeledFileDictType, test_share: float, validation_share: float
 ) -> Tuple[LabeledFileDictType, LabeledFileDictType, LabeledFileDictType]:
-    """
+    r"""
     Splits given files into test/train/validation sets.
 
     :param files: Annotated image dictionary
@@ -204,7 +211,7 @@ def create_config_file(
 
 def create_dataset_structure(files: LabeledFileDictType, label_names: Set[str], dir_name: str, test_split: float,
                              val_split: float) -> None:
-    """
+    r"""
     Generates dataset directory structure for given data.
 
     :param files: files to process

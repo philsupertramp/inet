@@ -20,9 +20,9 @@ from datetime import datetime
 import pytz
 from PIL import Image
 
+from inet.models.data_structures import BoundingBox
 from scripts.constants import CLASS_MAP
 from scripts.process_files import create_directory_structure
-from inet.models.data_structures import BoundingBox
 
 if __name__ == '__main__':
     ## Argument parser

@@ -3,8 +3,8 @@ import numpy as np
 from sklearn.metrics import confusion_matrix
 from sklearn.utils.multiclass import unique_labels
 
-from scripts.constants import LABEL_MAP
 from inet.models.data_structures import BoundingBox
+from scripts.constants import LABEL_MAP
 
 
 def plot_confusion_matrix(y_true, y_pred, classes,

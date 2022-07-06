@@ -52,7 +52,7 @@ $ python -m scripts.reuse_labels bounding-boxes-2022-02-12-14-33.json mnt/KInsek
 #### generate a training set:
 
 1. Set environment variables `USERNAME` (username on NAS), `PASSWORD` (password for NAS), `VPN_USER` and `VPN_PASSWD` accordingly
-2. Run 
+2. Run
 ```shell
 $ sudo ./scripts/mount_directories.sh on
 ```
@@ -67,7 +67,7 @@ for more options see `-h`.
 optionally Launch [LabelStudio](https://labelstud.io/)
 
     $ docker run -it -p 8080:8080 -v $PWD/data/iNat:/label-studio/data -e LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true -e LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data heartexlabs/label-studio:latest
-    
+
 5. Create labels for image files
 6. Export the labels from LStudio
 7. Generate file structure for train, test and validation sets by running

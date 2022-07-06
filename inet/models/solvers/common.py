@@ -1,13 +1,14 @@
 from typing import Optional
 
-import numpy as np
-import tensorflow as tf
-import sklearn
 import matplotlib.pyplot as plt
+import numpy as np
+import sklearn
+import tensorflow as tf
 
-from scripts.constants import CLASS_MAP
-from inet.data.visualization import plot_confusion_matrix, plot_prediction_samples
+from inet.data.visualization import (plot_confusion_matrix,
+                                     plot_prediction_samples)
 from inet.losses.giou_loss import GIoULoss
+from scripts.constants import CLASS_MAP
 
 
 def evaluate_solver_predictions(

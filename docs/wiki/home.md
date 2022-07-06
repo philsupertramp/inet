@@ -32,7 +32,7 @@ Harmonic mean of Precision and recall:
 
 ```
 ###########################
-	GIoU Loss:	 0.6161582 
+	GIoU Loss:	 0.6161582
 	RMSE Loss:	 25.917557
 ```
 
@@ -43,7 +43,7 @@ Harmonic mean of Precision and recall:
 
 ```
 ###########################
-	GIoU Loss:	 0.61227506 
+	GIoU Loss:	 0.61227506
 	RMSE Loss:	 25.372694
 ```
 ![image](../../wiki/uploads/13356e7e5e237e71e8834beecda54970/image.png)
@@ -53,7 +53,7 @@ Harmonic mean of Precision and recall:
 
 ```
 ###########################
-	GIoU Loss:	 0.947507 
+	GIoU Loss:	 0.947507
 	RMSE Loss:	 24.218405
 ```
 ![image](../../wiki/uploads/0a0256f68878fb09f152b230dbf951e1/image.png)
@@ -75,7 +75,7 @@ Harmonic mean of Precision and recall:
 ![image](../../wiki/uploads/3bf030e1a6b8a908bb549f38fd0df80b/image.png)
 ```
 ###########################
-	GIoU Loss:	 0.6330171 
+	GIoU Loss:	 0.6330171
 	RMSE Loss:	 26.344194
 ```
 ![image](../../wiki/uploads/03052b00c9e8e3c394efa9b282065954/image.png)
@@ -86,7 +86,7 @@ Harmonic mean of Precision and recall:
 
 ```
 ##########################
-	GIoU Loss:	 0.43982178 
+	GIoU Loss:	 0.43982178
 	RMSE Loss:	 17.006126
 ```
 
@@ -97,7 +97,7 @@ Harmonic mean of Precision and recall:
 ![image](../../wiki/uploads/d0e0a34d80f0943c8b77a12cee0b360f/image.png)
 ```
 ##########################
-	GIoU Loss:	 1.399976 
+	GIoU Loss:	 1.399976
 	RMSE Loss:	 40.743893
 ```
 
@@ -116,13 +116,13 @@ Harmonic mean of Precision and recall:
 .. _default-dataset-clf1:
 #### Default dataset (Clf1)
 ##### INet
-  
+
 ![image](../../wiki/uploads/66e727d6d0ecbc37079ab6d5fa1e1083/image.png)
 ![image](../../wiki/uploads/b20ac42dc5513acdb43b7b7ae62063cb/image.png)
 
 ```
 ##########################
-	Accuracy:	 0.6422222222222222 
+	Accuracy:	 0.6422222222222222
 	f1 score:	 0.6353292590535011
 ```
 
@@ -135,7 +135,7 @@ Harmonic mean of Precision and recall:
 
 ```
 ##########################
-	Accuracy:	 0.8511111111111112 
+	Accuracy:	 0.8511111111111112
 	f1 score:	 0.8462153544896847
 ```
 
@@ -148,7 +148,7 @@ Harmonic mean of Precision and recall:
 
 ```
 ##########################
-	Accuracy:	 0.84 
+	Accuracy:	 0.84
 	f1 score:	 0.8367397903530476
 ```
 
@@ -172,7 +172,7 @@ Harmonic mean of Precision and recall:
 
 ```
 ##########################
-	Accuracy:	 0.6422222222222222 
+	Accuracy:	 0.6422222222222222
 	f1 score:	 0.62984677235293
 ```
 ![image](../../wiki/uploads/44033735747e24bf623e14b99602503e/image.png)
@@ -185,7 +185,7 @@ Harmonic mean of Precision and recall:
 
 ```
 ##########################
-	Accuracy:	 0.8333333333333334 
+	Accuracy:	 0.8333333333333334
 	f1 score:	 0.8261255977635148
 ```
 ![image](../../wiki/uploads/8af1a4270d72758e85ddc1c4692f2a7b/image.png)
@@ -197,7 +197,7 @@ Harmonic mean of Precision and recall:
 ![image](../../wiki/uploads/2b242a634de4637e930cf50c851990e9/image.png)
 ```
 ##########################
-	Accuracy:	 0.8466666666666667 
+	Accuracy:	 0.8466666666666667
 	f1 score:	 0.8438866903702877
 ```
 ![image](../../wiki/uploads/a4e3e0f5233da6528f023c1012b2e086/image.png)
@@ -219,7 +219,7 @@ Harmonic mean of Precision and recall:
 ![image](../../wiki/uploads/c5dda8dcfe62a2db33634af85642bce6/image.png)
 ```
 ##########################
-	Accuracy:	 0.7844444444444445 
+	Accuracy:	 0.7844444444444445
 	f1 score:	 0.779331433620758
 ```
 
@@ -241,11 +241,11 @@ Harmonic mean of Precision and recall:
 ![image](../../wiki/uploads/65432715e23355f56e66bdce49d610a6/image.png)
 ```
 ##########################
-Regression: 
-	GIoU Loss:	 0.64344555 
-	RMSE Loss:	 24.211178 
-Classification: 
-	Accuracy:	 0.49333333333333335 
+Regression:
+	GIoU Loss:	 0.64344555
+	RMSE Loss:	 24.211178
+Classification:
+	Accuracy:	 0.49333333333333335
 	f1 score:	 0.4762167417804296
 ```
 ![image](../../wiki/uploads/7cbce192c97e4c49e6a47a5bfb3165c6/image.png)
@@ -254,30 +254,30 @@ Classification:
 
 ##### MobileNet
 
-  
+
 ![image](../../wiki/uploads/ea5c7e3963deacbd6e0fd185688de1bf/image.png)
 ```
 ##########################
-Regression: 
-	GIoU Loss:	 1.4751697 
-	RMSE Loss:	 39.193527 
-Classification: 
-	Accuracy:	 0.7311111111111112 
+Regression:
+	GIoU Loss:	 1.4751697
+	RMSE Loss:	 39.193527
+Classification:
+	Accuracy:	 0.7311111111111112
 	f1 score:	 0.7224772507688828
 ```
 ![image](../../wiki/uploads/7b986b137af03555a668b630cc4f6fbd/image.png)
 ![image](../../wiki/uploads/a54fa89f1d33235ba17d8f3af3dd1c71/image.png)
 
 ##### VGG-16
-  
+
 ![image](../../wiki/uploads/c0eba9c1ba640d38581aca1568560c29/image.png)
 ```
 ##########################
-Regression: 
-	GIoU Loss:	 1.5730777 
-	RMSE Loss:	 43.680496 
-Classification: 
-	Accuracy:	 0.17333333333333334 
+Regression:
+	GIoU Loss:	 1.5730777
+	RMSE Loss:	 43.680496
+Classification:
+	Accuracy:	 0.17333333333333334
 	f1 score:	 0.0590909090909091
 ```
 ![image](../../wiki/uploads/ae242635517f0f1ac09c1f4d32e5576e/image.png)
@@ -313,11 +313,11 @@ Localization:
 
 ```
 ##########################
-Regression: 
-	GIoU Loss:	 0.6958105 
-	RMSE Loss:	 21.909544 
-Classification: 
-	Accuracy:	 0.48444444444444446 
+Regression:
+	GIoU Loss:	 0.6958105
+	RMSE Loss:	 21.909544
+Classification:
+	Accuracy:	 0.48444444444444446
 	f1 score:	 0.4625029774807487
 ```
 ![image](../../wiki/uploads/f1361c38c1087356bbb3b7c0bd72e1ca/image.png)
@@ -326,15 +326,15 @@ Classification:
 ###### MobileNet
 
 
-  
+
 ![image](../../wiki/uploads/01dc1b53cfb009e78db70dffc9da015b/image.png)
 ```
 ##########################
-Regression: 
-	GIoU Loss:	 0.63962024 
-	RMSE Loss:	 20.518587 
-Classification: 
-	Accuracy:	 0.7555555555555555 
+Regression:
+	GIoU Loss:	 0.63962024
+	RMSE Loss:	 20.518587
+Classification:
+	Accuracy:	 0.7555555555555555
 	f1 score:	 0.7496034996537605
 ```
 ![image](../../wiki/uploads/0b4b8d06298c2afeaefd25d28a50c418/image.png)
@@ -344,15 +344,15 @@ Classification:
 ###### VGG-16
 
 
-  
+
 ![image](../../wiki/uploads/7410591e84a83f5edaae0fdfec15904d/image.png)
 ```
 ##########################
-Regression: 
-	GIoU Loss:	 1.4623789 
-	RMSE Loss:	 38.729637 
-Classification: 
-	Accuracy:	 0.78 
+Regression:
+	GIoU Loss:	 1.4623789
+	RMSE Loss:	 38.729637
+Classification:
+	Accuracy:	 0.78
 	f1 score:	 0.77794664790425
 ```
 ![image](../../wiki/uploads/6f9b4840ee990bde6c0f9cb7112ef759/image.png)
@@ -378,12 +378,12 @@ Localization:
 |    VGG-16     |  -0.4624   |   38.7296    |
 
 ## Comparisons
-### (best Reg) MobileNet + (best Clf) MobileNet 
+### (best Reg) MobileNet + (best Clf) MobileNet
 
 ```
 Classification:
  #########################
-	Accuracy:	 0.5288888888888889 
+	Accuracy:	 0.5288888888888889
 	f1 score:	 0.5097587081088926
 ```
 ![image](../../wiki/uploads/01f4f10deda9bbd214ffbedf284aa5f4/image.png)
@@ -393,10 +393,10 @@ Classification:
 
 ### Result:
 
-- `2-S`: 2 Stage method  
-- `2-S-1`: 2 Stage without retraining (BBReg: MobileNet, Clf: MobileNet)  
-- `2-S-2`: 2 Stage with clf retrained (BBReg: MobileNet, Clf: INet)  
-- `2-S-3`: 2 Stage with clf retrained  (BBReg: MobileNet, Clf: MobileNet)  
+- `2-S`: 2 Stage method
+- `2-S-1`: 2 Stage without retraining (BBReg: MobileNet, Clf: MobileNet)
+- `2-S-2`: 2 Stage with clf retrained (BBReg: MobileNet, Clf: INet)
+- `2-S-3`: 2 Stage with clf retrained  (BBReg: MobileNet, Clf: MobileNet)
 - `2-Head`: 2-Head MobileNet
 - `Clf3`: Classifier trained on original images
 

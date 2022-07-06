@@ -1,5 +1,5 @@
 """
-
+Model configurations used to generate the presented results.
 """
 import functools
 from typing import Dict, Tuple

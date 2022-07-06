@@ -7,7 +7,8 @@ import tensorflow as tf
 import tensorflow_model_optimization as tfmot
 
 from inet.models.architectures.base_model import TaskModel
-from inet.models.tf_lite.tflite_methods import evaluate_q_model, validate_q_model_prediction
+from inet.models.tf_lite.tflite_methods import (evaluate_q_model,
+                                                validate_q_model_prediction)
 
 tf_cluster_weights = tfmot.clustering.keras.cluster_weights
 CentroidInitialization = tfmot.clustering.keras.CentroidInitialization

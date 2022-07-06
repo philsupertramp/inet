@@ -5,6 +5,7 @@
 # - PASSWORD: password
 # - VPN_PASSWORD: the password for your VPN account
 # - VPN_USR: username of VPN account
+# - SERVER_ADDR: NAS server address
 #
 # to mount remote directories /home and /KInsektDaten from 141.64.103.52 into ./mnt
 #
@@ -17,7 +18,7 @@ VPN_USR=${VPN_USR:-SOME_USER}
 VPN_PASSWORD=${VPN_PASSWD}
 
 # NAS AUTH
-SERVER_ADDR=141.64.103.52
+SERVER_ADDR=${SERVER_ADDR}
 
 password="${PASSWORD}"
 username="${USERNAME}"

@@ -9,7 +9,6 @@ from typing import Optional, Tuple
 import numpy as np
 from tensorflow import keras
 
-
 ## current directory path
 cur_dir = os.path.dirname(__file__)
 ## train logdir is located in root of project

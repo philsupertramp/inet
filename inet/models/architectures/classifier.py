@@ -4,12 +4,12 @@ import keras_tuner
 import sklearn.metrics
 from tensorflow import keras
 
-from scripts.constants import CLASS_MAP
 from inet.data.constants import ModelType
 from inet.data.visualization import plot_confusion_matrix
 from inet.models.architectures.base_model import Backbone, SingleTaskModel
 from inet.models.data_structures import ModelArchitecture
 from inet.models.hyper_parameter_optimization import FrozenBlockConf
+from scripts.constants import CLASS_MAP
 
 
 class Classifier(SingleTaskModel):

@@ -5,9 +5,9 @@ import sklearn
 import tensorflow as tf
 from tensorflow.keras.metrics import RootMeanSquaredError
 
-from scripts.helpers import ProgressBar
 from inet.data.constants import ModelType
 from inet.losses.giou_loss import GIoULoss
+from scripts.helpers import ProgressBar
 
 
 def save_model_file(model):

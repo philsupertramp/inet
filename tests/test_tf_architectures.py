@@ -6,11 +6,10 @@ from tensorflow.keras.applications.mobilenet import MobileNet
 from tensorflow.keras.applications.mobilenet import \
     preprocess_input as mobilenet_preprocess_input
 
-from scripts.configs import create_config
 from inet.data.load_dataset import directory_to_two_in_one_dataset
 from inet.models.solvers.two_in_one import TwoInOneModel
+from scripts.configs import create_config
 from tests.helper import Timer
-
 
 if __name__ == '__main__':
     input_shape = (224, 224, 3)

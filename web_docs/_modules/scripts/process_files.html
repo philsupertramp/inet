@@ -4,13 +4,13 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>scripts.process_files &mdash; inet  documentation</title>
-  
 
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>scripts.process_files &mdash; inet  documentation</title>
+
+
+
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -18,56 +18,56 @@
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/fonts.css" type="text/css" />
 
-  
-  
 
-  
-  
 
-  
 
-  
+
+
+
+
+
+
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
+
+
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-    
+
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-    
+
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" /> 
+    <link rel="search" title="Search" href="../../search.html" />
 </head>
 
 <body class="wy-body-for-nav">
 
-   
+
   <div class="wy-grid-for-nav">
-    
+
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
-          
+
+
             <a href="../../index.html" class="icon icon-home"> inet
-          
 
-          
+
+
           </a>
 
-          
-            
-            
-          
 
-          
+
+
+
+
+
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,17 +76,17 @@
   </form>
 </div>
 
-          
+
         </div>
 
-        
+
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+
+
+
+
+
+
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../docs_index.html">iNet</a></li>
@@ -95,21 +95,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../../modules.html">inet</a></li>
 </ul>
 
-            
-          
+
+
         </div>
-        
+
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-      
+
       <nav class="wy-nav-top" aria-label="top navigation">
-        
+
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">inet</a>
-        
+
       </nav>
 
 
@@ -118,10 +118,10 @@
   <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
 </div>
 
-        
+
         <div class="rst-content">
-        
-          
+
+
 
 
 
@@ -142,28 +142,35 @@
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
-    
+
       <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
+
           <li><a href="../index.html">Module code</a> &raquo;</li>
-        
+
       <li>scripts.process_files</li>
-    
-    
+
+
       <li class="wy-breadcrumbs-aside">
-        
+
       </li>
-    
+
   </ul>
 
-  
+
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+
   <h1>Source code for scripts.process_files</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Script to convert an input directory into a data set directory based on</span>
+<span class="sd">a provided bounding box configuration file.</span>
+
+<span class="sd">For usage:</span>
+<span class="sd">    python -m scripts.process_files -h</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -177,10 +184,10 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pytz</span>
 
-<span class="kn">from</span> <span class="nn">scripts.constants</span> <span class="kn">import</span> <span class="n">CLASS_MAP</span>
 <span class="kn">from</span> <span class="nn">inet.data.constants</span> <span class="kn">import</span> <span class="p">(</span><span class="n">BBoxLabelType</span><span class="p">,</span> <span class="n">ClassLabelType</span><span class="p">,</span>
                                  <span class="n">LabeledFileDictType</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">inet.models.data_structures</span> <span class="kn">import</span> <span class="n">BoundingBox</span>
+<span class="kn">from</span> <span class="nn">scripts.constants</span> <span class="kn">import</span> <span class="n">CLASS_MAP</span>
 
 
 <div class="viewcode-block" id="extract_file_name"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.extract_file_name">[docs]</a><span class="k">def</span> <span class="nf">extract_file_name</span><span class="p">(</span><span class="n">elem</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -287,7 +294,7 @@
 <div class="viewcode-block" id="split_labeled_files"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.split_labeled_files">[docs]</a><span class="k">def</span> <span class="nf">split_labeled_files</span><span class="p">(</span>
         <span class="n">files</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">test_share</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">validation_share</span><span class="p">:</span> <span class="nb">float</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">LabeledFileDictType</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits given files into test/train/validation sets.</span>
 
 <span class="sd">    :param files: Annotated image dictionary</span>
@@ -369,7 +376,7 @@
 
 <div class="viewcode-block" id="create_dataset_structure"><a class="viewcode-back" href="../../scripts.html#scripts.process_files.create_dataset_structure">[docs]</a><span class="k">def</span> <span class="nf">create_dataset_structure</span><span class="p">(</span><span class="n">files</span><span class="p">:</span> <span class="n">LabeledFileDictType</span><span class="p">,</span> <span class="n">label_names</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">dir_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">test_split</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
                              <span class="n">val_split</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates dataset directory structure for given data.</span>
 
 <span class="sd">    :param files: files to process</span>
@@ -546,7 +553,7 @@
 </pre></div>
 
            </div>
-           
+
           </div>
           <footer>
 
@@ -558,14 +565,14 @@
 
     </p>
   </div>
-    
-    
-    
+
+
+
     Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
 
 </footer>
         </div>
@@ -574,7 +581,7 @@
     </section>
 
   </div>
-  
+
 
   <script type="text/javascript">
       jQuery(function () {
@@ -582,10 +589,10 @@
       });
   </script>
 
-  
-  
-    
-   
+
+
+
+
 
 </body>
 </html>

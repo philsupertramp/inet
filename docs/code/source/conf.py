@@ -25,10 +25,10 @@ project = 'inet'
 copyright = '2022, B. Sc. Philipp Zettl'
 author = 'B. Sc. Philipp Zettl'
 extensions = [
-"sphinx.ext.intersphinx",
-"sphinx.ext.autodoc",
-"sphinx.ext.mathjax",
-"sphinx.ext.viewcode",
+'sphinx.ext.intersphinx',
+'sphinx.ext.autodoc',
+'sphinx.ext.mathjax',
+'sphinx.ext.viewcode',
 'm2r2',
 
 ]

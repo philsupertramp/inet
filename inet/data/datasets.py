@@ -9,8 +9,8 @@ from typing import Dict, List, Optional, Tuple, Union
 
 import tensorflow as tf
 
-from scripts.constants import CLASS_MAP
 from inet.data.constants import ImageType, LabelType
+from scripts.constants import CLASS_MAP
 
 
 class ImageDataSet:

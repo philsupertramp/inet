@@ -1,7 +1,8 @@
-from typing import Callable, Dict, Tuple, Optional
+from typing import Callable, Dict, Optional, Tuple
 
 import numpy as np
 import tensorflow as tf
+
 from inet.helpers import extract_labels_and_features
 from inet.models.architectures.bounding_boxes import BoundingBoxRegressor
 from inet.models.architectures.classifier import Classifier

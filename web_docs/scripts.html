@@ -4,13 +4,13 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>scripts package &mdash; inet  documentation</title>
-  
 
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>scripts package &mdash; inet  documentation</title>
+
+
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -18,57 +18,57 @@
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
 
-  
-  
 
-  
-  
 
-  
 
-  
+
+
+
+
+
+
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
+
+
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
+
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
-    
+
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="tests package" href="tests.html" /> 
+    <link rel="prev" title="tests package" href="tests.html" />
 </head>
 
 <body class="wy-body-for-nav">
 
-   
+
   <div class="wy-grid-for-nav">
-    
+
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
-          
+
+
             <a href="index.html" class="icon icon-home"> inet
-          
 
-          
+
+
           </a>
 
-          
-            
-            
-          
 
-          
+
+
+
+
+
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -77,17 +77,17 @@
   </form>
 </div>
 
-          
+
         </div>
 
-        
+
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+
+
+
+
+
+
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="docs_index.html">iNet</a></li>
@@ -112,21 +112,21 @@
 </li>
 </ul>
 
-            
-          
+
+
         </div>
-        
+
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-      
+
       <nav class="wy-nav-top" aria-label="top navigation">
-        
+
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">inet</a>
-        
+
       </nav>
 
 
@@ -135,10 +135,10 @@
   <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
 </div>
 
-        
+
         <div class="rst-content">
-        
-          
+
+
 
 
 
@@ -159,30 +159,30 @@
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
-    
+
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
+
           <li><a href="modules.html">inet</a> &raquo;</li>
-        
+
       <li>scripts package</li>
-    
-    
+
+
       <li class="wy-breadcrumbs-aside">
-        
-          
+
+
             <a href="_sources/scripts.rst.txt" rel="nofollow"> View page source</a>
-          
-        
+
+
       </li>
-    
+
   </ul>
 
-  
+
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+
   <div class="section" id="scripts-package">
 <h1>scripts package<a class="headerlink" href="#scripts-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
@@ -190,6 +190,7 @@
 </div>
 <div class="section" id="module-scripts.configs">
 <span id="scripts-configs-module"></span><h2>scripts.configs module<a class="headerlink" href="#module-scripts.configs" title="Permalink to this headline">¶</a></h2>
+<p>Model configurations used to generate the presented results.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.configs.create_config">
 <span class="sig-name descname"><span class="pre">create_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/configs.html#create_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.configs.create_config" title="Permalink to this definition">¶</a></dt>
@@ -534,6 +535,12 @@ Allows to require approval for each sample by adding <cite>requires_decision=Tru
 </div>
 <div class="section" id="module-scripts.process_files">
 <span id="scripts-process-files-module"></span><h2>scripts.process_files module<a class="headerlink" href="#module-scripts.process_files" title="Permalink to this headline">¶</a></h2>
+<p>Script to convert an input directory into a data set directory based on
+a provided bounding box configuration file.</p>
+<dl class="simple">
+<dt>For usage:</dt><dd><p>python -m scripts.process_files -h</p>
+</dd>
+</dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.process_files.bounding_box_stats">
 <span class="sig-name descname"><span class="pre">bounding_box_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#bounding_box_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.bounding_box_stats" title="Permalink to this definition">¶</a></dt>
@@ -868,7 +875,7 @@ into the dedicated structure.</p>
 
 
            </div>
-           
+
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
@@ -883,14 +890,14 @@ into the dedicated structure.</p>
 
     </p>
   </div>
-    
-    
-    
+
+
+
     Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
 
 </footer>
         </div>
@@ -899,7 +906,7 @@ into the dedicated structure.</p>
     </section>
 
   </div>
-  
+
 
   <script type="text/javascript">
       jQuery(function () {
@@ -907,10 +914,10 @@ into the dedicated structure.</p>
       });
   </script>
 
-  
-  
-    
-   
+
+
+
+
 
 </body>
 </html>
