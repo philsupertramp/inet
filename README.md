@@ -3,6 +3,8 @@ A look into ML methods for single object detection, solving the tasks of insect 
 and bounding box regression, individually as well as simultaneously.
 
 ![](docs/code/source/_static/dataset-representation.png)
+## Abstract
+
 ## Description
 This project contains all content and things around the underlying thesis.
 The submitted paper can be found in `./docs/thesisphilipp.pdf`.
