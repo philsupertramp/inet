@@ -1,3 +1,5 @@
+[![tensorflow](./docs/tensorflow.svg)](./docs/tensorflow.svg)
+[![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://philsupertramp.github.io/inet/index.html)
 ## Thesis: Machine Learning Methods for Localization and Classification of Insects in Images
 A look into ML methods for single object detection, solving the tasks of insect genera classification
 and bounding box regression, individually as well as simultaneously.
