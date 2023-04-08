@@ -57,7 +57,7 @@
     \centering
     \begin{minipage}{\textwidth}
         \centering
-        \rotatebox[origin=c]{90}{\includegraphics[width=\textwidth,keepaspectratio]{src/images/camera.JPG}}
+        \rotatebox[origin=c]{0}{\includegraphics[height=\textwidth,keepaspectratio]{images/camera.JPG}}
         \caption{Camera module of the \textit{KInsecta} device. High resolution camera lens on top and a light source triggered by a light barrier on bottom.}
         \label{fig:camera}
     \end{minipage}
@@ -65,7 +65,7 @@
 \begin{figure}[!ht]
     \begin{minipage}{\textwidth}
         \centering
-        \includegraphics[width=\textwidth,keepaspectratio]{src/images/camera-look-through.JPG}
+        \includegraphics[width=\textwidth,keepaspectratio]{images/camera-look-through.JPG}
         \caption{Look through the passage an insect needs to walk through to get recorded.}
         \label{fig:camera-look-through}
     \end{minipage}
@@ -73,7 +73,7 @@
 \begin{figure}[!ht]
     \begin{minipage}{\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{src/images/experimental-setup.JPG}
+        \includegraphics[width=\textwidth]{images/experimental-setup.JPG}
         \caption{An experimental setup of the \textit{KInsecta} device. Two containers, which will later contain specific insect species, connected with a passage leading through different setups for different sensors (wooden boxes). On the table lies the detached \textit{WindBeat} sensor. Next to it a monitor and keyboard are connected to the \textit{RaspberryPi} on top of the right box.}
         \label{fig:experiment-setup}
     \end{minipage}
@@ -81,14 +81,14 @@
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{src/images/dataset-representation.eps}
+    \includegraphics[width=\textwidth]{images/dataset-representation.eps}
     \caption{Representation of the here used data set displaying the five insect orders. It is easy to notice that all vary in quality as well as focus and coverage of important surface areas. Especially Hemiptera and Formicidae are difficult for Localization of individual insects due to the fact that they mostly appear in herds of multiple insects.}
     \label{fig:dataset-overview}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth,keepaspectratio]{src/images/augmentation-samples.eps}
+    \includegraphics[width=\textwidth,keepaspectratio]{images/augmentation-samples.eps}
     \caption{Visualization of different augmentation methods, from top down as listed in "\nameref{subsec:augmentation}".}
     \label{fig:augmentation-samples}
 \end{figure}
@@ -128,11 +128,11 @@
 \begin{figure}
     \centering
     \begin{minipage}{.45\textwidth}
-    \includegraphics[width=\textwidth]{src/images/ridge-svm-two-stage-model-confusion.png}
+    \includegraphics[width=\textwidth]{images/ridge-svm-two-stage-model-confusion.png}
     \end{minipage}
     \hfill
     \begin{minipage}{.45\textwidth}
-    \includegraphics[width=\textwidth]{src/images/pca-400-ridge-svm-two-stage-model-confusion.png}
+    \includegraphics[width=\textwidth]{images/pca-400-ridge-svm-two-stage-model-confusion.png}
     \end{minipage}
     \caption{Confusion matrices for conventional methods based on the validation set. Left predictions performed with a model using $\text{PCA}_{100}$, right $\text{PCA}_{400}$. No distinctive classification for both cases. The predictions seem randomly distributed. Most cells contain values $\approx0.2$, which is the same value as a random guess.}
     \label{fig:conventional-confusions}
@@ -142,11 +142,11 @@
 \begin{figure}[!ht]
     \centering
     \begin{minipage}{.45\textwidth}
-    \includegraphics[width=\textwidth]{src/images/regression-mobilenet-raw.png}
+    \includegraphics[width=\textwidth]{images/regression-mobilenet-raw.png}
     \end{minipage}
     \hfill
     \begin{minipage}{.45\textwidth}
-    \includegraphics[width=\textwidth]{src/images/regression-mobilenet-augmented.png}
+    \includegraphics[width=\textwidth]{images/regression-mobilenet-augmented.png}
     \end{minipage}
     \caption{BB predictions on validation set of final models after HPO, using MobileNet as backbone. Left contains predictions from a model trained on the raw training data set. The predictions seem to be bound to a fixed location. Right, predictions performed with a MobileNet backbone optimized while training on the augmented training data set. Leading to a higher variance in BB locations and dimensions.}
     \label{fig:regression-samples-mobilenet}
@@ -318,29 +318,29 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \vspace{-25pt}
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/regression-inet.png}
+            \includegraphics[width=\textwidth]{images/regression-inet.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/augmented-regression-inet.png}
+            \includegraphics[width=\textwidth]{images/augmented-regression-inet.png}
         \end{minipage}
     \end{multicols}
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/regression-mobilenet.png}
+            \includegraphics[width=\textwidth]{images/regression-mobilenet.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/augmented-regression-mobilenet.png}
+            \includegraphics[width=\textwidth]{images/augmented-regression-mobilenet.png}
         \end{minipage}
     \end{multicols}
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/regression-vgg.png}
+            \includegraphics[width=\textwidth]{images/regression-vgg.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/augmented-regression-vgg.png}
+            \includegraphics[width=\textwidth]{images/augmented-regression-vgg.png}
         \end{minipage}
     \end{multicols}
     \caption{Predictions of models solving the regression task. All predictions from the left column are from models trained on the original data set. The predictions on the right side are done by models trained on an augmented version of it.
@@ -352,11 +352,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/classification-inet.png}
+            \includegraphics[width=\textwidth]{images/classification-inet.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/augmented-classification-inet.png}
+            \includegraphics[width=\textwidth]{images/augmented-classification-inet.png}
         \end{minipage}
     \end{multicols}
     \caption{Confusion matrix of predictions on the validation set for the model based on the INet backbone. Left trained on the cropped training (\eqref{eq:cropped-sample}) on the right side trained on the augmented version.
@@ -367,11 +367,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/classification-mobilenet.png}
+            \includegraphics[width=\textwidth]{images/classification-mobilenet.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/augmented-classification-mobilenet.png}
+            \includegraphics[width=\textwidth]{images/augmented-classification-mobilenet.png}
         \end{minipage}
     \end{multicols}
     \caption{CMs for MobileNet classifier trained on the raw training set (left) and on the augmented version of it (right).
@@ -382,11 +382,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/classification-vgg.png}
+            \includegraphics[width=\textwidth]{images/classification-vgg.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/augmented-classification-vgg.png}
+            \includegraphics[width=\textwidth]{images/augmented-classification-vgg.png}
         \end{minipage}
     \end{multicols}
     \caption{Confusion matrices for VGG-16 trained on a raw (left) and an augmented (right) training set. Other than previous models, e.g. INet, VGG-16 seems to generalize better on augmented data.}
@@ -397,11 +397,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-         \includegraphics[width=\textwidth]{src/images/uncropped-inet.png}
+         \includegraphics[width=\textwidth]{images/uncropped-inet.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-           \includegraphics[width=\textwidth]{src/images/sequential-classification-mobilenet.png}
+           \includegraphics[width=\textwidth]{images/sequential-classification-mobilenet.png}
         \end{minipage}
     \end{multicols}
     \caption{Confusion matrices for classification using a model having MobileNet as backbone and performing a specific task. Left the model was trained on uncropped images \eqref{eq:classification-sample} and will be used for the independent method approach. On the right side the model later used for the sequential method, trained on a training set generated using predictions of the best BBReg model.}
@@ -411,12 +411,12 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/independent-model-predictions.png}
+            \includegraphics[width=\textwidth]{images/independent-model-predictions.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
             \vspace{20pt}
-            \includegraphics[width=\textwidth]{src/images/independent-model-confusion.png}
+            \includegraphics[width=\textwidth]{images/independent-model-confusion.png}
         \end{minipage}
     \end{multicols}
     \caption{Validation for independent two-stage-method. Left, predictions done by the solver on the test set, on the right side the related confusion matrix. The method seems to generalize well for the classification task, as the CM hints. The BBs generated by the method are good as well, but for some cases (row: 2, column: 3) the predictions are not very accurate.}
@@ -426,11 +426,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/two-stage-model-predictions.png}
+            \includegraphics[width=\textwidth]{images/two-stage-model-predictions.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/two-stage-model-confusion.png}
+            \includegraphics[width=\textwidth]{images/two-stage-model-confusion.png}
         \end{minipage}
     \end{multicols}
     \caption{Sequential two-stage-method validation. The BBs are the same as in \figref{fig:independent-results}. The confusion matrix differs. This is due to the fact that a new model was trained for the classification, but the regression task was solved by the same model. It seems that the sequential solver has trouble classifying Formicidae (ants).}
@@ -441,11 +441,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/two-in-one-model-predictions.png}
+            \includegraphics[width=\textwidth]{images/two-in-one-model-predictions.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/two-in-one-model-confusion.png}
+            \includegraphics[width=\textwidth]{images/two-in-one-model-confusion.png}
         \end{minipage}
     \end{multicols}
     \caption{Evaluation of the single-stage-method, performed on the test set with samples of shape \eqref{eq:1-stage-sample}. The predictions on the left side show a problem, that was previously mentioned, the BBs seem to be fixed in one location. The results of the confusion matrix, compared to previous CMs (\figref{fig:independent-results} and \figref{fig:sequential-results}), more stable for all classes.}
@@ -456,11 +456,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/tf-lite-independent-model-predictions.png}
+            \includegraphics[width=\textwidth]{images/tf-lite-independent-model-predictions.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/tf-lite-independent-model-confusion.png}
+            \includegraphics[width=\textwidth]{images/tf-lite-independent-model-confusion.png}
         \end{minipage}
     \end{multicols}
     \caption{Validation results for TF Lite version of independent two-stage-method, using the test set. A decrease in quality for BB predictions, compared to its original model \figref{fig:independent-results}, was predictable due to the conversion to TF Lite. But the classification task does visually seem not to be solved in a less accurate way, this assumption is strengthened by the results displayed in \figref{fig:final-results-tflite}.}
@@ -470,11 +470,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/tf-lite-two-stage-model-predictions.png}
+            \includegraphics[width=\textwidth]{images/tf-lite-two-stage-model-predictions.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/tf-lite-two-stage-model-confusion.eps}
+            \includegraphics[width=\textwidth]{images/tf-lite-two-stage-model-confusion.eps}
         \end{minipage}
     \end{multicols}
     \caption{Results of validation for the sequential method converted to TF Lite applied to the test set. As in \figref{fig:tflite-independent-results} stated, the BB predictions decreased in quality. Unfortunately in this case the predictive decreased as well for the classification task, as the CM visualizes, e.g. the class Hemiptera lost $\approx 10\%$ in accuracy.}
@@ -485,11 +485,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/tf-lite-two-in-one-model-predictions.png}
+            \includegraphics[width=\textwidth]{images/tf-lite-two-in-one-model-predictions.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/tf-lite-two-in-one-model-confusion.eps}
+            \includegraphics[width=\textwidth]{images/tf-lite-two-in-one-model-confusion.eps}
         \end{minipage}
     \end{multicols}
     \caption{Validation of the TF Lite version of the single-stage-method, based on the test set. The previously badly located (\figref{fig:single-stage-results}) decreased further in quality. Unfortunately, in this case also the classification quality decreases as listed in \figref{fig:final-results-tflite}. Whilst the original model performed well for the classification task, after converting to a TF Lite format the accuracy dropped drastically for all classes.}
@@ -500,11 +500,11 @@ $24.2111$ & $0.4844$ & $0.4625$ & $0.0023$ & $0.0022$ & $0.4775$ & 7h 10m\\
     \centering
     \begin{multicols}{2}
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/val_batch2_pred.png}
+            \includegraphics[width=\textwidth]{images/val_batch2_pred.png}
         \end{minipage}
         \columnbreak
         \begin{minipage}{.45\textwidth}
-            \includegraphics[width=\textwidth]{src/images/yolo-confusion_matrix.png}
+            \includegraphics[width=\textwidth]{images/yolo-confusion_matrix.png}
         \end{minipage}
     \end{multicols}
     \caption{Validation results for YOLOv5 converted to TF Lite. Left the previously displayed (\figref{fig:yolo-predictions}) predictions on the right side the related CM.}

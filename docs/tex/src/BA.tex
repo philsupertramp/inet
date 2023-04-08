@@ -1,0 +1,27 @@
+\documentclass[a4paper]{article}
+\usepackage{amssymb}
+
+
+\input{lib/definitions}
+
+% HEADER/FOOTER DEFINITIONS
+\fancyhf{}
+\lhead{\pageHead}
+\rhead{\rightmark}
+\rfoot{Page \thepage}
+\lfoot{\author}
+
+\renewcommand*\contentsname{Summary}
+
+
+
+\begin{document}
+\pagestyle{fancy}
+
+\input{source_files}
+
+%\begin{multicols}{2}
+\bibliographystyle{ieeetr}
+\bibliography{lib/bibtex_lib}
+%\end{multicols}
+\end{document}

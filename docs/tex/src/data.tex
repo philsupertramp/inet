@@ -34,7 +34,7 @@ From top to bottom the tree becomes more and more fine-grained.}
 \hfill
 \begin{minipage}{.45\textwidth}
 
-    \includegraphics[width=\textwidth]{src/images/hymenoptera-representation.eps}
+    \includegraphics[width=\textwidth]{images/hymenoptera-representation.eps}
     \caption{
     Samples for two families of the order Hymenoptera, compared to members of other orders.
     }
@@ -73,11 +73,11 @@ By only considering the scale, for every image there is a big chance of choosing
 Similar, the probability of selecting a wrong species label for the insects order is considered high, as mentioned in "\nameref{subsec:taxonomy}".
 But for the purpose of this work, it can be assumed that the order specification is in fact accurate, based on the argument that the species taxonomy is more fine grained than the order taxonomy and therefore harder to apply.\\
 The base data set used in this project is a reduced form of the original \textit{iNat} public training data set that was provided by the team of \textit{KInsecta}.
-It is prefiltered by the the taxonomic class type "Insecta", insects.
+It is prefiltered by the taxonomic class type "Insecta", insects.
 This base data set is hosted on a \textbf{N}etwork \textbf{A}ttached \textbf{S}torage (NAS) device that runs in the local network of BHT.
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.80\textwidth]{src/images/image-example.eps}
+    \includegraphics[width=.80\textwidth]{images/image-example.eps}
     \caption{Image channels individually and combined. All channels combined result in the original image.}
     \label{fig:image-example}
 \end{figure}
@@ -199,7 +199,7 @@ Using LabelStudio the data set of the 2500 pre-selected \textit{iNat} image file
 \figref{fig:label-studio-1} gives an overview on how the interface of Label Studio looks like.
 \begin{wrapfigure}{l}{.45\linewidth}
     \centering
-    \includegraphics[width=.45\textwidth]{src/images/bounding-box-area-distribution.eps}
+    \includegraphics[width=.45\textwidth]{images/bounding-box-area-distribution.eps}
     \caption{Distribution of share of area under BBs.}
     \label{fig:bb-area-distribution}
 \end{wrapfigure}
@@ -211,7 +211,7 @@ This will be useful for the following section, in which the data gets preprocess
 \vfill
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=\textwidth]{src/images/LS-2.png}
+    \includegraphics[width=\textwidth]{images/LS-2.png}
     \caption{Annotation-View of LabelStudio: Bounding Boxes can be selected using Drag\&Drop mechanics; Each BB is labelled with a corresponding order-label.}
     \label{fig:label-studio-1}
 \end{figure}

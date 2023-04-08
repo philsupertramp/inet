@@ -117,7 +117,7 @@ Another regularized version of LinReg is Lasso-Regression\cite{handsOn}, it appl
 \end{align}
 In this paper Ridge Reg is used for classification, to perform multi-class classification a \textbf{O}ne \textbf{v}ersus \textbf{R}est (OvR) method is employed to combine 5 individual RidgeReg models into a multi-class regressor.
 \subsection{Support Vector Machines (SVMs)}\label{subsec:support-vector-machines}
-Another supervised learning method are SVMs, they can be applied for for classification and regression.
+Another supervised learning method are SVMs, they can be applied for classification and regression.
 Other than Linear Regression, SVMs find a boundary, the \textit{decision boundary} (DB), between the data to separate it, instead of trying to find a function that represents the data.
 The goal of an SVM is to find the hyper plane that generates the widest margin that does not contain objects of the training set.
 It does so by minimizing the length of the normal vector pointing to the closest of those objects.
@@ -139,7 +139,7 @@ Describing SVMs further goes beyond the scope of this paper, for more details an
 Here multiple linear SVMs are applied to solve the task of multioutput classification, again using a OvR method.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{src/images/svm.eps}
+    \includegraphics[width=\textwidth]{images/svm.eps}
     \caption{
     \footnotemark
         Maximum margin classification for two classes.
@@ -262,7 +262,7 @@ Backpropagation (BP) is an iterative algorithm that is used to calculate the gra
 Backpropagation is a version of GD designed specifically for optimization problems solved via Deep NNs.
 In one forward and one backward pass BP uses numerical differentiation to compute all gradients required to update the weights.
 The forward pass consists of performing a prediction for a sample and calculating the corresponding loss of it.
-Then in the backward pass the BP propagates the the gradients back through the network while performing the GD-step \eqref{eq:gd-step}.
+Then in the backward pass the BP propagates the gradients back through the network while performing the GD-step \eqref{eq:gd-step}.
 After adjusting all weights accordingly through the network the process is repeated until the algorithm converges.\footnote{
     Youtube video of Grant Sanderson on the BP topic: "What is Backpropagation really doing?" \url{https://youtu.be/Ilg3gGewQ5U}.
 }
@@ -287,7 +287,7 @@ faster in converging for random weights because it turns off neurons with negati
 This becomes clearer through visualization, see \figref{fig:relu-vs-sigmoid}.
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.4\textwidth]{src/images/relu-vs-sigmoid.eps}
+    \includegraphics[width=.4\textwidth]{images/relu-vs-sigmoid.eps}
     \caption{Visualized comparison of $\ReLU$ (blue) and Sigmoid (orange). Sigmoid is evenly balanced between positive and negative values, whereas $\ReLU$ sets all values $f\left(\mybold{x^{(m)}}\right) < 0 \Rightarrow f\left(\mybold{x^{(m)}}\right) = 0$.}
     \label{fig:relu-vs-sigmoid}
 \end{figure}
@@ -371,7 +371,7 @@ Let a kernel in a conv. layer be described as $C^{(l)}: \R^{w^{(l)}_i \times h^{
 \begin{figure}[!ht]
     \centering
     \begin{tikzpicture}
-        \node at (1.5,4.5){input $X^{(m)}$};
+      \node at (1.5,4.5){\begin{tabular}{c}{\begin{tabular}{c}input\\ $X^{(m)}$\end{tabular}}\end{tabular}};
 
 		\draw (0,0) -- (3,0) -- (3,3) -- (0,3) -- (0,0);
 
@@ -515,13 +515,13 @@ Then, the intersecting area, as seen in Figure~\ref{fig:iou}, can be computed fr
 \begin{figure}[!ht]
     \centering
 \begin{minipage}{0.28\textwidth}
-    \includegraphics[width=\textwidth]{src/images/iou-plot-union.eps}
+    \includegraphics[width=\textwidth]{images/iou-plot-union.eps}
 \end{minipage}
 \begin{minipage}{0.28\textwidth}
-    \includegraphics[width=\textwidth]{src/images/iou-plot-intersection.eps}
+    \includegraphics[width=\textwidth]{images/iou-plot-intersection.eps}
 \end{minipage}
 \begin{minipage}{0.28\textwidth}
-    \includegraphics[width=\textwidth]{src/images/iou-plot-all.eps}
+    \includegraphics[width=\textwidth]{images/iou-plot-all.eps}
     \end{minipage}
     \caption{Left: $A^{(m)}_I$ (green) in combination with $A^{(m)}_U$ (cyan and green). Center: The intersection area $A^{(m)}_I$. Right: The union area $A^{(m)}_U$ for two BBs.}
     \label{fig:iou}
@@ -561,7 +561,7 @@ To calculate the $\IoU_B$, the IoU over a batch of predictions, the average is c
 \textbf{Generalized Intersection over Union (GIoU)}\\
 \begin{wrapfigure}{r}{0.5\textwidth}
     \centering
-    \includegraphics[width=.25\textwidth]{src/images/giou-plot.eps}
+    \includegraphics[width=.25\textwidth]{images/giou-plot.eps}
     \caption{$A_I$ (green), $A_U$ (cyan and green) and $A_C$ (purple + cyan + green)}
     \label{fig:giou}
 \end{wrapfigure}

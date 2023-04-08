@@ -153,11 +153,11 @@ These visualisations match the results of the metrics as listed in \tabref{fig:c
 \begin{figure}[!ht]
     \centering
     \begin{minipage}{.45\textwidth}
-    \includegraphics[width=\textwidth]{src/images/pca-ridge-svm-two-stage-model-predictions.png}
+    \includegraphics[width=\textwidth]{images/pca-ridge-svm-two-stage-model-predictions.png}
     \end{minipage}
     \hfill
     \begin{minipage}{.45\textwidth}
-    \includegraphics[width=\textwidth]{src/images/pca-400-ridge-svm-two-stage-model-predictions.png}
+    \includegraphics[width=\textwidth]{images/pca-400-ridge-svm-two-stage-model-predictions.png}
     \end{minipage}
     \caption{Sequential predictions for the validation set, performed with conventional methods. Left predictions from a model using $\text{PCA}_{100}$, right using $\text{PCA}_{400}$. For both cases some of the class predictions are wrong. Size and location of the BBs seem to converge to a mean value.}
     \label{fig:conventional-predictions}
@@ -179,7 +179,7 @@ This example can be seen in \figref{fig:reg-vgg-loss}.
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=.4\textwidth]{src/images/vgg-regression.eps}
+    \includegraphics[width=.4\textwidth]{images/vgg-regression.eps}
     \caption{Regression loss function of VGG-16 trained on the raw training data set. Although the training loss \path{loss} decreases, the validation loss \path{val_loss} seems to bounce up and down. This model seems to overfit the training data.}
     \label{fig:reg-vgg-loss}
 \end{figure}
@@ -277,11 +277,11 @@ This should be a target of further investigation, as well.
 \begin{figure}[!ht]
     \centering
     \begin{minipage}{.475\textwidth}
-        \includegraphics[width=\textwidth]{src/images/val_batch2_labels.png}
+        \includegraphics[width=\textwidth]{images/val_batch2_labels.png}
     \end{minipage}
     \hfill
     \begin{minipage}{.475\textwidth}
-        \includegraphics[width=\textwidth]{src/images/val_batch2_pred.png}
+        \includegraphics[width=\textwidth]{images/val_batch2_pred.png}
     \end{minipage}
     \caption{Predictions performed by YOLOv5. On the left side are single label predictions, here with the BB and label having the highest confidence. The right side contains predictions for one or multiple objects.}
     \label{fig:yolo-predictions}

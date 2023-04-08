@@ -1,0 +1,144 @@
+% PACKAGE DEFINITIONS
+\usepackage[ngerman,english]{babel}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{fancyhdr}
+\usepackage{blindtext}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{lscape}
+\usepackage{tikz-network}
+\usetikzlibrary {arrows.meta}
+\usepackage{listings}
+\usepackage{multicol}
+\usepackage{cite}
+\usepackage{wrapfig}
+\usepackage{paracol}
+\globalcounter{figure}
+\usepackage{tipa}
+\usepackage{nicefrac}
+\usepackage{eurosym}
+\usepackage{comment}
+\DeclareUnicodeCharacter{20AC}{\euro}
+
+
+% CUSTOM COMMANDS
+\newcommand{\image}[1]{\begin{center}\includegraphics[width=.75\linewidth]{#1}\end{center}}
+
+% reference to a figure incl. "Figure"
+\newcommand{\figref}[1]{\figurename~\ref{#1}}
+\newcommand{\tabref}[1]{\tablename~\ref{#1}}
+
+% comment command
+
+
+% Math
+
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\G}{\mathbb{G}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\MSE}{\text{MSE}}
+\newcommand{\RMSE}{\text{RMSE}}
+\newcommand{\MAE}{\text{MAE}}
+\newcommand{\GIoU}{\text{GIoU}}
+\newcommand{\IoU}{\text{IoU}}
+\newcommand{\PCA}{\text{PCA}}
+\newcommand*{\qed}{\null\nobreak\hfill\ensuremath{\blacksquare}}
+\DeclareMathOperator{\e}{e}
+\DeclareMathOperator{\Hyp}{Hyp}
+\DeclareMathOperator{\Normal}{N}
+\DeclareMathOperator{\Binomial}{B}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand{\skr}[1]{\left\langle#1\right\rangle}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\mybold}[1]{\bm{#1}}
+% Color definitions
+\definecolor{YellowGreen}{RGB}{154, 205, 50}
+\definecolor{BurntOrange}{RGB}{255, 165, 0}
+\definecolor{CornflowerBlue}{RGB}{100, 149, 237}
+
+
+% Code listing format for JSON file format
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    backgroundcolor=\color{background},
+    literate=
+     *{0}{{{\color{numb}0}}}{1}
+      {1}{{{\color{numb}1}}}{1}
+      {2}{{{\color{numb}2}}}{1}
+      {3}{{{\color{numb}3}}}{1}
+      {4}{{{\color{numb}4}}}{1}
+      {5}{{{\color{numb}5}}}{1}
+      {6}{{{\color{numb}6}}}{1}
+      {7}{{{\color{numb}7}}}{1}
+      {8}{{{\color{numb}8}}}{1}
+      {9}{{{\color{numb}9}}}{1}
+      {:}{{{\color{punct}{:}}}}{1}
+      {,}{{{\color{punct}{,}}}}{1}
+      {\{}{{{\color{delim}{\{}}}}{1}
+      {\}}{{{\color{delim}{\}}}}}{1}
+      {[}{{{\color{delim}{[}}}}{1}
+      {]}{{{\color{delim}{]}}}}{1},
+}
+
+%% CNN + Tikz
+
+\DeclareMathOperator{\ReLU}{ReLU}
+\newcommand{\KL}{\ensuremath{\mathrm{KL}}}
+\newcommand{\Ber}{\ensuremath{\mathrm{Ber}}}
+
+\definecolor{fc}{HTML}{1E90FF}
+\definecolor{h}{HTML}{228B22}
+\definecolor{bias}{HTML}{87CEFA}
+\definecolor{denseBlock}{HTML}{87CEFA}
+\definecolor{noise}{HTML}{8B008B}
+\definecolor{dropout}{HTML}{FFCCCB}
+\definecolor{conv}{HTML}{FFA500}
+\definecolor{dense}{HTML}{CDF3CD}
+\definecolor{pool}{HTML}{FFD700}
+\definecolor{up}{HTML}{B22222}
+\definecolor{view}{HTML}{FFFFFF}
+\definecolor{bn}{HTML}{FFD700}
+\tikzset{fc/.style={black,draw=black,fill=fc,rectangle,minimum height=1cm}}
+\tikzset{h/.style={black,draw=black,fill=h,rectangle,minimum height=1cm}}
+\tikzset{bias/.style={black,draw=black,fill=bias,rectangle,minimum height=1cm}}
+\tikzset{denseBlock/.style={black,draw=black,fill=denseBlock,rectangle,minimum height=1cm}}
+\tikzset{noise/.style={black,draw=black,fill=noise,rectangle,minimum height=1cm}}
+\tikzset{dropout/.style={black,draw=black,fill=dropout,rectangle,minimum height=1cm}}
+\tikzset{conv/.style={black,draw=black,fill=conv,rectangle,minimum height=1cm}}
+\tikzset{dense/.style={black,draw=black,fill=dense,rectangle,minimum height=1cm}}
+\tikzset{pool/.style={black,draw=black,fill=pool,rectangle,minimum height=1cm}}
+\tikzset{up/.style={black,draw=black,fill=up,rectangle,minimum height=1cm}}
+\tikzset{view/.style={black,draw=black,fill=view,rectangle,minimum height=1cm}}
+\tikzset{bn/.style={black,draw=black,fill=bn,rectangle,minimum height=1cm}}
+\tikzset{basic/.style={draw,fill=blue!20,text width=1em,text badly centered}}
+\tikzset{functions/.style={basic,circle,fill=blue!10}}
+
+
+% VARIABLES
+
+
+\def\author{Philipp Zettl 841523}
+\def\thesisTitle{Machine Learning Methods for the Localization~ and Classification of Insects in Images}
+\def\pageHead{Thesis}

@@ -20,33 +20,33 @@ The following section will describe the motivation behind this paper, give an in
     \centering
     \begin{minipage}[t]{.4\textwidth}
         \vspace{0pt}
-        \includegraphics[width=\textwidth]{src/images/00185_Coleoptera_Buprestidae_0a92c2b4-ca55-4f52-850b-3718920d2c9f.jpg}
+        \includegraphics[width=\textwidth]{images/00185_Coleoptera_Buprestidae_0a92c2b4-ca55-4f52-850b-3718920d2c9f.jpg}
         \caption{Coleoptera sample}
         \label{fig:coleoptera-sample}
     \end{minipage}
     \hfill
     \begin{minipage}[t]{.4\textwidth}
         \vspace{0pt}
-        \includegraphics[width=\textwidth]{src/images/00624_Hemiptera_Pentatomidae_5ee497cb-1230-4743-b455-49e77bad4eb9.jpg}
+        \includegraphics[width=\textwidth]{images/00624_Hemiptera_Pentatomidae_5ee497cb-1230-4743-b455-49e77bad4eb9.jpg}
         \caption{Hemiptera sample}
         \label{fig:hemiptera-sample}
     \end{minipage}
     \begin{minipage}[t]{.4\textwidth}
         \vspace{0.3cm}
-        \includegraphics[width=\textwidth]{src/images/01471_Lepidoptera_Lycaenidae_6ba490d2-8d07-4d44-97b3-b8f1fc48b5b5.jpg}
+        \includegraphics[width=\textwidth]{images/01471_Lepidoptera_Lycaenidae_6ba490d2-8d07-4d44-97b3-b8f1fc48b5b5.jpg}
         \caption{Lepidoptera sample}
         \label{fig:lepidoptera-sample}
     \end{minipage}
     \hfill
     \begin{minipage}[t]{.4\textwidth}
         \vspace{0.3cm}
-        \includegraphics[width=\textwidth]{src/images/02312_Odonata_Aeshnidae_1aefce10-69b6-456a-88ad-ae1d3a11b2e6.jpg}
+        \includegraphics[width=\textwidth]{images/02312_Odonata_Aeshnidae_1aefce10-69b6-456a-88ad-ae1d3a11b2e6.jpg}
         \caption{Odonata sample}
         \label{fig:odonata-sample}
     \end{minipage}
     \begin{minipage}[t]{.4\textwidth}
         \vspace{0.3cm}
-        \includegraphics[width=\textwidth]{src/images/00761_Hymenoptera_Formicidae_eaf1dd96-d5bb-44c2-96b3-220c8104598d.jpg}
+        \includegraphics[width=\textwidth]{images/00761_Hymenoptera_Formicidae_eaf1dd96-d5bb-44c2-96b3-220c8104598d.jpg}
         \caption{Hymenoptera sample}
         \label{fig:hymenoptera-sample}
     \end{minipage}
@@ -105,11 +105,11 @@ For the \textbf{single-stage-method}, methods get explored that can solve both t
     \begin{tikzpicture}
     \SetEdgeStyle[TextFillOpacity=0]
 
-    \node (input) at (0, 8) {\includegraphics[width=.6\textwidth]{src/images/00185_Coleoptera_Buprestidae_0a92c2b4-ca55-4f52-850b-3718920d2c9f.jpg}};
-    \node (bb) at (0, 4) {\includegraphics[width=.6\textwidth]{src/images/perfect-prediction-without-label.eps}};
-    %\node (c) at (0, 0) {\includegraphics[width=.125\textwidth]{src/images/cropped-00185_Coleoptera_Buprestidae_0a92c2b4-ca55-4f52-850b-3718920d2c9f.jpg}};
+    \node (input) at (0, 8) {\includegraphics[width=.6\textwidth]{images/00185_Coleoptera_Buprestidae_0a92c2b4-ca55-4f52-850b-3718920d2c9f.jpg}};
+    \node (bb) at (0, 4) {\includegraphics[width=.6\textwidth]{images/perfect-prediction-without-label.eps}};
+    %\node (c) at (0, 0) {\includegraphics[width=.125\textwidth]{images/cropped-00185_Coleoptera_Buprestidae_0a92c2b4-ca55-4f52-850b-3718920d2c9f.jpg}};
     %\node[text width=1.5cm] (model2) at (2, 2){Clas\-si\-fi\-ca\-tion};
-    \node (label) at (0, 0) {\includegraphics[width=.6\textwidth]{src/images/cropped-00185_coleoptera.eps}};
+    \node (label) at (0, 0) {\includegraphics[width=.6\textwidth]{images/cropped-00185_coleoptera.eps}};
 
     \Edge[Direct,label=Localization,position=right](input.south)(bb.north)
     \Edge[Direct,label=Classification,position=right](bb.south)(label.north)
@@ -128,8 +128,8 @@ For the \textbf{single-stage-method}, methods get explored that can solve both t
         \begin{tikzpicture}
         \SetEdgeStyle[TextFillOpacity=0]
 
-        \node (input) at (0, 4) {\includegraphics[width=.6\textwidth]{src/images/00185_Coleoptera_Buprestidae_0a92c2b4-ca55-4f52-850b-3718920d2c9f.jpg}};
-        \node (bb) at (0, 0) {\includegraphics[width=.6\textwidth]{src/images/perfect-prediction.eps}};
+        \node (input) at (0, 4) {\includegraphics[width=.6\textwidth]{images/00185_Coleoptera_Buprestidae_0a92c2b4-ca55-4f52-850b-3718920d2c9f.jpg}};
+        \node (bb) at (0, 0) {\includegraphics[width=.6\textwidth]{images/perfect-prediction.eps}};
 
         \Edge[Direct,label=Detection,position=right](input.south)(bb.north)
 
