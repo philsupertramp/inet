@@ -1,0 +1,62 @@
+%%
+%% macros for Beamerpresentation using the BHT theme
+%%
+
+\ProvidesPackage{beamerMacrosBHT}[2021/10/16 V1.0 BHT beamerMacros]
+\message{2021/10/16 V1.0 BHT-Style Macros, S.Tschirley, tschirley@bht-berlin.de} 
+    
+\AtBeginSection[]
+    {
+      \begin{frame}<beamer>{Inhalt}
+        \tableofcontents[currentsection,currentsubsection, 
+          hideothersubsections, 
+          sectionstyle=show/shaded,
+        ]
+      \end{frame}
+    }
+
+\makeatletter
+\AtBeginPart{%
+  %\beamer@tocsectionnumber=0\relax
+  %\setcounter{section}{0}
+  %\frame{\partpage}%
+}
+\makeatother
+
+%\newcommand{\subsectionpage}{
+%% \setbeamertemplate{subsection page}
+%% {
+%%   \vspace{10ex}\vfill
+%%   \textbf{\large{Abschnitt
+%%   \thepart.\thesection.\thesubsection\\[3ex]\insertsubsection}}
+%%   \vspace{3ex}
+%%   \vfill
+%% }
+
+\newcommand{\copyrightSlide}
+  {
+    \frame{\frametitle{Rechtlicher Hinweis }
+      \begin{alertblock}{Bild- und Tonaufzeichungen}
+        \begin{itemize}
+        \item Jegliche Aufzeichung des seminaristischen Unterrichts in Ton und Bild
+          ohne Zustimmung des Dozenten
+          ist unzulässig  und wird  als  Verletzung  des Urheberrechts  (§§  106 ff.  UrhG)
+          behandelt.
+        \end{itemize}
+      \end{alertblock}
+      \begin{alertblock}{Verwendung der Unterlagen}
+        \begin{itemize}
+        \item  Alle Unterlagen  dieses  Kurses sind  urheberrechtlich geschützt.  Die
+          Rechte liegen beim Autor.  Die Verwendung in gedruckter oder digitaler Form
+          im Rahmen von  Lehrveranstaltungen an der Beuth Hochschule  für Technik ist
+          gestattet.
+        \item   Eine   weitergehende   Veröffentlichung  der   vorlesungsbegleitenden
+          Unterlagen, Aufgaben  und Klausuren in  gedruckter oder digitaler  Form ist
+          nicht gestattet und wird als Urheberrechtsverstoss verfolgt.  
+        \end{itemize}
+      \end{alertblock}
+    }
+  }
+
+%% EOF
+      

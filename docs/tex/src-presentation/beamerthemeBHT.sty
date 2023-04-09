@@ -1,0 +1,223 @@
+%%
+%% Theme for BeamerClass: BHT Corporate Desgign 
+%%
+%% This theme bases on the theme warsaw. Beside this files, 
+%% the corresponding colortheme is required:
+%%    - beamercolorthemeBHT for presentations
+%%
+%% Usually, a beamerclass theme is split in three parts 
+%% (inner, outer, color) and a theme file. These parts are
+%% combined in this file.
+%%
+%% 29.04.09 Sven Tschirley
+%%
+
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\ProvidesPackage{beamerthemeBHT}[2009/04/30 V0.5 BHT beamertheme]
+\message{2009/04/30 V0.5 BHT-Style, S.Tschirley, tschirley@bht-berlin.de}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Presentation mode
+%%
+\mode<presentation>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Setting the Base
+\useinnertheme[shadow=true]{rounded}
+%\useoutertheme{shadow}
+\usecolortheme{BHT}
+
+\setbeamerfont{block title}{size={\small}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Completing the color and font definitions
+%%
+\setbeamercolor{subtitlebar}{fg=white, bg=HKS51!70}
+\setbeamercolor*{title in head/foot}{bg=white}
+\setbeamercolor*{frametitle}{fg=FGtext, bg=white}
+\setbeamercolor*{framesubtitle}{fg=HKS51,bg=white}
+\setbeamercolor*{frametitleLogo}{bg=white}
+\setbeamercolor*{frametitleLogoDEV}{bg=HKS51!44}
+\setbeamercolor*{footline}{fg=HKS51,bg=white}
+
+\setbeamerfont*{section in head/foot}{size=\footnotesize}
+\setbeamerfont*{frametitle}{size=\footnotesize}%
+\setbeamerfont*{sectionnavigationhorizontal}{size=\tiny}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definition of the blocks
+%%
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Setting Papersize
+%%
+\setbeamersize{text margin left=2em, text margin right=2em} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Construction of a frame's title as follows:
+%% [4 squares][ frametitle               ][Logo]
+%% [section navigation                         ]
+%%
+\newcommand{\sectionHeader}
+  {
+    \ifthenelse{\equal{\thesection}{0}}
+      { 
+        % nothing to do
+      }
+      {
+        \ifthenelse{\equal{\thesubsection}{0}}
+          {
+            % section exists, subsection 0: only section in subtitlebar
+            \thepart.\thesection~--~\insertsection
+          }
+          {
+            % subsection existsalso: section.subsection in subtitlebar
+            \thepart.\thesection.\thesubsection~--~\insertsubsection
+          }
+          
+      }  
+  }
+
+
+\newcommand{\sectionHeaderLeft}
+  {
+    \ifthenelse{\equal{\thesection}{0}}
+      {
+        % nothing to do
+      }
+      {
+        \thepart.\thesection~--~\textsc{\insertsection}
+      }
+  }
+
+\newcommand{\sectionHeaderRight}
+  {
+    \ifthenelse{\equal{\thesubsection}{0}}
+      {
+        % nothing to do
+      }
+      {
+        \insertsubsection
+      }
+  }
+
+\newcommand{\frameFootPart}
+  {
+    \ifthenelse{\equal{\thepart}{0}}
+      {
+        % nothing to do
+      }
+      {
+        \hspace{1ex}\hspace{1ex}\partname~\thepart:~\insertpart
+      }
+  }
+ 
+
+\setbeamertemplate{frametitle}
+  {%
+    \hspace*{-2.65em}    %% negative offset for first headerline (hack)
+    \hbox{
+      \begin{beamercolorbox}[wd=.15\paperwidth,ht=2.75ex,dp=1ex,center]{frametitleLogo}%
+        %\usebeamerfont{section in head/foot}
+        % \includegraphics[width=.13\paperwidth]{frameTitleSquares}%\hspace*{2ex} 
+      \end{beamercolorbox}%
+      \begin{beamercolorbox}[wd=.69\paperwidth,ht=2.75ex,dp=1ex,left,shadow=true]{frametitle}%.618
+        \usebeamerfont{frametitle}\hspace*{2ex}\raisebox{0.3ex}{\insertframetitle}
+      \end{beamercolorbox}
+      \begin{beamercolorbox}[wd=.15\paperwidth,ht=3.5ex,dp=1ex,center]{frametitleLogo}%
+        %\usebeamerfont{section in head/foot}
+        \includegraphics[width=.145\paperwidth]{BHT_Logo_horizontal_Anthrazit.eps}%\hspace*{2ex} 
+      \end{beamercolorbox}%
+    }
+    
+    \hbox{
+      \begin{beamercolorbox}[wd=\paperwidth, ht=1.2ex, dp=0.6ex]{subtitlebar}
+        \hspace*{2ex}        
+                {\tiny{\sectionHeaderLeft\hfill\sectionHeaderRight}}
+                \hspace*{2ex} 
+      \end{beamercolorbox} 
+    }
+  }
+
+% 
+\setbeamertemplate{headline}[default]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Construction of a frame's footline as follows:
+%% ________________________________________________
+%% [ Author ][ Lecture: PartNr  Partname   ][pages]
+%%
+\setbeamertemplate{footline}
+   {%
+     \color{HKS51}\hrule width \paperwidth depth 0pt height 0.2pt
+     \vskip1pt
+     \hbox{
+       \begin{beamercolorbox}[wd=0.25\paperwidth, ht=2ex, dp=0.8ex, left]{footline}
+         \hspace{2em}\insertauthor
+       \end{beamercolorbox}%
+       \begin{beamercolorbox}[wd=0.5\paperwidth, ht=2ex, dp=0.8ex, left]{footline}
+         \insertshorttitle\frameFootPart
+       \end{beamercolorbox}%
+       \begin{beamercolorbox}[wd=0.25\paperwidth, ht=2ex, dp=0.8ex, right]{footline}
+         \insertframenumber{}\,/\,\inserttotalframenumber\hspace{3em}
+       \end{beamercolorbox}%
+     }
+   }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Construction of the titlepage as follows:
+%%
+%% Logo                                     Squares
+%%                                          Version
+%% ________________________________________________
+%%
+%%                  [ Title  ]
+%%                  [ Author ]
+%%                  [ School ]
+%%
+%%      colored pictures of the Beut Hochschule
+%% ________________________________________________
+%% Footline
+%%
+\setbeamertemplate{title page}
+{\leavevmode
+\begin{beamercolorbox}[wd=\paperwidth,ht=\paperheight,center]{frametitle}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=.1667\paperheight,left]{}
+    \hskip0.037\paperwidth
+    \includegraphics[width=.3\paperwidth]{BHT_Logo_horizontal_Anthrazit.eps}
+  \end{beamercolorbox}
+  %
+  \begin{beamercolorbox}[wd=\paperwidth,ht=.0238\paperheight,right]{framesubtitle}
+    {\tiny{Version \today}\hspace{2ex}}
+    \vskip.5ex
+  \hrule width \paperwidth depth 0pt height 0.2pt
+  \end{beamercolorbox}
+  %
+  \begin{beamercolorbox}[wd=.802\paperwidth,ht=0.644\paperheight,center]{frametitle}%.6428
+    \begin{centering}
+      {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle\par}\\[3ex]
+      {\usebeamerfont{author}\usebeamercolor[fg]{title}\insertauthor}\\[4ex]
+      {\usebeamerfont{institute}\usebeamercolor[fg]{title}\insertinstitute\\[16ex]
+      \insertdate} %[8ex]
+    \end{centering}
+  \end{beamercolorbox}
+  %
+  \begin{beamercolorbox}[wd=\paperwidth,ht=.1667\paperheight,right]{frametitle}
+    \includegraphics[trim=0 0 0 25,clip,width=\paperwidth]{frameTitlePictures}
+    \vskip0.03\paperheight
+  \end{beamercolorbox}
+\end{beamercolorbox}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Switches
+%%
+\setbeamertemplate{navigation symbols}
+{}
+
+\mode
+<all>

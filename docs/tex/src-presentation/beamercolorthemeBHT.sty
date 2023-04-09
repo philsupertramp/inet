@@ -1,0 +1,62 @@
+%\ProvidesPackageRCS $Header: /cvsroot/latex-beamer/latex-beamer/themes/theme/beamercolorthemeTFH.sty $
+% BHT Berlin Color   based on the file beamercolorthemecrane.sty
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+%
+% Defining the Colors of BHT's current corporate design
+%
+%\xdefinecolor{HKS51}{rgb}{0,0.593,0.629}             % HKS51, BHT türkis
+\xdefinecolor{HKS51}{rgb}{0.33,0.33,0.33}
+\xdefinecolor{HKS13}{rgb}{0.937,0.094,0.117}         % HKS13, BHT rot
+\xdefinecolor{HKS51-dark70}{rgb}{0.13,0.13,0.13 }      % TFH türkis abgedunkelt
+                                                     % kontrast 70%
+
+
+%\definecolor{HKS51}{RGB}{0,152,164}
+\definecolor{UeberUns}{RGB}{30,119,125}
+\definecolor{Studium}{RGB}{149,222,53}
+\definecolor{Fachbereich}{RGB}{41,208,244}
+\definecolor{Campus}{RGB}{252,174,100}
+\definecolor{Forschung}{RGB}{252,208,15}
+\definecolor{Service}{RGB}{255,0,0}
+
+%
+% text is black
+%
+\definecolor{FGtext}{RGB}{0,0,0}
+
+
+\setbeamercolor{structure}{fg=FGtext}
+
+\setbeamercolor{palette primary}{fg=FGtext,bg=HKS51!20}
+\setbeamercolor{palette secondary}{fg=FGtext,bg=HKS51!80}
+\setbeamercolor{palette tertiary}{fg=FGtext,bg=HKS51!90}
+\setbeamercolor{palette quaternary}{fg=FGtext,bg=HKS51}
+
+\setbeamercolor{titlelike}{parent=palette quaternary}
+
+\setbeamercolor{block title}{fg=white,bg=HKS51}
+\setbeamercolor{block title alerted}{use=alerted text,fg=FGtext,bg=alerted text.fg!75!bg}
+\setbeamercolor{block title example}{fg=FGtext,bg=HKS51!30}
+%\setbeamercolor{block title example}{use=example text,fg=FGtext,bg=example text.fg!75!bg}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+
+\setbeamercolor{sidebar}{bg=HKS51!10}
+  
+\setbeamercolor{palette sidebar primary}{fg=FGtext}
+\setbeamercolor{palette sidebar secondary}{fg=FGtext!75}
+\setbeamercolor{palette sidebar tertiary}{fg=FGtext!75}
+\setbeamercolor{palette sidebar quaternary}{fg=FGtext}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\mode
+<all>

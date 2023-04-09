@@ -1,0 +1,549 @@
+%
+% Vorlesungsfolien
+%
+% $Revision$ 
+% $Date$
+% $Author$
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\documentclass[10pt]{beamer}
+\usetheme{BHT}
+%
+%
+
+\usepackage{helvet}
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{longtable, tabularx}
+\usepackage{multicol, multirow}
+\usepackage{listings, pifont,  verbatim}
+\usepackage{ifthen, xspace}
+\usepackage{colortbl}
+\usepackage{mathptmx}
+\usepackage[most]{tcolorbox}
+\usepackage{ stmaryrd }
+\usepackage{algorithm2e,algorithmic}
+\usepackage{pdfpages}
+\usepackage{tikz-network}
+\usepackage{caption}
+\DeclareCaptionFormat{plain}{#3\par} 
+
+\xdefinecolor{HKS51}{rgb}{0,0.593,0.629}             % HKS51, BHT türkis
+\xdefinecolor{HKS13}{rgb}{0.937,0.094,0.117}         % HKS13, BHT rot
+\xdefinecolor{HKS51-dark70}{rgb}{0,0.198,0.20 }      % TFH türkis abgedunkelt
+\xdefinecolor{lightgray}{gray}{0.9}
+\xdefinecolor{lightGrey}{gray}{0.8}
+% \xdefinecolor{lighterblue}{cyan}{0.9}
+\xdefinecolor{lighterGrey}{gray}{0.9}
+\xdefinecolor{bgcolor}{RGB}{255, 255, 255}
+\xdefinecolor{txcolor}{RGB}{0, 0, 0}
+\colorlet{titleBackColor}{HKS51!20!bgcolor}
+\colorlet{redBackColor}{HKS13!20!bgcolor}
+\colorlet{frameColor}{HKS51}
+\colorlet{grayBackColor}{lightGrey!25!bgcolor}
+\colorlet{faintTitleBack}{titleBackColor!10!bgcolor}
+\colorlet{faintredBack}{redBackColor!33!bgcolor}
+\newlength{\boxseppadding}
+\setlength{\boxseppadding}{3pt}
+
+\colorlet{YellowGreen}{yellow!50!green} % todo
+
+\newlength{\leftpadding}
+\setlength{\leftpadding}{3pt}
+\newlength{\rightpadding}
+\setlength{\rightpadding}{\leftpadding}
+
+
+\newtcolorbox{aufgabe}{%
+%\tcbset{
+    colback=HKS51!5!bgcolor, colframe=frameColor, coltext=txcolor,
+    highlight math style= {enhanced, %<-- needed for the ’remember’ options
+        colframe=HKS51, colback=bgcolor, boxsep=0pt},
+    boxrule=.75pt,
+    arc=0pt,
+    boxsep =\boxseppadding,
+    left   =\leftpadding,
+    right  =\rightpadding,
+    top    =0pt,
+    bottom =0pt,
+    enforce breakable=true,
+    colbacktitle=titleBackColor,
+}
+
+\setbeamercovered{transparent}
+\graphicspath{{pictures/}}
+
+\title{}
+
+\date{\today}
+\author{Philipp Zettl
+\\841523}
+\institute{
+  University of Applied Sciences Berlin
+  }
+<<<<<<< Updated upstream
+\title{Werkstudent bei MoBerries GmbH}
+=======
+\title{MoBerries GmbH}
+>>>>>>> Stashed changes
+
+
+%\usefonttheme{serif}
+\newcommand{\kommentar}[1]{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\setbeamerfont{frametitle}{size=\small}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Inhalt
+%%
+\frame{\titlepage}
+
+\frame{\frametitle{}
+  {\Large Inhaltsverzeichnis}
+  \begin{enumerate}
+    \item Werkstudent bei MoBerries GmbH
+    \item Die Entwicklungsabteilung (TECH Bereich)
+    \item Erster Arbeitstag
+    \item Täglicher Ablauf
+    \item Meine Aufgaben
+    \item Fazit
+  \end{enumerate}
+}
+%% CHAPTER
+\part{Werkstudent bei MoBerries GmbH}
+\frame{\partpage}
+\frame{\frametitle{Die Firma}
+
+  \includegraphics[width=\textwidth]{MoBerries_horizontal_color.eps}
+    \begin{itemize}
+        \item 2015 in Berlin gegründetes SaaS Start-Up
+        \item AI-gesteuerte Hiring Plattform
+        \item Sitz in Berlin Prenzlauer Berg
+        \item etwa 20 Mitarbeiter
+    \end{itemize}
+}
+\frame{\frametitle{Geschäftsmodell}
+    \begin{itemize}
+      \item Plattform um Jobsuchende (\textcolor{blue}{\href{https://www.moberries.com/page/candidateguide}{Kandidaten}}) und Stellenangebote (\textcolor{blue}{\href{https://www.moberries.com/page/company-guide}{Jobs}}) von Firmen zu verbinden
+      \item Baut auf Netzwerkeffekt
+      \item Verbindungen zwischen Kandidaten und Jobs (Matches) werden AI-gesteuert erstellt
+      \item Für Kandidaten komplett kostenfrei
+<<<<<<< Updated upstream
+      \item Für Firmen kostenpflichtiges Abonnement-Modelle
+=======
+      \item Für Firmen kostenpflichtige Abonnement-Modelle
+>>>>>>> Stashed changes
+    \end{itemize}
+}
+\frame{\frametitle{Organigramm}
+  \begin{center}
+    \includegraphics[width=\textwidth]{test-hirachy.png}
+  \end{center}
+}
+
+\frame{\frametitle{Firmenkultur}
+\begin{itemize}
+  \item Kooperationen mit vielen kleinen Startups als auch großen Unternehmen
+  \item Möglichkeit auf Weiterbildung im Rahmen von Großveranstaltungen wie AWS-Summit 2019
+  \item Stärkung des Teams durch Team-Events wie Mini-Golf oder Bowling
+\end{itemize}
+}
+\frame{\frametitle{Stellenbeschreibung}
+  \begin{itemize}
+    \item Python/Django Backend
+    \begin{itemize}
+      \item Erweiterung von bestehenden Endpunkten
+      \item Implementierung von neuen Endpunkten
+      \item Wartung des aktuellen Zustands
+    \end{itemize}
+    \item Qualitätssicherung eines Machine-Learning Services durch Code-Review
+<<<<<<< Updated upstream
+    \item seit 31.10.2020 alleiniger Entwickler für das Python Backend
+  \end{itemize}
+}
+\frame{\frametitle{Bewerbungsprozess}
+  \begin{itemize}
+    \item September 2018 auf Stellenanzeige von \dq\url{jobbot.me}\dq\; unter \url{moberries.com} beworben
+    \item einer von 30 Bewerbern
+    \item drei Phasen Bewerbungsprozess
+    \begin{enumerate}
+      \item Telefonat mit CTO zum Kennenlernen
+      \item \dq Coding-Task\dq\; um meine Fähigkeiten mit Python/Django/PostgreSQL zu testen
+      \begin{itemize}
+        \item Python/Django Web API
+        \item Pizza Liefer Service
+      \end{itemize}
+      \item Persönliches Bewerbungsgespräch mit CTO und einem weiteren Entwickler
+    \end{enumerate}
+=======
+>>>>>>> Stashed changes
+  \end{itemize}
+}
+
+
+%% CHAPTER
+\part{Die Entwicklungsabteilung (TECH)}
+\frame{\partpage}
+\frame{
+  \frametitle{Die Entwicklungsabteilung}
+  \begin{itemize}
+    \item Management
+    \begin{itemize}
+      \item CTO
+      \item Produktmanagerin/QA (Quality Assurance)
+    \end{itemize}
+    \item Data Science
+    \begin{itemize}
+      \item Senior Data Scientist
+      \item entwickelt Machine-Learning Service um Kandidaten auf Stellenanzeigen  \dq zu matchen\dq\; (nutzt Natural Language Processing (NLP))
+    \end{itemize}
+    \item Frontend
+    \begin{itemize}
+      \item 4 Entwickler für 4 Projekte
+      \item Kundenanwendungen für Kandidaten/Firmen/Recruiter/Mitarbeiter von MoBerries
+    \end{itemize}
+    \item Backend
+    \begin{itemize}
+      \item seit 31.10.2020 alleiniger Entwickler für 3 Projekte
+      \item Anwendungen die im Hintergrund laufen, Datenquellen und automatisiertes Backup-Management
+      \item Enge Zusammenarbeit mit allen Bereichen, da das Backend das Zentrale System ist
+    \end{itemize}
+  \end{itemize}
+}
+%% CHAPTER
+\part{Erster Arbeitstag}
+\frame{\partpage}
+\frame{
+  \frametitle{Erster Arbeitstag}
+  \begin{itemize}
+    \item Einführung in firmeninterne Projektstruktur
+    \item Einrichten der Arbeitsumgebung/lokales Starten \underline{aller} Anwendungen
+    \item Einführung in interne \lstinline{git} Strategie
+    \item Erster Task
+  \end{itemize}
+  \centering\includegraphics[width=0.75\textwidth]{services-GENERATED.eps}
+}
+\frame{
+  \frametitle{Mein Arbeitsplatz}
+  Bis März 2020
+  \begin{itemize}
+    \item eigener Schreibtisch in \dq Großraumbüro\dq\; des TECH-Bereiches
+    \item Ausstattung: Schreibtisch, Stuhl, Laptop, Tastatur \& Maus
+    \item seit kurzem (Januar 2020) mit ergonomischem Stuhl
+  \end{itemize}
+  \vfill
+  Seit März 2020
+  
+  Bis auf eine Ausnahme im September geschlossen in \dq Arbeit von zu Hause\dq
+}
+%% CHAPTER
+\part{Täglicher Ablauf}
+\frame{\partpage}
+\frame{\frametitle{Täglicher Ablauf}
+\begin{itemize}
+  \item Vormittag
+  \begin{itemize}
+    \item spätestens 10:00 Uhr Arbeitsbeginn
+    \item 10:30 Uhr \dq Daily Standup\dq
+    \item eine Stunde Code-Review, wenn nötig
+    \item Bearbeiten von aktuellen Aufgaben
+  \end{itemize}
+  \item Mittagspause 13-14~Uhr
+  \item Nachmittag
+  \begin{itemize}
+    \item eine Stunde Code-Review, wenn nötig
+    \item Bearbeiten von Tasks
+    \item Feierabend 19~Uhr
+  \end{itemize}
+\end{itemize}
+}
+\frame{\frametitle{Wiederkehrende Meetings}
+  \begin{itemize}
+    \item Daily Standup
+    \item Monatliches Firmenmeeting
+    \item Feedback Gespräch (1x im Quartal)
+    \item Task-Estimation Meeting
+    \item Team-Lunch (alle 2 Wochen)
+  \end{itemize}
+}
+%% CHAPTER
+\part{Meine Aufgaben}
+\frame{\partpage}
+\frame{
+  \frametitle{Meine Aufgaben}
+  Oktober 2018 bis März 2020
+  \begin{itemize}
+    \item Hauptfokus Backend Erweiterung / Wartung
+    \item Implementieren von neuen Features
+    \item Neuentwicklung von Teilprojekten
+    \item Wartung des aktuellen Zustands
+    \item kleine infrastrukturrelevante Aufgaben (Docker)
+  \end{itemize}
+  März 2020
+  \begin{itemize}
+    \item Hauptfokus nach wie vor Erweiterung/Wartung Backend Projekt
+    \item Übernahme von zwei existierenden Projekten \dq Converter\dq, \dq Background\dq
+    \item Infrastruktur Wartung und Erweiterung (Kubernetes, Docker)
+  \end{itemize}
+}
+\frame{
+  \frametitle{Wiederkehrende Aufgaben}
+  \begin{itemize}
+    \item Updates für Paket-Abhängigkeiten der Projekte
+    \item Systemupdates (z.B. neue Python Version)
+    \item Wiederholtes Anpassen des gleichen Features
+  \end{itemize}
+}
+
+\frame{
+  \frametitle{Interessante Aufgaben}
+
+  \Large{
+    \begin{enumerate}
+      \item Fuzzy Volltextsuche\\
+      \item Reduktion von Knoten in einem Graphen
+    \end{enumerate}
+  }
+<<<<<<< Updated upstream
+}
+
+\frame{
+  \frametitle{Fuzzy Full-Text-Search}
+  \begin{block}{Fuzzy Full-Text-Search (FTS)}
+     \begin{itemize}
+       \item Art der Volltextsuche
+       \item Suchergebnisse sollen exakte und unscharfe bzw. fehlertolerante Ergebnisse enthalten
+     \end{itemize}
+   \end{block}
+}
+
+\frame{
+=======
+}
+
+\frame{
+  \frametitle{Fuzzy Volltextsuche}
+  \begin{block}{Fuzzy Volltextsuche (Fuzzy FTS)}
+     \begin{itemize}
+       \item Art der Volltextsuche
+       \item Suchergebnisse sollen exakte und unscharfe bzw. fehlertolerante Ergebnisse enthalten
+     \end{itemize}
+   \end{block}
+}
+
+\frame{
+>>>>>>> Stashed changes
+  \frametitle{Fuzzy Volltextsuche: Anforderungen}
+
+  Anforderungen:
+  \begin{itemize}
+    \item Erweiterung eines Endpunktes mit Suchfunktion
+    \item Suche soll sowohl exakte als auch unscharfe Ergebnisse liefern
+  \end{itemize}
+  Vorüberlegungen:
+  \begin{itemize}
+    \item Exakte Suche
+    \begin{aufgabe}
+      Eingabe: \lstinline{user@example.com}\\
+      Ausgabe: \lstinline{user@example.com}
+    \end{aufgabe}
+    \item Regex-Suche
+    \begin{aufgabe}
+      \textcolor{blue}{\href{https://regex101.com/r/4Ootxx/1}{Beispiel}}
+    \end{aufgabe}
+    \item Fuzzy-Suche
+    \begin{itemize}
+      \item Verschiedene Arten der Fuzzy-Search
+      \item Wir haben uns entschieden PostgreSQLs Implementierung der \textcolor{blue}{\href{https://www.postgresql.org/docs/9.6/pgtrgm.html}{Trigram-Similarities}} zu verwenden
+      \item Beispiel Nutzereingabe: \dq Misissippi\dq \quad Suchergebnis: \dq Mississippi\dq
+    \end{itemize}
+  \end{itemize}
+}
+\frame{
+  \frametitle{Fuzzy Volltextsuche: Entwicklung}
+  Vorgehen:
+  \begin{enumerate}
+    \item Erstellung von Prototypen aller Methoden in SQL Queries
+    \item Vergleich der Ergebnisse $\lightning$ schlechte Resultate
+    \item Prototyp einer Kombination aus den Methoden mit Gewichtung
+    \item Vergleich der Ergebnisse $\checkmark$ gute Resultate
+    \item Implementierung der Kombination in Python
+  \end{enumerate}
+  \;\\
+  Probleme:
+  \begin{enumerate}
+    \item Ergebnisse in Theorie und Praxis weichen ab
+    \item Gewichte sind reine Erfahrungswerte
+  \end{enumerate}
+}
+\frame{\frametitle{Fuzzy Volltextsuche: Implementierung}
+
+\begin{block}{Pseudocode}
+  \begin{algorithm}[H]
+    \begin{algorithmic}[1]
+        \STATE Erstelle Trigram-Simularitäten
+        \STATE Suche nach Ergebnissen mit Regex
+        \STATE Suche nach exakten Ergebnissen
+        \STATE Skaliere Suchergebnisse {$S_i$} mit sinnvollen Gewichten $G$
+        \STATE $S = \max(S_i)$
+        \STATE Filtere alle Einträge nach $S \geq \min(G)$
+        \STATE Sortiere die Ergebnisse absteigend nach $S$
+    \end{algorithmic}
+    \caption{Pseudocode der Implementierung der Fuzzy-FTS}
+    \end{algorithm}
+\end{block}
+Gewählte Gewichte:
+\begin{center}
+  \begin{tabular}{|c|c|}
+    \hline
+    Methode & Gewicht\\
+      \hline
+      Exakt & 1.0\\
+      \hline
+      Regex & 0.2\\
+      \hline
+      Trigram-Simularitäten & 1.0\\
+      \hline
+  \end{tabular}
+\end{center}
+}
+\frame{
+  \frametitle{Reduktion von Knoten in einem Graphen}
+  \begin{block}{Reduktion von Knoten in einem Graphen}
+    \begin{itemize}
+      \item Gerichteter Graph
+      \item Vereinigung von Knoten durch Reduktion der Kanten des Graphen
+    \end{itemize}  
+  \end{block}
+}
+\frame{
+  \frametitle{Reduktion von Knoten in einem Graphen}
+  \begin{multicols}{2}
+    \begin{itemize}
+      \item Datenbankmigrationen in Django sind \underline{meist} maschinell erstellte Dateien
+      \item Jede Migration representiert einen Zustand der angebundenen Datenbank
+      \item Migrationen können als Knoten in einem gerichteten Graphen gesehen werden
+      \item Knoten können unter bestimmten Vorraussetzungen vereinigt werden
+      \item $\lightning$ \underline{\textbf{Alle}} Migrationen werden während der Testdurchführung ausgeführt
+    \end{itemize}
+    \columnbreak
+    \begin{figure}
+      \includegraphics[height=0.7\textheight]{backend-migrations.gv.pdf}
+      \caption{Annonymisierter Migrationsgraph der MoBerries GmbH}
+    \end{figure}
+    % \includepdf[pages={1}]{pictures/backend-migrations.gv.pdf}
+  \end{multicols}
+}
+
+\frame{
+  \frametitle{Reduktion von Knoten in einem Graphen: Anforderungen}
+
+  Anforderungen:
+  \begin{itemize}
+    \item Reduktion der Knoten
+    \item Um aktuellen Zustand nicht zu zerstören müssen existierende Knoten erhalten bleiben
+  \end{itemize}
+  \;\\
+  Vorüberlegungen:
+  \begin{itemize}
+      \item Graph muss ausgelesen und rekonstruiert werden um damit zu arbeiten
+      \item Existierender Graph muss erhalten bleiben, oder neuer Graph muss alle alten Knoten beinhalten
+      \item Es existiert bereits ein Kommandozeilenbefehl um Migrationen zu vereinigen, dieser erfordert aber manuelle Anpassungen
+  \end{itemize}
+}
+\frame{
+  \frametitle{Reduktion von Knoten in einem Graphen: Entwicklung}
+  \begin{columns}
+    \column[t]{0.5\textwidth}
+    
+  Vorgehen:
+  \begin{enumerate}
+    \item Auslesen des Graphen in geeignete Datenstruktur
+    \item Identifizierung von \dq Straßen\dq
+    \item Mit Hilfe des Kommandozeilenbefehls \lstinline{squashmigrations} Migrationen \dq squashen \dq
+  \end{enumerate}
+  \;\\
+  Probleme:
+  \begin{enumerate}
+    \item Migrationen können manuel geschriebenen Code beinhalten
+    \item neuer Graph muss sowohl mit laufenden als auch neuen Datenbanken kompatibel sein
+  \end{enumerate}
+  \column[t]{0.5\textwidth}
+  Ziel:
+  \begin{columns}
+    \column[t]{0.25\textwidth}
+    \begin{figure}
+      \captionsetup[figure]{format=plain}
+      \caption{Vorher}
+      \begin{tikzpicture}
+        \Vertex[x=1,y=0,label=A,size=0.75]{A}
+        \Vertex[x=1,y=-1.5,label=B,size=0.75]{B}
+        \Vertex[x=1,y=-3,label=C,size=0.75]{C}
+        \Vertex[x=1,y=-4.5,label=E,size=0.75]{E}
+        \Vertex[x=2,y=-3,label=D,size=0.75]{D}
+        \Edge[Direct](A)(B)
+        \Edge[Direct](B)(C)
+        \Edge[Direct](D)(E)
+        \Edge[Direct](C)(E)
+      \end{tikzpicture}
+    \end{figure}
+    \column[t]{0.25\textwidth}
+    \begin{figure}
+      \captionsetup[figure]{format=plain}
+      \caption{Nachher}
+      \begin{tikzpicture}
+        \Vertex[x=1,y=0,label={},size=0.75,Pseudo]{A}
+        \Vertex[x=1,y=-1.5,label={},size=0.75,Pseudo]{B}
+        \Vertex[x=1,y=-3,label={A,B,C},size=0.75]{C}
+        \Vertex[x=1,y=-4.5,label=E,size=0.75]{E}
+        \Vertex[x=2,y=-3,label=D,size=0.75]{D}
+        \Edge[Direct](D)(E)
+        \Edge[Direct](C)(E)
+      \end{tikzpicture}
+    \end{figure}
+  \end{columns}
+\end{columns}
+}
+
+\frame{\frametitle{Reduktion von Knoten in einem Graphen: Implementierung}
+  \begin{block}{Vereinigung der Knoten}
+    \vfill
+      \begin{center}\large Live Demo\end{center}
+    \vfill
+  \end{block}
+}
+%% CHAPTER
+\part{Fazit}
+\frame{\partpage}
+
+\frame{
+  \frametitle{Fazit}
+  \begin{itemize}
+    \item Aussichten wurden erfüllt
+    \item konnte Eindrücke in Software Entwicklung und Machine-Learning sammeln
+    \item Agile Arbeitsweise durch kleine Teamgröße
+    \item Viel Unterstützung bei Weiterbildung
+    \item Interessanteste Eindrücke in Best Practices: Code-Review und Pair-Programming
+  \end{itemize}
+}
+
+
+\frame{
+  \begin{block}{Ende}
+    \begin{center}
+        \vfill
+        \large Zeit für Fragen.\\
+
+      \Large Vielen Dank für Ihre Aufmerksamkeit.    
+    \end{center}
+  \end{block}
+}
+
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

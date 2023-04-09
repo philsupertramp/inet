@@ -1,0 +1,38 @@
+%%
+%% macros for BEamerpresentation using the BHT theme
+%%
+
+
+
+\ProvidesPackage{beamerMacrosBHT}[2009/06/30 V0.5 BHT beamerMacros]
+\message{2009/06/30 V0.5 BHT-Style Macros, S.Tschirley, tschirley@bht-berlin.de} 
+
+
+\newcommand{\changeblockcolor}[1]
+    {
+      \ifthenelse{\equal{#1}{default}}
+        {
+          \setbeamercolor{block title}{bg=HKS51}
+          \setbeamercolor{block body}{bg=HKS51!25} 
+        }
+        {
+          \setbeamercolor{block title}{bg=#1}
+          \setbeamercolor{block body}{bg=#1!60} 
+        }
+    }
+
+
+
+\newcommand{\sectionpage}{\frametitle{}
+  \vspace{10ex}\vfill
+  \textbf{\large{Abschnitt \thepart.\thesection\\[3ex]\insertsection}}
+  \vspace{3ex}
+  \vfill
+%%  \tableofcontents[currentsection]%%%, currentsubsection]
+  }
+
+\newcommand{\subsectionpage}{\frametitle{}
+  \textbf{\large{Abschnitt
+  \thepart.\thesection.\thesubsection\\[3ex]\insertsubsection}}}
+                                    
+

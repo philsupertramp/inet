@@ -1,0 +1,100 @@
+%\ProvidesPackageRCS $Header: /cvsroot/latex-beamer/latex-beamer/themes/theme/beamercolorthemeTFH.sty $
+% BHT Berlin Color   based on the file beamercolorthemecrane.sty
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+%
+% Defining the Colors of BHT's current corporate design
+%
+\xdefinecolor{bhtGray}{rgb}{0.333, 0.333, 0.333}     % BHT Dark Gray, Logo, Text
+\xdefinecolor{bhtTurquoise}{rgb}{0, 0.627, 0.666}    % BHT Turquoise
+\xdefinecolor{bhtCyan}{rgb}{0, 0.627, 0.666}         % BHT Turquoise  
+\xdefinecolor{bhtYellow}{rgb}{1, 0.788, 0}           % BHT Yellow (vivid orange)
+\xdefinecolor{bhtRed}{rgb}{0.918, 0.231, 0.025}      % BHT Rot (vivid red)
+\xdefinecolor{bhtBlue}{rgb}{0, 0.259, 0.510}         % BHT Dunkelblau (darkblue)
+
+% Old COlors
+\xdefinecolor{HKS51}{rgb}{0,0.593,0.629}             % HKS51, BHT türkis
+\xdefinecolor{HKS13}{rgb}{0.937,0.094,0.117}         % HKS13, BHT rot
+
+\xdefinecolor{AZBlue}{rgb}{0,0.125,0.376}            % FSI Blau
+\xdefinecolor{AZRed}{rgb}{0.99,0.24,0.19}
+\xdefinecolor{AZRed1}{rgb}{0.678,0.121,0.302}
+\xdefinecolor{AZDBlue}{rgb}{0.019, 0.403, 0.588}
+\xdefinecolor{AZBordeaux}{rgb}{0.588,0.113,0.274}
+\xdefinecolor{AZOrange}{rgb}{0.94,0.27,0.20}
+\xdefinecolor{AZViolet}{rgb}{0.341,0.208,0.302}
+
+\xdefinecolor{azRed}{rgb}     {0.99, 0.24, 0.19}
+\xdefinecolor{azOrange}{rgb}  {0.94, 0.27, 0.2}
+\xdefinecolor{azYellow}{rgb}  {1, 0.94, 0.32}
+\xdefinecolor{azDBlue}{rgb}   {0.019, 0.403, 0.588}
+\xdefinecolor{azViolet}{rgb}  {0.164, 0.235, 0.423}
+\xdefinecolor{azBordeaux}{rgb}{0.588, 0.113, 0.274}
+\xdefinecolor{azDViolet}{rgb} {0.341, 0.207, 0.302}
+\xdefinecolor{azRed1}{rgb}    {0.678, 0.121, 0.207}
+\xdefinecolor{azRed2}{rgb}    {0.768, 0.188, 0.243}
+\xdefinecolor{azRed3}{rgb}    {0.952, 0.407, 0.431}
+
+\xdefinecolor{colLernziele}{rgb}{0.918, 0.231, 0.025}% BHT Rot (vivid red)
+\xdefinecolor{colLiteratur}{rgb}{0, 0.666, 0.686}    % BHT Turquoise
+\xdefinecolor{colVertiefung}{rgb}{1.00, 0.675, 0}    % Dark Orange
+\xdefinecolor{colUebung}{rgb}{1, 0.788, 0}           % BHT Yellow (vivid orange)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Colors and fonts
+%%
+
+\xdefinecolor{FGtext}{RGB}{0,0,0}
+
+%\setbeamercolor{structure}{fg=FGtext}
+\setbeamercolor{structure}{fg=bhtBlue}  %itemize, chaptertoc
+\setbeamercolor{author}{parent=structure}
+\setbeamercolor{frametitle}{fg=FGtext, bg=bhtGray!5}
+\setbeamercolor{author in sidebar}{fg=bhtGray}
+\setbeamercolor{titlepage}{bg=white}
+
+%% Palette 
+\setbeamercolor{palette primary}{fg=FGtext,bg=red}%bg=HKS51!20}
+\setbeamercolor{palette secondary}{fg=FGtext,bg=bhtBlue!80}
+\setbeamercolor{palette tertiary}{fg=FGtext,bg=bhtBlue!90}
+\setbeamercolor{palette quaternary}{fg=FGtext,bg=bhtYellow}
+\setbeamercolor{titlelike}{parent=palette quaternary}
+
+%% Palette Sidebar
+\setbeamercolor{sidebar right}{bg=bhtGray!15}
+\setbeamercolor{palette sidebar primary}{fg=bhtGray!85}
+\setbeamercolor{palette sidebar secondary}{fg=bhtGray!85}
+\setbeamercolor{palette sidebar tertiary}{fg=FGtext!75}
+\setbeamercolor{palette sidebar quaternary}{fg=FGtext}
+\setbeamercolor{sidebar}{bg=bhtYellow!10}  % highlighted chapter
+  
+%% Blocks
+\setbeamercolor{block title}{fg=white,bg=bhtBlue}
+\setbeamercolor{block title alerted}{use=alerted text,fg=FGtext,bg=alerted text.fg!75!bg}
+\setbeamercolor{block title example}{fg=FGtext,bg=bhtYellow}
+%\setbeamercolor{block title example}{use=example text,fg=FGtext,bg=example text.fg!75!bg}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+\setbeamercolor{alerted text}{fg=azRed1}
+
+%% fonts and appearance
+\setbeamerfont{title}{series=\bfseries,size=\LARGE}
+\setbeamerfont{title in sidebar}{series=\bfseries}
+\setbeamerfont{author in sidebar}{size=\tiny}%,series=\bfseries}
+\setbeamerfont*{item}{series=}
+\setbeamerfont{frametitle}{size=\small}
+\setbeamerfont{block title}{size=\small}
+\setbeamerfont{subtitle}{size=\large,series=\normalfont}
+
+\mode
+<all>
