@@ -64,8 +64,6 @@ Localization:
 
 ### Prerequesites:
 - `python >= 3.8, virtualenv`, optional `docker`
-- An account to access the VPN, as well as an account to access the NAS is required
-- `openfortivpn`
 - set environment variables according to `./scripts/mount_directories.sh`
 
 ## Usage
