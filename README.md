@@ -36,10 +36,12 @@ This project contains all content and things around the underlying thesis.
 The submitted paper can be found in `./docs/thesisphilipp.pdf`.
 
 The repository contains the `./docs` directory holding research and the theoretical part of the paper.
-A demo app is under development, that can be found in the `./src/webapp` directory.
 
-The accommodating code to the paper and the webapp is located in `./src`.
+The accommodating code to the paper and the webapp is located in `./inet`.
 For more details consult the documentation pages.
+
+**Note**: This project uses [git-lfs](https://git-lfs.com/) for storing jupyter notebooks!
+To run pull the notebooks install it.
 
 ## Visuals
 ### Data Augmentation
