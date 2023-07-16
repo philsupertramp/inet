@@ -70,6 +70,8 @@ Localization:
 
 ## Usage
 ### Datasets
+To optain the data set, either contact me via [gh issue](https://github.com/philsupertramp/inet/issues/new) or through any other channel mentioned on my [gh page](https://github.com/philsupertramp), or by following the steps below.
+
 #### recreate a pre-labelled training set
 ##### Recreate the data set from iNaturalist Competition 2021
 You can find the iNaturalist Competition Data set at the bottom of [this page](https://github.com/visipedia/inat_comp/tree/master/2021).
@@ -80,37 +82,25 @@ You can find the iNaturalist Competition Data set at the bottom of [this page](h
 ```shell
 $ python -m scripts.reuse_labels bounding-boxes-2022-02-12-14-33.json mnt/KInsektDaten/data/iNat/train_Insecta/ data/iNat/storage
 ```
-##### Existing data set on project internal NAS
-```shell
-$ sudo ./scripts/mount_directories.sh on
-$ python -m scripts.reuse_labels bounding-boxes-2022-02-12-14-33.json mnt/KInsektDaten/data/iNat/train_Insecta/ data/iNat/storage
-```
 #### generate a training set:
 
-1. Set environment variables `USERNAME` (username on NAS), `PASSWORD` (password for NAS), `VPN_USER` and `VPN_PASSWD` accordingly
-2. Run
-```shell
-$ sudo ./scripts/mount_directories.sh on
-```
-3. To generate a dataset from the source `mnt/KInsektDaten/data/iNat/train_Insecta/`:
+1. To generate a dataset from the source `mnt/KInsektDaten/data/iNat/train_Insecta/`:
     ```shell
     $ python -m scripts.preselect_files --seed 42 -g 20 -s 25 -rng -l ../mnt/KInsektDaten/data/iNat/train_Insecta/ ../data/iNat/
     ```
 for more options see `-h`.
-
-4. Upload the files within the (default) target directory `./data/iNat/storage` into ["Label-Studio"](https://labelstudio-kinsekt.app.datexis.com) and annotate bounding boxes.
+2. Upload the files within the (default) target directory `./data/iNat/storage` into ["Label-Studio"](https://labelstudio-kinsekt.app.datexis.com) and annotate bounding boxes.
 
 optionally Launch [LabelStudio](https://labelstud.io/)
 
     $ docker run -it -p 8080:8080 -v $PWD/data/iNat:/label-studio/data -e LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true -e LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data heartexlabs/label-studio:latest
-
-5. Create labels for image files
-6. Export the labels from LStudio
-7. Generate file structure for train, test and validation sets by running
+3. Create labels for image files
+4. Export the labels from LStudio
+5. Generate file structure for train, test and validation sets by running
 ```shell
 $ python -m scripts.process_files -input_directory data/iNat/storage -output_directory data/iNat/data -test 0.1 -val 0.2 bounding-boxes-2022-02-12-14-33.json
 ```
-8. Generate cropped dataset for classification task
+6. Generate cropped dataset for classification task
 ```shell
 $ python -m scripts.generate_cropped_dataset data/iNat/
 ```
