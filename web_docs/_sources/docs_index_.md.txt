@@ -2,15 +2,13 @@
 A look into ML methods for single object detection, solving the tasks of insect genera classification
 and bounding box regression, individually as well as simultaneously.
 
-![](docs/code/source/_static/dataset-representation.png)
 ## Abstract
 This thesis has been written in the citizen science project KInsekt at
-the Berliner Hochschule f ̈ur Technik. Its main objective is to investigate
+the Berliner Hochschule für Technik. Its main objective is to investigate
 different Machine Learning techniques for the localization and classifi-
 cation of insect orders, namely ”Coleoptera”, ”Hymenoptera, Formici-
 dae”, ”Lepidoptera”, ”Hemiptera” and ”Ordonata”, based on image files.
-The accompanying code repository (https://gitlab.com/kinsecta/ml/
-thesisphilipp and https://github.com/philsupertramp/inet) contains software written in Python (version 3.6.9), de-
+The accompanying code repository (https://gitlab.com/kinsecta/ml/thesisphilipp and https://github.com/philsupertramp/inet) contains software written in Python (version 3.6.9), de-
 veloped using the libraries numpy,
 tensorflow, keras, keras-tuner and scikit-learn. The code has
 been written in the attempt to be easily extendable or changeable, to e.g.
@@ -41,7 +39,9 @@ For more details consult the documentation pages.
 ## Visuals
 
 ![](_static/dataset-representation.png)
+
 ### Data Augmentation
+
 ![](_static/data.png)
 
 ### Predictions
@@ -57,8 +57,8 @@ Localization:
     GIoU:   0.4361618
 ```
 
-<img src="docs/code/source/_static/independent-model-predictions.png" width="300px">
-<img src="docs/code/source/_static/independent-model-confusion.png" width="300px">
+<img src="_static/independent-model-predictions.png" width="300px">
+<img src="_static/independent-model-confusion.png" width="300px">
 
 ## Installation
 
@@ -108,6 +108,7 @@ To test inference of trained models run scripts from the `./tests` directory.
 
 #### `test_tf_architectures.py`
 Executes inference tests on pretrained optimized instances of
+
 - `IndependentModel`
 - `TwoStageModel`
 - `SingleStageModel`
@@ -117,6 +118,7 @@ Executes inference tests on [YoloV5](https://github.com/ultralytics/yolov5).
 
 #### `test_tf_lite_architectures.py`
 Executes inference tests on TFLite compatible versions of pretrained optimized instances of
+
 - `IndependentModel`
 - `TwoStageModel`
 - `SingleStageModel`

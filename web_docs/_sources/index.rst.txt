@@ -8,7 +8,10 @@ iNet
 A look into Machine Learning Methods for Localization and Classification of Insects in Images.
 
 
-:download:`download paper <../../thesisphilipp.pdf>`
+:download:`download paper <../../tex/src/BA.pdf>`
+
+:download:`download slides <../../tex/src-presentation/main.pdf>`
+
 
 
 .. toctree::

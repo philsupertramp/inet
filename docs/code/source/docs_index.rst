@@ -1,4 +1,4 @@
 iNet
 ====
 
-.. mdinclude:: ./docs_index.md
+.. mdinclude:: ./docs_index_.md
