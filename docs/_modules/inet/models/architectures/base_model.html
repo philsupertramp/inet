@@ -1,0 +1,487 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inet.models.architectures.base_model &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">inet</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inet.models.architectures.base_model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inet.models.architectures.base_model</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A collection of different base models to build different model architectures.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tensorflow</span> <span class="kn">import</span> <span class="n">keras</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Model</span> <span class="k">as</span> <span class="n">KerasModel</span>
+
+<span class="kn">from</span> <span class="nn">inet.data.constants</span> <span class="kn">import</span> <span class="n">LabelType</span><span class="p">,</span> <span class="n">ModelType</span>
+<span class="kn">from</span> <span class="nn">inet.data.datasets</span> <span class="kn">import</span> <span class="n">ImageDataSet</span>
+<span class="kn">from</span> <span class="nn">inet.helpers</span> <span class="kn">import</span> <span class="n">extract_labels_and_features</span><span class="p">,</span> <span class="n">get_train_logdir</span>
+
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">KerasModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper class to store a human-readable name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param inputs: input parameters</span>
+<span class="sd">        :param outputs: output parameters</span>
+<span class="sd">        :param name: verbose name for the model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">## verbose name for the model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Backbone"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.Backbone">[docs]</a><span class="k">class</span> <span class="nc">Backbone</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An alias for Backbone/Feature extractor models.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="TaskModel"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.TaskModel">[docs]</a><span class="k">class</span> <span class="nc">TaskModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model tailored to solve a task. Essentially keras.Model with helper methods and wrappers for training methods.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from tensorflow.keras.applications.mobilenet import MobileNet</span>
+<span class="sd">        &gt;&gt;&gt; backbone = MobileNet(weights=&#39;imagenet&#39;, include_top=False, input_shape=(224, 224))</span>
+<span class="sd">        &gt;&gt;&gt; my_model = TaskModel(inputs=[backbone.input], outputs=[backbone.output])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">## Type of model</span>
+    <span class="n">model_type</span><span class="p">:</span> <span class="n">ModelType</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="TaskModel.default_callbacks"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.TaskModel.default_callbacks">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">default_callbacks</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">monitoring_val</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="n">model_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Hidden helper function to create default callbacks for fit method.</span>
+
+<span class="sd">        Consists of:</span>
+<span class="sd">        - keras.callbacks.TensorBoard</span>
+<span class="sd">        - keras.callbacks.ModelCheckpoint</span>
+<span class="sd">        - keras.callbacks.EarlyStopping</span>
+<span class="sd">        - keras.callbacks.ReduceLROnPlateau</span>
+<span class="sd">        - keras.callbacks.ProgbarLogger</span>
+<span class="sd">        - keras.callbacks.TerminateOnNaN</span>
+
+<span class="sd">        :param monitoring_val: value to monitor</span>
+<span class="sd">        :param verbose: use verbose output</span>
+<span class="sd">        :param model_name: name of the model</span>
+<span class="sd">        :return: list of default callbacks</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">run_logdir</span> <span class="o">=</span> <span class="n">get_train_logdir</span><span class="p">(</span><span class="n">model_name</span><span class="p">)</span>
+        <span class="n">tensorboard_cb</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">TensorBoard</span><span class="p">(</span><span class="n">run_logdir</span><span class="p">)</span>
+        <span class="n">model_checkpoint_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="s1">&#39;../../models/&#39;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%m-</span><span class="si">%d</span><span class="s2">-%Y_%H-%M-%S&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
+        <span class="n">checkpoint_cb</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">ModelCheckpoint</span><span class="p">(</span><span class="n">model_checkpoint_path</span><span class="p">,</span> <span class="n">save_best_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">stopping_cb</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="n">monitoring_val</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">min_delta</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span>
+                                                    <span class="n">restore_best_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">reduce_lr_cb</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">ReduceLROnPlateau</span><span class="p">(</span>
+            <span class="n">monitor</span><span class="o">=</span><span class="n">monitoring_val</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">min_lr</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="n">min_delta</span><span class="o">=</span><span class="mf">1e-2</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">tensorboard_cb</span><span class="p">,</span>
+            <span class="n">checkpoint_cb</span><span class="p">,</span>
+            <span class="n">stopping_cb</span><span class="p">,</span>
+            <span class="n">reduce_lr_cb</span><span class="p">,</span>
+            <span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">ProgbarLogger</span><span class="p">(</span><span class="s1">&#39;samples&#39;</span><span class="p">),</span>
+            <span class="n">keras</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">TerminateOnNaN</span><span class="p">()</span>
+        <span class="p">]</span></div>
+
+<div class="viewcode-block" id="TaskModel.fit"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.TaskModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">validation_set</span><span class="p">,</span> <span class="n">monitoring_val</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">32</span><span class="p">,</span> <span class="n">epochs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extended `keras.Model.fit` to add default callbacks</span>
+
+<span class="sd">        :param train_set: dataset for training</span>
+<span class="sd">        :param validation_set: dataset for validation</span>
+<span class="sd">        :param monitoring_val: value to monitor while using EarlyStopping/ModelCheckpoint callbacks</span>
+<span class="sd">        :param batch_size: the batch size to use when training the model</span>
+<span class="sd">        :param epochs: number of epochs used in the training process</span>
+<span class="sd">        :param verbose: verbosity setting</span>
+<span class="sd">        :param args: further args to pass to `keras.Model.fit`</span>
+<span class="sd">        :param kwargs: further kwargs to pass to `keras.Model.fit`</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">callbacks</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;callbacks&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_callbacks</span><span class="p">(</span><span class="n">monitoring_val</span><span class="p">,</span> <span class="n">verbose</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+            <span class="n">train_set</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">),</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="n">validation_data</span><span class="o">=</span><span class="n">validation_set</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">),</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">validation_batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskModel.extract_backbone_features"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.TaskModel.extract_backbone_features">[docs]</a>    <span class="k">def</span> <span class="nf">extract_backbone_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">validation_set</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">LabelType</span><span class="p">,</span> <span class="n">LabelType</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Processes inputs using weights from backbone feature extractor.</span>
+
+<span class="sd">        :param train_set:</span>
+<span class="sd">        :param validation_set:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">feature_layer_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">train_set</span><span class="p">),</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">validation_set</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskModel.evaluate_model"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.TaskModel.evaluate_model">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validation_set</span><span class="p">:</span> <span class="n">ImageDataSet</span><span class="p">,</span> <span class="n">preprocessing_method</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                       <span class="n">render_samples</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Method to evaluate a models predictive power.</span>
+
+<span class="sd">        :param validation_set: the validation data set to use</span>
+<span class="sd">        :param preprocessing_method: optional preprocessing_method for features. Gets applied before feeding the</span>
+<span class="sd">         features into the model</span>
+<span class="sd">        :param render_samples: boolean flag to append visualization of samples</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">preprocess_input</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">preprocessing_method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">x</span>
+            <span class="k">return</span> <span class="n">preprocessing_method</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">validation_values</span><span class="p">,</span> <span class="n">validation_labels</span> <span class="o">=</span> <span class="n">extract_labels_and_features</span><span class="p">(</span><span class="n">validation_set</span><span class="p">)</span>
+        <span class="n">processed_validation_values</span> <span class="o">=</span> <span class="n">preprocess_input</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">validation_values</span><span class="o">.</span><span class="n">copy</span><span class="p">()))</span>
+        <span class="n">preds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">processed_validation_values</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_predictions</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">validation_labels</span><span class="p">,</span> <span class="n">validation_values</span><span class="p">,</span> <span class="n">render_samples</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskModel.to_tflite"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.TaskModel.to_tflite">[docs]</a>    <span class="k">def</span> <span class="nf">to_tflite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">quantization_method</span><span class="p">:</span> <span class="s1">&#39;QuantizationMethod&#39;</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Converts the model to a tflite compatible model&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">inet.models.tf_lite.convert_to_tflite</span> <span class="kn">import</span> <span class="n">create_quantize_model</span>
+        <span class="k">return</span> <span class="n">create_quantize_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">,</span> <span class="n">quantization_method</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TaskModel.evaluate_predictions"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.TaskModel.evaluate_predictions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">evaluate_predictions</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">render_samples</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Implement this method to evaluate a models predictive power individually.</span>
+<span class="sd">        For examples see `.classifier.Classifier` or `.bounding_boxes.BoundingBoxRegressor`.</span>
+
+<span class="sd">        :param predictions: predictions done by the model</span>
+<span class="sd">        :param labels: true labels for the task</span>
+<span class="sd">        :param features: features used to make predictions</span>
+<span class="sd">        :param render_samples: boolean flag to append visualization of samples</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Requires implementation in child.&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SingleTaskModel"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.SingleTaskModel">[docs]</a><span class="k">class</span> <span class="nc">SingleTaskModel</span><span class="p">(</span><span class="n">TaskModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Dedicated model architecture to solve a single task, classification or regression.</span>
+<span class="sd">    Appends a backbone model with</span>
+<span class="sd">    - [optional] global max pooling layer</span>
+<span class="sd">    - 1 dropout layer with parameter `dropout_factor`</span>
+<span class="sd">    - 1 dense layer with `dense_neurons` number neurons</span>
+<span class="sd">    - 1 dense block</span>
+<span class="sd">    * batch normalization</span>
+<span class="sd">    * ReLU activation function</span>
+<span class="sd">    * dense layer with `num_classes` neurons and `regularization_factor` for L2 kernel regularization</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from tensorflow.keras.applications.vgg16 import VGG16</span>
+<span class="sd">        &gt;&gt;&gt; vgg_backbone = VGG16(weights=&#39;imagenet&#39;, include_top=False, input_shape=(224, 224, 3))</span>
+<span class="sd">        &gt;&gt;&gt; # building a classifier for 5 classes</span>
+<span class="sd">        &gt;&gt;&gt; clf = SingleTaskModel(vgg_backbone, 5, &#39;softmax&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; # building a bounding box regressor (outputs: [y, x, height, width])</span>
+<span class="sd">        &gt;&gt;&gt; reg = SingleTaskModel(vgg_backbone, 4, &#39;relu&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">backbone</span><span class="p">:</span> <span class="n">Backbone</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_activation</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dense_neurons</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span>
+                 <span class="n">include_pooling</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">regularization_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-3</span><span class="p">,</span>
+                 <span class="n">dropout_factor</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        :param backbone: backbone model</span>
+<span class="sd">        :param num_classes: number of output neurons</span>
+<span class="sd">        :param output_activation: activation function of output layer</span>
+<span class="sd">        :param dense_neurons: number dense neurons for FC layer</span>
+<span class="sd">        :param include_pooling: use pooling prior to FC layer</span>
+<span class="sd">        :param name: model name</span>
+<span class="sd">        :param regularization_factor: factor for L2 regularization in output layer</span>
+<span class="sd">        :param dropout_factor: factor of dropout that&#39;s applied in front of the FC layer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">clear_session</span><span class="p">()</span>
+        <span class="c1"># define model architecture</span>
+        <span class="c1">## Index of feature layer (last CNN layer)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feature_layer_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">backbone</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="c1"># fully connected layer</span>
+        <span class="k">if</span> <span class="n">include_pooling</span><span class="p">:</span>
+            <span class="n">layer_stack</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">GlobalMaxPooling2D</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;pre_task_pooling&#39;</span><span class="p">)(</span><span class="n">backbone</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">feature_layer_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">layer_stack</span> <span class="o">=</span> <span class="n">backbone</span><span class="o">.</span><span class="n">output</span>
+
+        <span class="n">layer_stack</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="n">dropout_factor</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;task_dropout&#39;</span><span class="p">)(</span><span class="n">layer_stack</span><span class="p">)</span>
+        <span class="n">layer_stack</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">dense_neurons</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;task_dense_layer&#39;</span><span class="p">)(</span><span class="n">layer_stack</span><span class="p">)</span>
+        <span class="n">layer_stack</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;task_bn&#39;</span><span class="p">)(</span><span class="n">layer_stack</span><span class="p">)</span>
+        <span class="n">layer_stack</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;task_relu&#39;</span><span class="p">)(</span><span class="n">layer_stack</span><span class="p">)</span>
+        <span class="n">output_layer</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span>
+            <span class="n">num_classes</span><span class="p">,</span>
+            <span class="n">activation</span><span class="o">=</span><span class="n">output_activation</span><span class="p">,</span>
+            <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">keras</span><span class="o">.</span><span class="n">regularizers</span><span class="o">.</span><span class="n">L2</span><span class="p">(</span><span class="n">regularization_factor</span><span class="p">),</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;task_output&#39;</span>
+        <span class="p">)(</span><span class="n">layer_stack</span><span class="p">)</span>
+
+        <span class="c1"># set model config</span>
+        <span class="c1">## desired loss function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_fn</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">## value to monitor while optimizing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">monitoring_val</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1">## Stores history after training cycle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">## expected input image width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_width</span> <span class="o">=</span> <span class="n">backbone</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="c1">## expected input image height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_height</span> <span class="o">=</span> <span class="n">backbone</span><span class="o">.</span><span class="n">input</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">backbone</span><span class="o">.</span><span class="n">inputs</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="p">[</span><span class="n">output_layer</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+        <span class="c1">## args used when calling `compile`</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compile_args</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="SingleTaskModel.evaluate_predictions"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.SingleTaskModel.evaluate_predictions">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">evaluate_predictions</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">render_samples</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper method to evaluate predictive power of model.</span>
+
+<span class="sd">        :param predictions: predictions done by the model</span>
+<span class="sd">        :param labels: true labels for the task</span>
+<span class="sd">        :param features: features used to make predictions</span>
+<span class="sd">        :param render_samples: boolean flag to append visualization of samples</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Requires implementation in child.&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTaskModel.from_config"><a class="viewcode-back" href="../../../../inet.models.architectures.html#inet.models.architectures.base_model.SingleTaskModel.from_config">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cfg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load model from configuration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">backbone_clone</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">clone_model</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;backbone&#39;</span><span class="p">))</span>
+
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">backbone_clone</span><span class="p">,</span> <span class="o">**</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;head&#39;</span><span class="p">))</span>
+
+        <span class="n">model</span><span class="o">.</span><span class="n">load_weights</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weights&#39;</span><span class="p">),</span> <span class="n">by_name</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">),</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;loss&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">model</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Thesis: Machine Learning Methods for Localization and Classification of Insects in Images &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">inet</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Thesis: Machine Learning Methods for Localization and Classification of Insects in Images</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/docs_index_.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="thesis-machine-learning-methods-for-localization-and-classification-of-insects-in-images">
+<h1>Thesis: Machine Learning Methods for Localization and Classification of Insects in Images<a class="headerlink" href="#thesis-machine-learning-methods-for-localization-and-classification-of-insects-in-images" title="Permalink to this headline">¶</a></h1>
+<p>A look into ML methods for single object detection, solving the tasks of insect genera classification
+and bounding box regression, individually as well as simultaneously.</p>
+</div>
+<div class="section" id="abstract">
+<h1>Abstract<a class="headerlink" href="#abstract" title="Permalink to this headline">¶</a></h1>
+<p>This thesis has been written in the citizen science project KInsekt at
+the Berliner Hochschule für Technik. Its main objective is to investigate
+different Machine Learning techniques for the localization and classifi-
+cation of insect orders, namely ”Coleoptera”, ”Hymenoptera, Formici-
+dae”, ”Lepidoptera”, ”Hemiptera” and ”Ordonata”, based on image files.
+The accompanying code repository (<a class="reference external" href="https://gitlab.com/kinsecta/ml/thesisphilipp">https://gitlab.com/kinsecta/ml/thesisphilipp</a> and <a class="reference external" href="https://github.com/philsupertramp/inet">https://github.com/philsupertramp/inet</a>) contains software written in Python (version 3.6.9), de-
+veloped using the libraries numpy,
+tensorflow, keras, keras-tuner and scikit-learn. The code has
+been written in the attempt to be easily extendable or changeable, to e.g.
+append the list of available classification classes.
+All used algorithms and ”random” generated numbers are seeded, using
+the seed 42.
+The Machine Learning model is supposed to run efficiently on a small
+computer, such as the RaspberryPi, therefore widely used architectures
+can not simply be used.
+This thesis contains a brief description of the Machine Learning pipeline
+from data collection, and preparation to preprocessing of the data set and
+finally using the resulting data set to train different models and archi-
+tectures. At the end, the best models, based on predefined metrics, will
+be chosen and its performance against state-of-the-art architectures, in-
+cluding YOLO, evaluated. The results of this evaluation will then reveal
+that custom tailored architectures perform worse on the given task, when
+compared to SotA architectures.</p>
+</div>
+<div class="section" id="description">
+<h1>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h1>
+<p>This project contains all content and things around the underlying thesis.
+The submitted paper can be found in <code class="docutils literal notranslate"><span class="pre">./docs/thesisphilipp.pdf</span></code>.</p>
+<p>The repository contains the <code class="docutils literal notranslate"><span class="pre">./docs</span></code> directory holding research and the theoretical part of the paper.</p>
+<p>The accommodating code to the paper and the webapp is located in <code class="docutils literal notranslate"><span class="pre">./inet</span></code>.
+For more details consult the documentation pages.</p>
+</div>
+<div class="section" id="visuals">
+<h1>Visuals<a class="headerlink" href="#visuals" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="_static/dataset-representation.png"><img alt="" src="_images/dataset-representation.png" /></a>
+<div class="section" id="data-augmentation">
+<h2>Data Augmentation<a class="headerlink" href="#data-augmentation" title="Permalink to this headline">¶</a></h2>
+<a class="reference external image-reference" href="_static/data.png"><img alt="" src="_images/data.png" /></a>
+</div>
+<div class="section" id="predictions">
+<h2>Predictions<a class="headerlink" href="#predictions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Classification:
+ ===================================
+    Accuracy:   0.916
+    f1 score:   0.9167668857681328
+
+Localization:
+ ===================================
+    GIoU:   0.4361618
+</pre></div>
+</div>
+<p><span class="raw-html-m2r"><img src="_static/independent-model-predictions.png" width="300px"></span>
+<span class="raw-html-m2r"><img src="_static/independent-model-confusion.png" width="300px"></span></p>
+</div>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="prerequesites">
+<h2>Prerequesites:<a class="headerlink" href="#prerequesites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">&gt;=</span> <span class="pre">3.8,</span> <span class="pre">virtualenv</span></code>, optional <code class="docutils literal notranslate"><span class="pre">docker</span></code></p></li>
+<li><p>set environment variables according to <code class="docutils literal notranslate"><span class="pre">./scripts/mount_directories.sh</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="datasets">
+<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">¶</a></h2>
+<p>To optain the data set, either contact me via <a class="reference external" href="https://github.com/philsupertramp/inet/issues/new">gh issue</a> or through any other channel mentioned on my <a class="reference external" href="https://github.com/philsupertramp">gh page</a>, or by following the steps below.</p>
+<div class="section" id="recreate-a-pre-labelled-training-set">
+<h3>recreate a pre-labelled training set<a class="headerlink" href="#recreate-a-pre-labelled-training-set" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="recreate-the-data-set-from-inaturalist-competition-2021">
+<h4>Recreate the data set from iNaturalist Competition 2021<a class="headerlink" href="#recreate-the-data-set-from-inaturalist-competition-2021" title="Permalink to this headline">¶</a></h4>
+<p>You can find the iNaturalist Competition Data set at the bottom of <a class="reference external" href="https://github.com/visipedia/inat_comp/tree/master/2021">this page</a>.</p>
+<ol class="arabic simple">
+<li><p>Download the “Train” data set</p></li>
+</ol>
+<p>#. Extract subset for only “insecta” classes (place it under <code class="docutils literal notranslate"><span class="pre">mnt/KInsektDaten/data/iNat/train_Insecta</span></code>)
+#.</p>
+<blockquote>
+<div><p>Run</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python -m scripts.reuse_labels bounding-boxes-2022-02-12-14-33.json mnt/KInsektDaten/data/iNat/train_Insecta/ data/iNat/storage
+</pre></div>
+</div>
+<p>#### generate a training set:</p>
+</div></blockquote>
+<ol class="arabic">
+<li><p>To generate a dataset from the source <code class="docutils literal notranslate"><span class="pre">mnt/KInsektDaten/data/iNat/train_Insecta/</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python -m scripts.preselect_files --seed <span class="m">42</span> -g <span class="m">20</span> -s <span class="m">25</span> -rng -l ../mnt/KInsektDaten/data/iNat/train_Insecta/ ../data/iNat/
+</pre></div>
+</div>
+<p>for more options see <code class="docutils literal notranslate"><span class="pre">-h</span></code>.</p>
+</li>
+<li><p>Upload the files within the (default) target directory <code class="docutils literal notranslate"><span class="pre">./data/iNat/storage</span></code> into <a class="reference external" href="https://labelstudio-kinsekt.app.datexis.com">“Label-Studio”</a> and annotate bounding boxes.</p></li>
+</ol>
+<p>optionally Launch <a class="reference external" href="https://labelstud.io/">LabelStudio</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ docker run -it -p 8080:8080 -v $PWD/data/iNat:/label-studio/data -e LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true -e LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/label-studio/data heartexlabs/label-studio:latest
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p>Create labels for image files</p></li>
+<li><p>Export the labels from LStudio</p></li>
+<li><p>Generate file structure for train, test and validation sets by running
+.. code-block:: shell</p>
+<blockquote>
+<div><p>$ python -m scripts.process_files -input_directory data/iNat/storage -output_directory data/iNat/data -test 0.1 -val 0.2 bounding-boxes-2022-02-12-14-33.json</p>
+</div></blockquote>
+</li>
+<li><p>Generate cropped dataset for classification task
+.. code-block:: shell</p>
+<blockquote>
+<div><p>$ python -m scripts.generate_cropped_dataset data/iNat/</p>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="section" id="inference-tests">
+<h2>Inference tests<a class="headerlink" href="#inference-tests" title="Permalink to this headline">¶</a></h2>
+<p>To test inference of trained models run scripts from the <code class="docutils literal notranslate"><span class="pre">./tests</span></code> directory.</p>
+<div class="section" id="test-tf-architectures-py">
+<h3><code class="docutils literal notranslate"><span class="pre">test_tf_architectures.py</span></code><a class="headerlink" href="#test-tf-architectures-py" title="Permalink to this headline">¶</a></h3>
+<p>Executes inference tests on pretrained optimized instances of</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">IndependentModel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TwoStageModel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SingleStageModel</span></code></p></li>
+</ul>
+</div>
+<div class="section" id="test-yolo-inference-py">
+<h3><code class="docutils literal notranslate"><span class="pre">test_yolo_inference.py</span></code><a class="headerlink" href="#test-yolo-inference-py" title="Permalink to this headline">¶</a></h3>
+<p>Executes inference tests on <a class="reference external" href="https://github.com/ultralytics/yolov5">YoloV5</a>.</p>
+</div>
+<div class="section" id="test-tf-lite-architectures-py">
+<h3><code class="docutils literal notranslate"><span class="pre">test_tf_lite_architectures.py</span></code><a class="headerlink" href="#test-tf-lite-architectures-py" title="Permalink to this headline">¶</a></h3>
+<p>Executes inference tests on TFLite compatible versions of pretrained optimized instances of</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">IndependentModel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TwoStageModel</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SingleStageModel</span></code></p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="support">
+<h1>Support<a class="headerlink" href="#support" title="Permalink to this headline">¶</a></h1>
+<p>In case you need help setting up the project or run into issues please create a ticket within the repositories issue tracker</p>
+</div>
+<div class="section" id="license">
+<h1>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h1>
+<p>Unless marked differently all code and content in this repository is published under <a class="reference external" href="LICENSE">GNU GPL-3.0</a>.</p>
+</div>
+<div class="section" id="project-status">
+<h1>Project status<a class="headerlink" href="#project-status" title="Permalink to this headline">¶</a></h1>
+<p>First release is v1.0.0</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,923 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>scripts package &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="tests package" href="tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">inet</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="inet.html">inet.package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">scripts package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scripts.configs">scripts.configs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scripts.constants">scripts.constants module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scripts.convert_models_to_tflite">scripts.convert_models_to_tflite module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scripts.generate_cropped_dataset">scripts.generate_cropped_dataset module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scripts.helpers">scripts.helpers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scripts.preselect_files">scripts.preselect_files module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scripts.process_files">scripts.process_files module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scripts.reuse_labels">scripts.reuse_labels module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">inet</a> &raquo;</li>
+        
+      <li>scripts package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/scripts.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scripts-package">
+<h1>scripts package<a class="headerlink" href="#scripts-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-scripts.configs">
+<span id="scripts-configs-module"></span><h2>scripts.configs module<a class="headerlink" href="#module-scripts.configs" title="Permalink to this headline">¶</a></h2>
+<p>Model configurations used to generate the presented results.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.configs.create_config">
+<span class="sig-name descname"><span class="pre">create_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/configs.html#create_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.configs.create_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates configuration to build three final models:</p>
+<ol class="arabic simple">
+<li><p>Independent</p></li>
+<li><p>Two-Stage</p></li>
+<li><p>Single-Stage</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Final model configuration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.configs.create_conversion_config">
+<span class="sig-name descname"><span class="pre">create_conversion_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/scripts/configs.html#create_conversion_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.configs.create_conversion_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates configuration to convert trained TF models to TFLite models</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>input_shape</strong> – shape of the expected input features</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Conversion configuration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.configs.create_tflite_config">
+<span class="sig-name descname"><span class="pre">create_tflite_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/configs.html#create_tflite_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.configs.create_tflite_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates TFLite configuration for the final three models:</p>
+<ol class="arabic simple">
+<li><p>Independent</p></li>
+<li><p>Two-Stage</p></li>
+<li><p>Single-Stage</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Final TFLite model configuration</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.constants">
+<span id="scripts-constants-module"></span><h2>scripts.constants module<a class="headerlink" href="#module-scripts.constants" title="Permalink to this headline">¶</a></h2>
+<p>Commonly used constant values</p>
+</div>
+<div class="section" id="module-scripts.convert_models_to_tflite">
+<span id="scripts-convert-models-to-tflite-module"></span><h2>scripts.convert_models_to_tflite module<a class="headerlink" href="#module-scripts.convert_models_to_tflite" title="Permalink to this headline">¶</a></h2>
+<p>Script to convert TF models to TFLite models.</p>
+<dl class="simple">
+<dt>Example:</dt><dd><p>$ python -m scripts.convert_models_to_tflite</p>
+</dd>
+</dl>
+<p>To change the underlying configuration consult <cite>./scripts/configs.py</cite></p>
+</div>
+<div class="section" id="module-scripts.generate_cropped_dataset">
+<span id="scripts-generate-cropped-dataset-module"></span><h2>scripts.generate_cropped_dataset module<a class="headerlink" href="#module-scripts.generate_cropped_dataset" title="Permalink to this headline">¶</a></h2>
+<p>Script to create a cropped version of the dataset generated using <cite>process_files.py</cite>.
+Maintains pixels</p>
+<dl>
+<dt>Example:</dt><dd><p>Input: 200px x 300px
+Bounding Box: 10px x 20px</p>
+<p>Output: 10px x 20px</p>
+</dd>
+</dl>
+<p>For usage run <cite>./generate_cropped_dataset.py -h</cite></p>
+</div>
+<div class="section" id="module-scripts.helpers">
+<span id="scripts-helpers-module"></span><h2>scripts.helpers module<a class="headerlink" href="#module-scripts.helpers" title="Permalink to this headline">¶</a></h2>
+<p>Collection of helper functions used in script files.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.helpers.ProgressBar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ProgressBar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_num_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/helpers.html#ProgressBar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.helpers.ProgressBar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Helper class to send progress bar data to stdout.</p>
+<dl>
+<dt>Example:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pb</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">pb</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">pb</span><span class="o">.</span><span class="n">done</span><span class="p">()</span>
+<span class="go">[====================] 100%</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.helpers.ProgressBar.done">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/helpers.html#ProgressBar.done"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.helpers.ProgressBar.done" title="Permalink to this definition">¶</a></dt>
+<dd><p>call this to finalize the progress bar</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.helpers.ProgressBar.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/helpers.html#ProgressBar.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.helpers.ProgressBar.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a step in the progress bar, this can change the output or
+reapply previous version, depending on the current index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>index</strong> – current index</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="scripts.helpers.ThreadWithReturnValue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ThreadWithReturnValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/helpers.html#ThreadWithReturnValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.helpers.ThreadWithReturnValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></p>
+<p>Custom thread class with return values
+found at <a class="reference external" href="https://stackoverflow.com/a/6894023/6904543">https://stackoverflow.com/a/6894023/6904543</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.helpers.ThreadWithReturnValue.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/scripts/helpers.html#ThreadWithReturnValue.join"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.helpers.ThreadWithReturnValue.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Join with return value</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="scripts.helpers.ThreadWithReturnValue.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/helpers.html#ThreadWithReturnValue.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.helpers.ThreadWithReturnValue.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overwritten Thread.run method</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.helpers.decision">
+<span class="sig-name descname"><span class="pre">decision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/scripts/helpers.html#decision"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.helpers.decision" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to ask for decision input</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.helpers.move_files">
+<span class="sig-name descname"><span class="pre">move_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/helpers.html#move_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.helpers.move_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves files stored via file names in iterable into target directory</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.preselect_files">
+<span id="scripts-preselect-files-module"></span><h2>scripts.preselect_files module<a class="headerlink" href="#module-scripts.preselect_files" title="Permalink to this headline">¶</a></h2>
+<p>Script to prepare iNaturalist image files based on
+input parameters</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.calculate_stats">
+<span class="sig-name descname"><span class="pre">calculate_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combined_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#calculate_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.calculate_stats" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>combined_list</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.create_local_copy">
+<span class="sig-name descname"><span class="pre">create_local_copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combined_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requires_decisions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#create_local_copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.create_local_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates local copy of <cite>num_elements</cite> samples per record in <cite>combined_list</cite> from samples in <cite>base_dir</cite> into <cite>storage_dir</cite>.</p>
+<p>Uses multi-threading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combined_list</strong> – List of order directories</p></li>
+<li><p><strong>base_dir</strong> – parent directory of input files</p></li>
+<li><p><strong>storage_dir</strong> – storage directory to create copy in</p></li>
+<li><p><strong>requires_decisions</strong> – if <cite>True</cite> asks for approval before adding a sample</p></li>
+<li><p><strong>num_elements</strong> – required amount of samples per order</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of new file locations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.decide_image">
+<span class="sig-name descname"><span class="pre">decide_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#decide_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.decide_image" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>img_path</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.get_directory_by_prefix">
+<span class="sig-name descname"><span class="pre">get_directory_by_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#get_directory_by_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.get_directory_by_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>prefix</strong> – </p></li>
+<li><p><strong>base_dir</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.get_id_range_for_search_term">
+<span class="sig-name descname"><span class="pre">get_id_range_for_search_term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_terms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#get_id_range_for_search_term"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.get_id_range_for_search_term" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters given file name list by a list of search terms</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_list</strong> – list of file names</p></li>
+<li><p><strong>search_terms</strong> – list of search terms to search for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of ids matching the search terms</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.get_id_ranges_from_input_directory">
+<span class="sig-name descname"><span class="pre">get_id_ranges_from_input_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#get_id_ranges_from_input_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.get_id_ranges_from_input_directory" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>root_directory</strong> – root directory to get labels from</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dictionary containing species-ID ranges for all genera</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.get_n_random_elements">
+<span class="sig-name descname"><span class="pre">get_n_random_elements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#get_n_random_elements"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.get_n_random_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter for <cite>num_elements</cite> random elements out of <cite>container</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>container</strong> – the container to extract the elements from</p></li>
+<li><p><strong>num_elements</strong> – number of random elements to extract</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of <cite>num_elements</cite> random elements out of <cite>container</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.init_random_dataset_ids">
+<span class="sig-name descname"><span class="pre">init_random_dataset_ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#init_random_dataset_ids"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.init_random_dataset_ids" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num_elements</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.process_directories">
+<span class="sig-name descname"><span class="pre">process_directories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combined_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'../data/iNat'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requires_decisions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">move_files_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#process_directories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.process_directories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to generate a local copy of the data set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combined_list</strong> – List of sample directories</p></li>
+<li><p><strong>base_dir</strong> – root directory of source files</p></li>
+<li><p><strong>out_dir</strong> – target directory</p></li>
+<li><p><strong>requires_decisions</strong> – if <cite>True</cite> requires approval before adding a sample</p></li>
+<li><p><strong>num_elements</strong> – required number of samples per order/species</p></li>
+<li><p><strong>move_files_only</strong> – if <cite>True</cite> moves</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.process_directory">
+<span class="sig-name descname"><span class="pre">process_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir_prefix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requires_decisions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#process_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.process_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies <cite>num_samples</cite> files from input to target directory.
+Allows to require approval for each sample by adding <cite>requires_decision=True</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dir_prefix</strong> – prefix of source/input directory, e.g. 00420</p></li>
+<li><p><strong>base_dir</strong> – root directory of source</p></li>
+<li><p><strong>out_dir</strong> – target/output directory</p></li>
+<li><p><strong>requires_decisions</strong> – if <cite>True</cite> asks for approval before copying each sample</p></li>
+<li><p><strong>num_samples</strong> – required amount of samples</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of new file locations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.scan_input_directory">
+<span class="sig-name descname"><span class="pre">scan_input_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#scan_input_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.scan_input_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints statistics from input directory
+:param root_directory:
+:return:</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.preselect_files.test_dataset">
+<span class="sig-name descname"><span class="pre">test_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combined_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expected_num_elements</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/preselect_files.html#test_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.preselect_files.test_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verifies the dataset for consistency/integrity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combined_list</strong> – </p></li>
+<li><p><strong>base_dir</strong> – </p></li>
+<li><p><strong>expected_num_elements</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.process_files">
+<span id="scripts-process-files-module"></span><h2>scripts.process_files module<a class="headerlink" href="#module-scripts.process_files" title="Permalink to this headline">¶</a></h2>
+<p>Script to convert an input directory into a data set directory based on
+a provided bounding box configuration file.</p>
+<dl class="simple">
+<dt>For usage:</dt><dd><p>python -m scripts.process_files -h</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.bounding_box_stats">
+<span class="sig-name descname"><span class="pre">bounding_box_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#bounding_box_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.bounding_box_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates statistics for available bounding boxes.
+Calculates min, max, mean and avg width and heights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>files</strong> – dictionary of annotated image files</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>general statistics for bounding boxes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.create_config_file">
+<span class="sig-name descname"><span class="pre">create_config_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#create_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.create_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates JSON Dataset configuration file from given data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>test_set</strong> – annotated test data set</p></li>
+<li><p><strong>train_set</strong> – annotated train data set</p></li>
+<li><p><strong>val_set</strong> – annotated validation data set</p></li>
+<li><p><strong>label_names</strong> – set of available class labels in the data set</p></li>
+<li><p><strong>output_file</strong> – target file path + name for the configuration file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.create_dataset_structure">
+<span class="sig-name descname"><span class="pre">create_dataset_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#create_dataset_structure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.create_dataset_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates dataset directory structure for given data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> – files to process</p></li>
+<li><p><strong>label_names</strong> – set of available class labels</p></li>
+<li><p><strong>dir_name</strong> – name of target directory</p></li>
+<li><p><strong>test_split</strong> – share of test data (in [0, 1])</p></li>
+<li><p><strong>val_split</strong> – share of validation data  (in [0, 1])</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.create_directory_structure">
+<span class="sig-name descname"><span class="pre">create_directory_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#create_directory_structure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.create_directory_structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates test, train and validation directories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> – root directory to create directories in</p></li>
+<li><p><strong>class_names</strong> – set of available class names in the data set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tuple holding test, train and validation directory</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.extract_file_name">
+<span class="sig-name descname"><span class="pre">extract_file_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#extract_file_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.extract_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts file name from dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>elem</strong> – dictionary holding image annotations</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the file name of the annotated image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.extract_label">
+<span class="sig-name descname"><span class="pre">extract_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#extract_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.extract_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts labels from element dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>elem</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Bounding Box coordinates and class label: ((y_min, x_min, y_max, x_max), label)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.generate_statistics">
+<span class="sig-name descname"><span class="pre">generate_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#generate_statistics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.generate_statistics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate statistics over the processed data sets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> – dictionary holding annotated image files</p></li>
+<li><p><strong>target_directory</strong> – root directory for files</p></li>
+<li><p><strong>label_names</strong> – available class labels in the data set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.get_genera_file_stats_for_directory">
+<span class="sig-name descname"><span class="pre">get_genera_file_stats_for_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#get_genera_file_stats_for_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.get_genera_file_stats_for_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts number of samples for each genus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> – source root directory</p></li>
+<li><p><strong>label_names</strong> – set of class names/subdirectories to find in root directory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dictionary holding statistics <cite>genus: file_count</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.load_element">
+<span class="sig-name descname"><span class="pre">load_element</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#load_element"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.load_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>load element from data dict.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elem</strong> – annotated image</p></li>
+<li><p><strong>in_directory</strong> – source directory of annotated image</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>converted annotations</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.load_labels_from_bbox_file">
+<span class="sig-name descname"><span class="pre">load_labels_from_bbox_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bbox_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#load_labels_from_bbox_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.load_labels_from_bbox_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>loads all available labels from dataset file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbox_file</strong> – file holding BBox annotations</p></li>
+<li><p><strong>in_directory</strong> – source directory of annotations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary of annotated source image files</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.load_labels_from_bbox_files">
+<span class="sig-name descname"><span class="pre">load_labels_from_bbox_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bbox_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#load_labels_from_bbox_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.load_labels_from_bbox_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>loads all labels from all provided files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbox_files</strong> – list of BBox annotation files</p></li>
+<li><p><strong>in_directory</strong> – source directory for annotated images</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary holding annotated images</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.split_labeled_files">
+<span class="sig-name descname"><span class="pre">split_labeled_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_share</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validation_share</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#split_labeled_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.split_labeled_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Splits given files into test/train/validation sets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> – Annotated image dictionary</p></li>
+<li><p><strong>test_share</strong> – pct of test samples (in [0, 1])</p></li>
+<li><p><strong>validation_share</strong> – pct of validation samples (in [0, 1])</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>three annotation dictionaries: test, train, validation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.spread_files">
+<span class="sig-name descname"><span class="pre">spread_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#spread_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.spread_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>copies files from input to target directory nested in class directories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>files</strong> – annotated image dictionary</p></li>
+<li><p><strong>target_directory</strong> – target root directory</p></li>
+<li><p><strong>label_names</strong> – set of available class names in the data set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>copy of <cite>files</cite> with new location in <cite>target_directory</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.process_files.test_output_directory">
+<span class="sig-name descname"><span class="pre">test_output_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/scripts/process_files.html#test_output_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.process_files.test_output_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validates output directory for correctness.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>directory</strong> – root directory of data set</p></li>
+<li><p><strong>label_names</strong> – available class labels in data set</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>statistics for the test, train and validation sets</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scripts.reuse_labels">
+<span id="scripts-reuse-labels-module"></span><h2>scripts.reuse_labels module<a class="headerlink" href="#module-scripts.reuse_labels" title="Permalink to this headline">¶</a></h2>
+<p>Use this script to copy the labeled images from the mounted volume
+into the dedicated structure.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.reuse_labels.extract_file_name">
+<span class="sig-name descname"><span class="pre">extract_file_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/scripts/reuse_labels.html#extract_file_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.reuse_labels.extract_file_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract file name from element dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>elem</strong> – element dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>file name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.reuse_labels.get_directory_from_prefix">
+<span class="sig-name descname"><span class="pre">get_directory_from_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/reuse_labels.html#get_directory_from_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.reuse_labels.get_directory_from_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>search function for directory with prefix <cite>prefix</cite> within <cite>in_dir</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>in_dir</strong> – parent directory</p></li>
+<li><p><strong>prefix</strong> – search term to look for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>path to target directory</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.reuse_labels.move_file">
+<span class="sig-name descname"><span class="pre">move_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elem</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/reuse_labels.html#move_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.reuse_labels.move_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>moves files from one directory into another.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>elem</strong> – files to move</p></li>
+<li><p><strong>input_dir</strong> – source to move from</p></li>
+<li><p><strong>target_dir</strong> – target to move files to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of files in target directory</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.reuse_labels.process_in_multi_threads">
+<span class="sig-name descname"><span class="pre">process_in_multi_threads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/reuse_labels.html#process_in_multi_threads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.reuse_labels.process_in_multi_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves files <cite>file_content</cite> from <cite>input_dir</cite> to <cite>target_dir</cite> using multiple threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_content</strong> – list of file names</p></li>
+<li><p><strong>input_dir</strong> – source directory</p></li>
+<li><p><strong>target_dir</strong> – target directory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.reuse_labels.process_in_single_thread">
+<span class="sig-name descname"><span class="pre">process_in_single_thread</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/scripts/reuse_labels.html#process_in_single_thread"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.reuse_labels.process_in_single_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies files <cite>file_content</cite> from <cite>input_dir</cite> to <cite>target_dir</cite> using a single thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_content</strong> – files to move</p></li>
+<li><p><strong>input_dir</strong> – source directory</p></li>
+<li><p><strong>target_dir</strong> – target directory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="tests.html" class="btn btn-neutral float-left" title="tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

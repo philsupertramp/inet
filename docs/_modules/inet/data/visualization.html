@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>inet.data.visualization &mdash; inet  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/fonts.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> inet
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs_index.html">iNet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results.html">Results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../results.html#raspberrypi">RaspberryPi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">inet</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">inet</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<div class="git-ribbon">
+  <a href="http://github.com/SwissDataScienceCenter" rel="me">Join us on GitHub</a>
+</div>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>inet.data.visualization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for inet.data.visualization</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.multiclass</span> <span class="kn">import</span> <span class="n">unique_labels</span>
+
+<span class="kn">from</span> <span class="nn">inet.models.data_structures</span> <span class="kn">import</span> <span class="n">BoundingBox</span>
+<span class="kn">from</span> <span class="nn">scripts.constants</span> <span class="kn">import</span> <span class="n">LABEL_MAP</span>
+
+
+<div class="viewcode-block" id="plot_confusion_matrix"><a class="viewcode-back" href="../../../inet.data.html#inet.data.visualization.plot_confusion_matrix">[docs]</a><span class="k">def</span> <span class="nf">plot_confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">classes</span><span class="p">,</span>
+                          <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">cool_r</span><span class="p">,</span>
+                          <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function prints and plots the confusion matrix.</span>
+<span class="sd">    Normalization can be applied by setting `normalize=True`.</span>
+<span class="sd">    potentially good color maps from matplotlib:</span>
+
+<span class="sd">    Color maps to visualize positive cases</span>
+<span class="sd">    [&#39;Blues&#39;, &#39;BuGn&#39;, &#39;BuPu&#39;, &#39;GnBu&#39;, &#39;Greens&#39;, &#39;Greys&#39;, &#39;OrRd&#39;, &#39;Oranges&#39;, &#39;PuBu&#39;, &#39;PuBuGn&#39;, &#39;PuRd&#39;, &#39;Purples&#39;, &#39;RdPu&#39;,</span>
+<span class="sd">    &#39;Reds&#39;, &#39;YlGn&#39;, &#39;YlGnBu&#39;, &#39;YlOrBr&#39;, &#39;YlOrRd&#39;, &#39;afmhot_r&#39;, &#39;autumn_r&#39;, &#39;binary&#39;, &#39;bone_r&#39;, &#39;cividis_r&#39;, &#39;cool_r&#39;, ]</span>
+
+<span class="sd">    Color maps to visualize negative cases</span>
+<span class="sd">    [&#39;Wistia&#39;, &#39;brg_r&#39;, &#39;bwr_r&#39;]</span>
+
+<span class="sd">    :param y_true: array of ground truth values</span>
+<span class="sd">    :param y_pred: predictions done by a model</span>
+<span class="sd">    :param classes: verbatim class names</span>
+<span class="sd">    :param normalize: use normalized confusion matrix</span>
+<span class="sd">    :param colormap: the color map to use</span>
+<span class="sd">    :param title: the title for the resulting plot</span>
+<span class="sd">    :return: a matplotlib.pyplot.axis object containing the generated plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">title</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Normalized confusion matrix&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Confusion matrix, without normalization&#39;</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+    <span class="c1"># Compute confusion matrix</span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+    <span class="c1"># Only use the labels that appear in the data</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span><span class="p">[</span><span class="n">unique_labels</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float&#39;</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Normalized confusion matrix&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Confusion matrix, without normalization&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">set_dpi</span><span class="p">(</span><span class="mi">250</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">colormap</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="c1"># We want to show all ticks...</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+           <span class="n">yticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+           <span class="c1"># ... and label them with the respective list entries</span>
+           <span class="n">xticklabels</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;True label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted label&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="c1"># Rotate the tick labels and set their alignment.</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
+             <span class="n">rotation_mode</span><span class="o">=</span><span class="s1">&#39;anchor&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Loop over data dimensions and create text annotations.</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;.2f&#39;</span> <span class="k">if</span> <span class="n">normalize</span> <span class="k">else</span> <span class="s1">&#39;d&#39;</span>
+    <span class="n">thresh</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="nb">format</span><span class="p">(</span><span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span> <span class="n">fmt</span><span class="p">),</span>
+                    <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                    <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span> <span class="k">if</span> <span class="n">cm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">thresh</span> <span class="k">else</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="plot_histories"><a class="viewcode-back" href="../../../inet.data.html#inet.data.visualization.plot_histories">[docs]</a><span class="k">def</span> <span class="nf">plot_histories</span><span class="p">(</span><span class="n">hists</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">titles</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to visualize loss/accuracy course during the training phase</span>
+
+<span class="sd">    :param hists:</span>
+<span class="sd">    :param keys:</span>
+<span class="sd">    :param titles:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">plot_val</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">k</span><span class="p">])),</span> <span class="n">h</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> train_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;val_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">])),</span> <span class="n">h</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;val_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> val_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">keys</span><span class="p">):</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch #&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">hist</span> <span class="ow">in</span> <span class="n">hists</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">plot_val</span><span class="p">(</span><span class="n">hist</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hists</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+                <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span>  <span class="c1"># Position of legend,</span>
+                <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>  <span class="c1"># Small spacing around legend box</span>
+                <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="plot_prediction"><a class="viewcode-back" href="../../../inet.data.html#inet.data.visualization.plot_prediction">[docs]</a><span class="k">def</span> <span class="nf">plot_prediction</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">bb</span><span class="p">,</span> <span class="n">true_bb</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper method to plot bounding box and label of a single sample</span>
+
+<span class="sd">    :param image:</span>
+<span class="sd">    :param bb:</span>
+<span class="sd">    :param true_bb:</span>
+<span class="sd">    :param label:</span>
+<span class="sd">    :param color:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">def</span> <span class="nf">scale_bbs</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="mf">100.</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="n">height</span> <span class="o">/</span> <span class="mf">100.</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="n">width</span> <span class="o">/</span> <span class="mf">100.</span><span class="p">,</span> <span class="n">h</span> <span class="o">*</span> <span class="n">height</span> <span class="o">/</span> <span class="mf">100.</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+    <span class="n">scaled_bbs</span> <span class="o">=</span> <span class="n">BoundingBox</span><span class="p">(</span><span class="o">*</span><span class="n">scale_bbs</span><span class="p">(</span><span class="o">*</span><span class="n">bb</span><span class="p">))</span>
+    <span class="n">scaled_bbs</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">(),</span> <span class="n">color</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">true_bb</span><span class="p">:</span>
+        <span class="n">scaled_bbs2</span> <span class="o">=</span> <span class="n">BoundingBox</span><span class="p">(</span><span class="o">*</span><span class="n">scale_bbs</span><span class="p">(</span><span class="o">*</span><span class="n">true_bb</span><span class="p">))</span>
+        <span class="n">scaled_bbs2</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">(),</span> <span class="s1">&#39;green&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">label</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+            <span class="n">scaled_bbs</span><span class="o">.</span><span class="n">x_min</span> <span class="o">+</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span>
+            <span class="n">scaled_bbs</span><span class="o">.</span><span class="n">y_min</span> <span class="o">-</span> <span class="n">height</span><span class="o">*</span><span class="mf">0.05</span><span class="p">,</span>
+            <span class="n">label</span><span class="p">,</span>
+            <span class="n">backgroundcolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="n">color</span><span class="p">}</span>
+        <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_prediction_samples"><a class="viewcode-back" href="../../../inet.data.html#inet.data.visualization.plot_prediction_samples">[docs]</a><span class="k">def</span> <span class="nf">plot_prediction_samples</span><span class="p">(</span><span class="n">predicted_bbs</span><span class="p">,</span> <span class="n">validation_features</span><span class="p">,</span> <span class="n">predicted_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validation_bbs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">img_width</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">img_height</span><span class="o">=</span><span class="mi">224</span><span class="p">,</span> <span class="n">include_score</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Method to plot up to 25 samples of combined bounding box and class labels.</span>
+
+<span class="sd">    :param predicted_bbs: bounding box predictions by a method</span>
+<span class="sd">    :param predicted_labels: class labels predicted by a method</span>
+<span class="sd">    :param validation_features: used features to extract `predicted_bbs` and `predicted_labels`</span>
+<span class="sd">    :param validation_bbs: true class labels</span>
+<span class="sd">    :param img_width: original image width</span>
+<span class="sd">    :param img_height: original image height</span>
+<span class="sd">    :param include_score: if true renders class label confidence into label</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predicted_bbs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">25</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+
+        <span class="n">scaled_img</span> <span class="o">=</span> <span class="n">validation_features</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mf">255.</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predicted_labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">):</span>
+            <span class="n">label_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">LABEL_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">predicted_labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label_str</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">LABEL_MAP</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predicted_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">if</span> <span class="n">include_score</span><span class="p">:</span>
+            <span class="n">label_str</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39; (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">predicted_labels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="mf">100.</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%)&#39;</span>
+
+        <span class="n">plot_prediction</span><span class="p">(</span>
+            <span class="n">scaled_img</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="n">pred</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label_str</span><span class="p">,</span>
+            <span class="n">true_bb</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">validation_bbs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">if</span> <span class="n">validation_bbs</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+
+    <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+        <span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Ground truth&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="n">validation_bbs</span> <span class="k">else</span> <span class="p">[],</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span><span class="p">,</span>  <span class="c1"># Position of legend</span>
+        <span class="n">borderaxespad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>  <span class="c1"># Small spacing around legend box</span>
+        <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Bounding Boxes&#39;</span><span class="p">,</span>  <span class="c1"># Title for the legend,</span>
+        <span class="n">fontsize</span><span class="o">=</span><span class="mi">25</span>
+    <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2022, B. Sc. Philipp Zettl.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
