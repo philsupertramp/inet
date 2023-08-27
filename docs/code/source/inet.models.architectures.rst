@@ -27,3 +27,12 @@ inet.models.architectures.classifier module
    :members:
    :undoc-members:
    :show-inheritance:
+
+
+inet.models.architectures.inet module
+-------------------------------------------
+
+.. automodule:: inet.models.architectures.inet
+   :members:
+   :undoc-members:
+   :show-inheritance:
