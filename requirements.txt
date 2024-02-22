@@ -9,7 +9,7 @@ btrfsutil==6.3.2
 build==0.10.0
 CacheControl==0.12.14
 cairocffi==1.6.1
-CairoSVG==2.7.0
+CairoSVG==2.7.1
 certifi==2023.7.22
 cffi==1.15.1
 chardet==5.1.0
