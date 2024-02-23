@@ -83,7 +83,7 @@ pandas==1.5.3
 pexpect==4.8.0
 Pillow==10.2.0
 pkginfo==1.9.6
-platformdirs==3.8.1
+platformdirs==4.2.0
 plotly==5.15.0
 ply==3.11
 pnglatex==1.1
