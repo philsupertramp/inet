@@ -62,7 +62,7 @@ kiwisolver==1.4.5
 lensfun==0.3.4
 LibAppArmor==3.1.6
 libtorrent==2.0.9
-lit==15.0.7.dev0
+lit==15.0.7
 lockfile==0.12.2
 lxml==4.9.2
 Mako==1.2.4
