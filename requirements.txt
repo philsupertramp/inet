@@ -75,7 +75,7 @@ msgpack==1.0.7
 networkx==3.1
 nftables==0.1
 npyscreen==4.10.5
-numpy==1.25.1
+numpy==1.26.4
 ordered-set==4.1.0
 packaging==23.1
 pacman-mirrors==4.23.2
