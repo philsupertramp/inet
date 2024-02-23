@@ -64,7 +64,7 @@ LibAppArmor==3.1.6
 libtorrent==2.0.9
 lit==15.0.7.dev0
 lockfile==0.12.2
-lxml==4.9.2
+lxml==4.9.4
 Mako==1.2.4
 manjaro-sdk==0.1
 MarkupSafe==2.1.5
