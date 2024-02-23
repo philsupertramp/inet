@@ -10,7 +10,7 @@ build==0.10.0
 CacheControl==0.12.14
 cairocffi==1.6.1
 CairoSVG==2.7.1
-certifi==2023.7.22
+certifi==2024.2.2
 cffi==1.16.0
 chardet==5.1.0
 cleo==2.0.1
