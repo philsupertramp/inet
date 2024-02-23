@@ -108,7 +108,7 @@ pyrsistent==0.19.3
 PySide6==6.5.1.1
 python-dateutil==2.8.2
 python-xlib==0.33
-pytz==2023.3
+pytz==2023.4
 pyxdg==0.28
 PyYAML==6.0.1
 pyzmq==25.1.2
