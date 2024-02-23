@@ -91,7 +91,7 @@ poetry==1.5.1
 poetry-core==1.6.1
 poetry-plugin-export==1.4.0
 pooch==1.7.0
-psutil==5.9.5
+psutil==5.9.8
 ptyprocess==0.7.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
