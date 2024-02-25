@@ -101,7 +101,7 @@ pycparser==2.21
 pydantic==2.6.2
 PyGObject==3.46.0
 pynvim==0.4.3
-pyOpenSSL==23.3.0
+pyOpenSSL==24.0.0
 pyparsing==3.0.9
 pyproject_hooks==1.0.0
 pyrsistent==0.20.0
