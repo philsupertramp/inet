@@ -41,7 +41,7 @@ greenlet==2.0.2
 gufw==22.4.0
 html5lib==1.1
 hyperlink==21.0.0
-idna==3.4
+idna==3.7
 ifaddr==0.2.0
 importlib-metadata==6.6.0
 incremental==22.10.0
