@@ -146,5 +146,5 @@ urllib3==2.2.1
 validate-pyproject==0.13.post1.dev0+gb752273.d20230520
 virtualenv==20.25.1
 webencodings==0.5.1
-zipp==3.15.0
+zipp==3.18.2
 zope.interface==6.0
