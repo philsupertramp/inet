@@ -6,7 +6,7 @@ attrs==22.2.0
 autocommand==2.2.2
 Automat==22.10.0
 btrfsutil==6.3.2
-build==0.10.0
+build==1.2.1
 CacheControl==0.12.14
 cairocffi==1.6.1
 CairoSVG==2.7.1
