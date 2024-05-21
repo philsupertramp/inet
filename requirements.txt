@@ -115,7 +115,7 @@ pyzmq==25.1.2
 ranger-fm==1.9.3
 rapidfuzz==3.6.1
 rencode==1.0.6
-requests==2.31.0
+requests==2.32.0
 requests-toolbelt==1.0.0
 scipy==1.11.1
 SecretStorage==3.3.3
