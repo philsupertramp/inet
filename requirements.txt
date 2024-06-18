@@ -105,7 +105,7 @@ pyOpenSSL==24.0.0
 pyparsing==3.0.9
 pyproject_hooks==1.0.0
 pyrsistent==0.20.0
-PySide6==6.5.1.1
+PySide6==6.7.2
 python-dateutil==2.8.2
 python-xlib==0.33
 pytz==2024.1
