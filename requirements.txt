@@ -50,7 +50,7 @@ installer==0.7.0
 jaraco.classes==3.2.3
 jaraco.context==4.3.0
 jaraco.functools==4.0.0
-jaraco.text==3.11.1
+jaraco.text==3.14.0
 jeepney==0.8.0
 Jinja2==3.1.4
 jsonschema==4.17.3
