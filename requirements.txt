@@ -87,7 +87,7 @@ platformdirs==4.2.0
 plotly==5.15.0
 ply==3.11
 pnglatex==1.1
-poetry==1.5.1
+poetry==1.8.3
 poetry-core==1.6.1
 poetry-plugin-export==1.4.0
 pooch==1.7.0
