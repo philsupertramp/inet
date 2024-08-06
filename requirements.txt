@@ -110,7 +110,7 @@ python-dateutil==2.8.2
 python-xlib==0.33
 pytz==2024.1
 pyxdg==0.28
-PyYAML==6.0.1
+PyYAML==6.0.2
 pyzmq==25.1.2
 ranger-fm==1.9.3
 rapidfuzz==3.6.1
