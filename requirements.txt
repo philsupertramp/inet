@@ -13,7 +13,7 @@ CairoSVG==2.7.1
 certifi==2024.7.4
 cffi==1.16.0
 chardet==5.2.0
-cleo==2.0.1
+cleo==2.1.0
 click==8.1.7
 constantly==23.10.4
 contourpy==1.1.0
