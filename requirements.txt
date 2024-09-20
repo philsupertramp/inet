@@ -79,7 +79,7 @@ numpy==1.26.4
 ordered-set==4.1.0
 packaging==23.2
 pacman-mirrors==4.23.2
-pandas==2.2.1
+pandas==2.2.3
 pexpect==4.9.0
 Pillow==10.3.0
 pkginfo==1.9.6
