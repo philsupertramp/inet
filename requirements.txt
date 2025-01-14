@@ -144,7 +144,7 @@ ueberzug==18.2.1
 ufw==0.36.2
 urllib3==2.2.2
 validate-pyproject==0.18
-virtualenv==20.25.1
+virtualenv==20.26.6
 webencodings==0.5.1
 zipp==3.19.1
 zope.interface==6.4
